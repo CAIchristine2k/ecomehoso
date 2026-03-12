@@ -13,9 +13,8 @@ import {useConfig} from '~/utils/themeContext';
 export function Footer() {
   const config = useConfig();
 
-  // Build social links from config
   const socialLinks = Object.entries(config.socialLinks)
-    .filter(([_, url]) => url) // Only include links that have URLs
+    .filter(([_, url]) => url)
     .map(([platform, url]) => ({
       icon: getSocialIcon(platform),
       label: platform.charAt(0).toUpperCase() + platform.slice(1),
@@ -39,87 +38,59 @@ export function Footer() {
     }
   }
 
-  const quickLinks = [
-    'Shop All',
-    'Products',
-    'Customize',
-    `About ${config.influencerName.split(' ')[0]}`,
-    'Career Highlights',
+  const shopLinks = [
+    {name: 'Tous les produits', href: '/collections/all'},
+    {name: 'Nos Matchas', href: '/collections/all'},
+    {name: 'Accessoires', href: '/collections/all'},
+    {name: 'Coffrets', href: '/collections/all'},
   ];
 
-  const supportLinks = [
-    'Contact Us',
-    'Search',
-    'Cart',
-    'Privacy Policy & Terms', // Combined Privacy Policy and Terms
+  const infoLinks = [
+    {name: 'Notre Histoire', href: '/notre-histoire'},
+    {name: 'Contact', href: 'mailto:contact@hosomatcha.com'},
   ];
 
-  const policies = ['Privacy Policy & Terms', 'Sitemap']; // Updated policies array
-
-  // Map the quick links to appropriate routes
-  const getQuickLinkRoute = (link: string) => {
-    switch (link) {
-      case 'Shop All':
-        return '/collections/all';
-      case 'Products':
-        return '/products';
-      case 'Customize':
-        return '/customize-products';
-      case `About ${config.influencerName.split(' ')[0]}`:
-        return '/about';
-      case 'Career Highlights':
-        return '/about#highlights';
-      default:
-        return '/';
-    }
-  };
-
-  // Map the support links to appropriate routes
-  const getSupportLinkRoute = (link: string) => {
-    switch (link) {
-      case 'Contact Us':
-        return '/pages/contact';
-      case 'Search':
-        return '/search';
-      case 'Cart':
-        return '/cart';
-      case 'Privacy Policy & Terms':
-        return '/policies/privacy-terms';
-      default:
-        return '/';
-    }
-  };
-
-  // Map the policy links to appropriate routes
-  const getPolicyRoute = (policy: string) => {
-    switch (policy) {
-      case 'Privacy Policy & Terms':
-        return '/policies/privacy-terms';
-      case 'Sitemap':
-        return '/sitemap.xml';
-      default:
-        return '/';
-    }
-  };
+  const policies = [
+    {name: 'Mentions legales', href: '/policies/privacy-terms'},
+    {name: 'Plan du site', href: '/sitemap.xml'},
+  ];
 
   return (
-    <footer className="bg-gray-950 pt-20 pb-10">
-      <div className="container mx-auto px-4">
-        {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+    <footer
+      style={{
+        backgroundColor: '#1a2f23',
+        color: 'white',
+        padding: '64px 40px 40px',
+      }}
+    >
+      <div className="max-w-[1400px] mx-auto">
+        {/* Main Footer Grid */}
+        <div
+          className="grid gap-16 pb-12"
+          style={{
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
+          }}
+        >
           {/* Brand Column */}
-          <div>
+          <div className="max-w-[280px]">
             <Link to="/">
               <FooterLogo />
             </Link>
-            <p className="text-gray-400 mt-6 mb-8 leading-relaxed text-sm text-center">
-              The official brand of{' '}
-              {config.influencerBio || `boxing legend ${config.influencerName}`}
-              . Exclusive merchandise, training resources, and premium content
-              for champions.
+            <p
+              className="mt-6"
+              style={{
+                fontSize: '13px',
+                fontWeight: 300,
+                opacity: 0.5,
+                lineHeight: 1.9,
+              }}
+            >
+              Matcha d'exception selectionne a Uji, Kyoto. L'art du the vert japonais, de la feuille a la tasse.
             </p>
+
             {socialLinks.length > 0 && (
-              <div className="flex space-x-5 justify-center">
+              <div className="flex gap-4 mt-6">
                 {socialLinks.map((social, index) => {
                   const IconComponent = social.icon;
                   return (
@@ -128,10 +99,11 @@ export function Footer() {
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-10 h-10 rounded-sm bg-gray-900 hover:bg-primary flex items-center justify-center text-white hover:text-black transition-all duration-300 transform hover:scale-105"
+                      className="transition-opacity duration-300 hover:opacity-100"
+                      style={{opacity: 0.5}}
                       aria-label={social.label}
                     >
-                      <IconComponent className="h-5 w-5" />
+                      <IconComponent className="h-4 w-4" />
                     </a>
                   );
                 })}
@@ -139,68 +111,117 @@ export function Footer() {
             )}
           </div>
 
-          {/* Quick Links Column */}
+          {/* Boutique Column */}
           <div>
-            <h4 className="text-white font-bold text-lg mb-6 relative inline-block">
-              Quick Links
-              <span className="absolute left-0 bottom-0 w-1/2 h-0.5 bg-primary"></span>
+            <h4
+              style={{
+                fontSize: '10px',
+                fontWeight: 500,
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase' as const,
+                color: '#5a8a6a',
+                marginBottom: '24px',
+              }}
+            >
+              Boutique
             </h4>
             <ul className="space-y-3">
-              {quickLinks.map((link, index) => (
+              {shopLinks.map((link, index) => (
                 <li key={index}>
                   <Link
-                    to={getQuickLinkRoute(link)}
-                    className="text-gray-400 hover:text-primary transition-all duration-300 text-sm flex items-center group"
+                    to={link.href}
+                    className="transition-opacity duration-300 hover:opacity-100"
+                    style={{
+                      fontSize: '13px',
+                      fontWeight: 300,
+                      opacity: 0.5,
+                    }}
                   >
-                    <span className="w-1 h-1 bg-primary rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                    {link}
+                    {link.name}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Support Column */}
+          {/* Informations Column */}
           <div>
-            <h4 className="text-white font-bold text-lg mb-6 relative inline-block">
-              Support
-              <span className="absolute left-0 bottom-0 w-1/2 h-0.5 bg-primary"></span>
+            <h4
+              style={{
+                fontSize: '10px',
+                fontWeight: 500,
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase' as const,
+                color: '#5a8a6a',
+                marginBottom: '24px',
+              }}
+            >
+              Informations
             </h4>
             <ul className="space-y-3">
-              {supportLinks.map((link, index) => (
+              {infoLinks.map((link, index) => (
                 <li key={index}>
                   <Link
-                    to={getSupportLinkRoute(link)}
-                    className="text-gray-400 hover:text-primary transition-all duration-300 text-sm flex items-center group"
+                    to={link.href}
+                    className="transition-opacity duration-300 hover:opacity-100"
+                    style={{
+                      fontSize: '13px',
+                      fontWeight: 300,
+                      opacity: 0.5,
+                    }}
                   >
-                    <span className="w-1 h-1 bg-primary rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                    {link}
+                    {link.name}
                   </Link>
                 </li>
               ))}
             </ul>
+          </div>
+
+          {/* Contact Column */}
+          <div>
+            <h4
+              style={{
+                fontSize: '10px',
+                fontWeight: 500,
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase' as const,
+                color: '#5a8a6a',
+                marginBottom: '24px',
+              }}
+            >
+              Contact
+            </h4>
+            <div
+              style={{
+                fontSize: '13px',
+                fontWeight: 300,
+                opacity: 0.5,
+                lineHeight: 1.9,
+              }}
+            >
+              {config.contactInfo?.email && <p>{config.contactInfo.email}</p>}
+              {config.contactInfo?.address && <p>{config.contactInfo.address}</p>}
+            </div>
           </div>
         </div>
 
         {/* Copyright Section */}
-        <div className="border-t border-gray-800/50 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-500 text-sm mb-6 md:mb-0">
-              &copy; {new Date().getFullYear()} {config.brandName} Enterprises.
-              All rights reserved.
-            </p>
+        <div className="flex flex-col md:flex-row justify-between items-center pt-8 gap-4">
+          <p style={{fontSize: '11px', opacity: 0.3}}>
+            &copy; {new Date().getFullYear()} {config.brandName}. Tous droits reserves.
+          </p>
 
-            <div className="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-2">
-              {policies.map((policy, index) => (
-                <Link
-                  key={index}
-                  to={getPolicyRoute(policy)}
-                  className="text-gray-500 hover:text-primary text-sm transition-all duration-300"
-                >
-                  {policy}
-                </Link>
-              ))}
-            </div>
+          <div className="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-2">
+            {policies.map((policy, index) => (
+              <Link
+                key={index}
+                to={policy.href}
+                className="transition-opacity duration-300 hover:opacity-50"
+                style={{fontSize: '11px', opacity: 0.3}}
+              >
+                {policy.name}
+              </Link>
+            ))}
           </div>
         </div>
       </div>

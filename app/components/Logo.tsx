@@ -14,30 +14,14 @@ export function Logo({isScrolled = false}: LogoProps) {
         <img
           src={config.brandLogo}
           alt={`${config.brandName} Logo`}
-          className={`transition-all duration-500 ease-in-out filter drop-shadow-glow ${
-            isScrolled ? 'h-10 w-auto logo-scrolled' : 'h-14 w-auto'
+          className={`transition-all duration-500 ease-in-out ${
+            isScrolled ? 'h-20 w-auto' : 'h-24 w-auto'
           }`}
+          style={{
+            filter: isScrolled ? 'none' : 'brightness(0) invert(1)',
+          }}
         />
-        <span
-          className={`ml-3 text-xl font-bold tracking-wider transition-all duration-500 ${
-            !isScrolled ? 'text-white' : 'text-primary'
-          }`}
-        >
-          {config.brandName}
-        </span>
       </Link>
     </div>
   );
 }
-
-// Add styles to your global CSS or component styles
-const styles = `
-.logo-scrolled {
-  transform-origin: center;
-  filter: drop-shadow(0 0 8px rgba(var(--color-primary-rgb), 0.4));
-}
-
-.drop-shadow-glow {
-  filter: drop-shadow(0 0 5px rgba(var(--color-primary-rgb), 0.2));
-}
-`;

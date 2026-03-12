@@ -39,7 +39,7 @@ export function PageLayout({
   const config = useConfig();
 
   return (
-    <div className="flex flex-col min-h-screen bg-background text-text">
+    <div className="flex flex-col min-h-screen" style={{backgroundColor: 'var(--color-cream)', color: 'var(--color-charcoal)'}}>
       <Header />
 
       <main className="flex-grow">{children}</main>
@@ -47,8 +47,8 @@ export function PageLayout({
       <Footer />
 
       {/* Aside Components */}
-      <Aside type="search" heading="SEARCH">
-        <div className="bg-background text-text p-4">
+      <Aside type="search" heading="RECHERCHE">
+        <div className="p-4" style={{backgroundColor: 'var(--color-cream)', color: 'var(--color-charcoal)'}}>
           <SearchFormPredictive>
             {({fetchResults, inputRef}) => (
               <div>
@@ -56,10 +56,16 @@ export function PageLayout({
                   name="q"
                   onChange={fetchResults}
                   onFocus={fetchResults}
-                  placeholder="Search products..."
+                  placeholder="Rechercher..."
                   ref={inputRef}
                   type="search"
-                  className="w-full p-3 bg-gray-800 border border-primary/20 rounded-sm text-text placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full p-3 rounded-md focus:outline-none focus:ring-2"
+                  style={{
+                    backgroundColor: 'var(--color-cream-warm)',
+                    border: '1px solid var(--color-cream-dark)',
+                    color: 'var(--color-charcoal)',
+                    fontSize: '14px',
+                  }}
                 />
               </div>
             )}
@@ -98,7 +104,7 @@ export function PageLayout({
       </Aside>
 
       {/* USING SPECIALIZED CART ASIDE THAT GUARANTEES RIGHT POSITIONING */}
-      <CartAside heading="CART">
+      <CartAside heading="PANIER">
         <Suspense
           fallback={
             <div className="p-4 flex items-center justify-center h-full">
@@ -124,13 +130,20 @@ export function PageLayout({
       </CartAside>
 
       <Aside type="mobile" heading="MENU">
-        <div className="bg-background text-text p-4">
+        <div className="p-4" style={{backgroundColor: 'var(--color-cream)', color: 'var(--color-charcoal)'}}>
           <nav className="space-y-4">
             {config.navigation.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
-                className="block text-text hover:text-primary font-semibold text-lg transition-colors duration-300"
+                className="block transition-colors duration-300 hover:text-[#3d6b4f]"
+                style={{
+                  fontSize: '14px',
+                  fontWeight: 400,
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase' as const,
+                  color: 'var(--color-charcoal)',
+                }}
               >
                 {item.name}
               </a>

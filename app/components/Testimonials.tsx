@@ -1,165 +1,218 @@
-import React, {useState, useEffect} from 'react';
-import {ChevronLeft, ChevronRight, Star} from 'lucide-react';
-import {useConfig} from '~/utils/themeContext';
+import React from 'react';
+import {Star} from 'lucide-react';
+
+const reviews = [
+  {
+    name: 'Sophie M.',
+    initials: 'SM',
+    text: 'La difference avec les autres matchas est flagrante des la premiere gorgee. Une douceur umami incroyable.',
+  },
+  {
+    name: 'Thomas L.',
+    initials: 'TL',
+    text: 'Enfin un matcha ceremonial digne de ce nom en France. La couleur, la texture, tout est parfait.',
+  },
+  {
+    name: 'Camille R.',
+    initials: 'CR',
+    text: 'Je commande depuis 6 mois et la qualite est toujours au rendez-vous. Mon rituel matinal prefere.',
+  },
+  {
+    name: 'Antoine D.',
+    initials: 'AD',
+    text: 'Offert a ma mere pour Noel, elle a adore. L\'emballage est tres soigne, ideal pour un cadeau.',
+  },
+  {
+    name: 'Julie P.',
+    initials: 'JP',
+    text: 'Le meilleur matcha que j\'ai goute en dehors du Japon. On sent vraiment la qualite Uji.',
+  },
+  {
+    name: 'Marc B.',
+    initials: 'MB',
+    text: 'Mousse parfaite au chasen, saveur douce sans amertume. Je ne peux plus m\'en passer.',
+  },
+  {
+    name: 'Emma V.',
+    initials: 'EV',
+    text: 'Livraison rapide, packaging elegant et matcha exceptionnel. Tout est impeccable chez HOSO.',
+  },
+  {
+    name: 'Lucas G.',
+    initials: 'LG',
+    text: 'J\'ai compare avec 5 marques premium, HOSO est clairement au-dessus. Vert intense, gout pur.',
+  },
+];
 
 export default function Testimonials() {
-  const config = useConfig();
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  // Skip rendering if testimonials section is disabled in config
-  if (
-    !config.showTestimonials ||
-    !config.testimonials ||
-    config.testimonials.length === 0
-  ) {
-    return null;
-  }
-
-  const handlePrev = (): void => {
-    if (isAnimating || !config.testimonials || config.testimonials.length === 0)
-      return;
-    setIsAnimating(true);
-    setCurrentIndex(
-      currentIndex === 0 ? config.testimonials.length - 1 : currentIndex - 1,
-    );
-    setTimeout(() => setIsAnimating(false), 500);
-  };
-
-  const handleNext = (): void => {
-    if (isAnimating || !config.testimonials || config.testimonials.length === 0)
-      return;
-    setIsAnimating(true);
-    setCurrentIndex(
-      currentIndex === config.testimonials.length - 1 ? 0 : currentIndex + 1,
-    );
-    setTimeout(() => setIsAnimating(false), 500);
-  };
-
-  const goToSlide = (index: number): void => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    setCurrentIndex(index);
-    setTimeout(() => setIsAnimating(false), 500);
-  };
-
-  useEffect(() => {
-    if (config.testimonials && config.testimonials.length > 1) {
-      const interval = setInterval(handleNext, 8000);
-      return () => clearInterval(interval);
-    }
-  }, [currentIndex, config.testimonials?.length]);
-
-  const currentTestimonial = config.testimonials[currentIndex];
-
   return (
-    <section id="testimonials" className="py-20 bg-gray-950">
-      <div className="container mx-auto px-4">
+    <section
+      id="testimonials"
+      style={{
+        padding: 'var(--section-spacing) 0',
+        backgroundColor: 'var(--color-cream-warm)',
+        overflow: 'hidden',
+      }}
+    >
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+        {/* Section Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            CHAMPION <span className="text-primary">TESTIMONIALS</span>
+          <span
+            className="inline-block mb-4"
+            style={{
+              fontSize: '10px',
+              fontWeight: 500,
+              letterSpacing: '0.25em',
+              textTransform: 'uppercase' as const,
+              color: 'var(--color-matcha-mid)',
+            }}
+          >
+            Temoignages
+          </span>
+          <h2
+            style={{
+              fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
+              fontWeight: 400,
+              lineHeight: 1.2,
+              color: 'var(--color-charcoal)',
+            }}
+          >
+            Ce que disent nos clients
           </h2>
-          <p className="text-gray-300 max-w-2xl mx-auto">
-            Hear what legends of the sport have to say about{' '}
-            {config.influencerName}'s career and legacy.
+          <p style={{fontFamily: "'Noto Serif JP', serif", fontSize: '0.85rem', color: 'var(--color-matcha-mid)', letterSpacing: '0.3em', marginTop: '8px'}}>
+            お客様の声
           </p>
         </div>
+      </div>
 
-        <div className="max-w-4xl mx-auto relative">
-          {/* Navigation Buttons - only show if multiple testimonials */}
-          {config.testimonials.length > 1 && (
-            <>
-              <button
-                onClick={handlePrev}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-10 bg-black/30 hover:bg-primary text-white hover:text-black w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300"
-                aria-label="Previous testimonial"
-              >
-                <ChevronLeft className="h-6 w-6" />
-              </button>
+      {/* Scrolling reviews */}
+      <div style={{position: 'relative'}}>
+        {/* Fade edges */}
+        <div
+          style={{
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            bottom: 0,
+            width: '80px',
+            background:
+              'linear-gradient(to right, var(--color-cream-warm), transparent)',
+            zIndex: 2,
+            pointerEvents: 'none',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            right: 0,
+            top: 0,
+            bottom: 0,
+            width: '80px',
+            background:
+              'linear-gradient(to left, var(--color-cream-warm), transparent)',
+            zIndex: 2,
+            pointerEvents: 'none',
+          }}
+        />
 
-              <button
-                onClick={handleNext}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-10 bg-black/30 hover:bg-primary text-white hover:text-black w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300"
-                aria-label="Next testimonial"
-              >
-                <ChevronRight className="h-6 w-6" />
-              </button>
-            </>
-          )}
-
-          {/* Testimonial Slider */}
-          <div className="overflow-hidden rounded-lg bg-gray-900 p-6 md:p-10 shadow-xl border border-gray-800 hover:border-primary/30 transition-all duration-300">
-            <div
-              className={`transition-transform duration-500 ease-in-out ${
-                isAnimating ? 'opacity-0' : 'opacity-100'
-              }`}
-            >
-              <div className="flex flex-col md:flex-row items-center">
-                {/* Profile Image - conditional rendering if image exists */}
-                {currentTestimonial.image && (
-                  <div className="md:w-1/3 mb-6 md:mb-0">
-                    <div className="relative w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-primary">
-                      <img
-                        src={currentTestimonial.image}
-                        alt={currentTestimonial.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  </div>
-                )}
-
+        <div
+          className="testimonials-scroll"
+          style={{
+            display: 'flex',
+            gap: '20px',
+            animation: 'testimonialsScroll 35s linear infinite',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {[...Array(3)].map((_, setIdx) => (
+            <React.Fragment key={setIdx}>
+              {reviews.map((review, i) => (
                 <div
-                  className={`${currentTestimonial.image ? 'md:w-2/3 md:pl-8' : 'w-full text-center'}`}
+                  key={`${setIdx}-${i}`}
+                  style={{
+                    flexShrink: 0,
+                    width: '300px',
+                    padding: '24px',
+                    background: 'white',
+                    border: '1px solid var(--color-cream-dark)',
+                    borderRadius: '12px',
+                    whiteSpace: 'normal',
+                  }}
                 >
-                  {/* Rating stars - conditional rendering if rating exists */}
-                  {currentTestimonial.rating && (
-                    <div className="flex mb-3 justify-center md:justify-start">
-                      {[...Array(currentTestimonial.rating)].map((_, n) => (
-                        <Star
-                          key={n}
-                          className="h-5 w-5 text-primary fill-primary"
-                        />
-                      ))}
-                    </div>
-                  )}
+                  {/* Stars */}
+                  <div className="flex gap-0.5 mb-3">
+                    {[...Array(5)].map((_, s) => (
+                      <Star
+                        key={s}
+                        className="h-3 w-3"
+                        style={{
+                          color: 'var(--color-matcha-mid)',
+                          fill: 'var(--color-matcha-mid)',
+                        }}
+                      />
+                    ))}
+                  </div>
 
-                  <blockquote className="text-white text-lg italic mb-4">
-                    "{currentTestimonial.content}"
-                  </blockquote>
+                  {/* Review text */}
+                  <p
+                    style={{
+                      fontSize: '13px',
+                      fontWeight: 300,
+                      lineHeight: 1.7,
+                      color: 'var(--color-charcoal-light)',
+                      fontStyle: 'italic',
+                      marginBottom: '16px',
+                    }}
+                  >
+                    "{review.text}"
+                  </p>
 
-                  <div>
-                    <div className="font-bold text-primary">
-                      {currentTestimonial.name}
+                  {/* Author */}
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="flex items-center justify-center rounded-full"
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        backgroundColor: 'var(--color-cream)',
+                        color: 'var(--color-matcha-deep)',
+                        fontSize: '11px',
+                        fontWeight: 500,
+                        flexShrink: 0,
+                      }}
+                    >
+                      {review.initials}
                     </div>
-                    {currentTestimonial.role && (
-                      <div className="text-gray-400 text-sm">
-                        {currentTestimonial.role}
-                      </div>
-                    )}
+                    <span
+                      style={{
+                        fontSize: '12px',
+                        fontWeight: 500,
+                        color: 'var(--color-charcoal)',
+                        letterSpacing: '0.03em',
+                      }}
+                    >
+                      {review.name}
+                    </span>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Indicator Dots - only show if multiple testimonials */}
-          {config.testimonials.length > 1 && (
-            <div className="flex justify-center mt-6 space-x-2">
-              {config.testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  className={`h-3 rounded-full transition-all duration-300 ${
-                    currentIndex === index
-                      ? 'bg-primary w-6'
-                      : 'bg-gray-600 w-3'
-                  }`}
-                  aria-label={`Go to testimonial ${index + 1}`}
-                />
               ))}
-            </div>
-          )}
+            </React.Fragment>
+          ))}
         </div>
+
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+            @keyframes testimonialsScroll {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(-33.333%); }
+            }
+            .testimonials-scroll:hover {
+              animation-play-state: paused;
+            }
+          `,
+          }}
+        />
       </div>
     </section>
   );

@@ -18,11 +18,12 @@ import {useConfig} from '~/utils/themeContext';
 import {AuthPrompt} from '~/components/AuthPrompt';
 
 /*
- * AI Photo Generator using KlingAI's V1 model
- * Cost optimization:
- * - Using V1 model ($0.0035 per generation)
- * - Removed Virtual Try-On feature for now
- * - Each image generation costs $0.0035 whether using a reference image or not
+ * AI Photo Generator using KlingAI's V2 model
+ * Enhanced capabilities:
+ * - Using V2 model for superior image quality and face preservation
+ * - Enhanced face reference capabilities with image_reference='face'
+ * - Better prompt understanding and scene generation
+ * - V2's built-in quality optimization (no manual fidelity parameter needed)
  */
 
 interface AITask {
@@ -153,6 +154,12 @@ export default function AIPhotoGenerator() {
         name: 'Autograph',
         description: 'Get a virtual autograph',
         imagePath: '/images/preset/autograph.png',
+      },
+      {
+        id: 'shane-special',
+        name: 'Shane Special',
+        description: 'Special pose with Sugar Shane Mosley',
+        imagePath: '/images/preset/shane1.jpg',
       },
     ];
 
@@ -598,10 +605,20 @@ export default function AIPhotoGenerator() {
           throw new Error('Invalid preset selected');
         }
 
-        // Load the preset image and convert to base64
-        const presetImageBase64 = await loadImageAsBase64(
-          presetImage.imagePath,
-        );
+        // Determine which Shane Mosley image to use based on preset
+        // Use shane1.jpg for specific presets, otherwise use the default influencer image
+        let shaneImagePath = config.aiMediaGeneration.influencerReferenceImage;
+        
+        // Use shane1.jpg for these specific presets that should feature Shane prominently
+        if (['shane-special', 'celebrity-style', 'meet-greet', 'boxing-ring'].includes(selectedPreset)) {
+          shaneImagePath = '/images/preset/shane1.jpg'; // Use the specific Shane image
+          console.log(`🥊 Using shane1.jpg for preset: ${selectedPreset}`);
+        } else {
+          console.log(`🥊 Using default influencer image for preset: ${selectedPreset}`);
+        }
+        
+        // Load the Shane Mosley reference image
+        const influencerImageBase64 = await loadImageAsBase64(shaneImagePath);
 
         // Map the selected preset to a pose
         let poseName = 'default';
@@ -621,60 +638,69 @@ export default function AIPhotoGenerator() {
           poseName = 'formal'; // New pose name
         } else if (selectedPreset === 'autograph') {
           poseName = 'signing'; // New pose name
+        } else if (selectedPreset === 'shane-special') {
+          poseName = 'special'; // New pose name for shane1
         }
 
         // Create a specific prompt based on the selected pose
+        // For V2 with image_reference='face', describe Shane's appearance clearly
+        // V2 offers superior face preservation and scene understanding
         let prompt = '';
         if (selectedPreset === 'celebrity-style') {
-          prompt = `A professional studio photograph of a fan training with ${config.influencerName} in a gym setting, boxing poses, wearing boxing gloves, professional lighting, high detail, realistic photograph, high quality, 4K, sharp focus`;
+          prompt = `A professional studio photograph showing two people training together in a gym setting, one person (keeping their original face) and Sugar Shane Mosley (African American former professional boxer, athletic build, goatee, wearing boxing gloves), both in boxing poses side by side, gym equipment in background, professional lighting, photorealistic, high detail, 4K, sharp focus`;
         } else if (selectedPreset === 'meet-greet') {
-          prompt = `A professional photograph of a fan meeting ${config.influencerName} at a red carpet event, standing side by side, handshake or friendly embrace, smiling, professional lighting, high detail, realistic photograph, high quality, 4K, sharp focus`;
+          prompt = `A professional photograph of two people at a meet and greet event, one person (keeping their original face) meeting Sugar Shane Mosley (African American former professional boxer, athletic build, goatee, friendly smile), both standing together and smiling, handshake or friendly pose, professional event lighting, photorealistic, high detail, 4K, sharp focus`;
         } else if (selectedPreset === 'fan-love') {
-          prompt = `A professional photograph of a fan with ${config.influencerName} making a heart gesture with hands together, smiling, friendly, professional lighting, high detail, realistic photograph, high quality, 4K, sharp focus`;
+          prompt = `A professional photograph of two people, one person (keeping their original face) and Sugar Shane Mosley (African American former professional boxer, athletic build, goatee, charismatic smile), both making a heart gesture together with their hands, smiling and looking at camera, friendly atmosphere, professional lighting, photorealistic, high detail, 4K, sharp focus`;
         } else if (selectedPreset === 'boxing-ring') {
-          prompt = `A professional photograph of a fan in a boxing ring with ${config.influencerName}, both wearing boxing gloves in fighting stance, boxing ring background, ropes visible, professional sports lighting, high detail, realistic photograph, high quality, 4K, sharp focus`;
+          prompt = `A professional photograph of two people in a boxing ring, one person (keeping their original face) and Sugar Shane Mosley (African American former professional boxer, athletic build, goatee, wearing boxing gloves), standing together in the ring, boxing ropes visible, professional sports lighting, photorealistic, high detail, 4K, sharp focus`;
         } else if (selectedPreset === 'championship') {
-          prompt = `A professional photograph of a fan celebrating with ${config.influencerName}, both holding a championship belt together, confetti falling, victory pose, excited expressions, arena background, professional lighting, high detail, realistic photograph, high quality, 4K, sharp focus`;
+          prompt = `A professional photograph of two people celebrating together, one person (keeping their original face) and Sugar Shane Mosley (African American former professional boxer, athletic build, goatee, victory expression), both holding a championship belt, confetti falling around them, victory celebration, arena background, professional lighting, photorealistic, high detail, 4K, sharp focus`;
         } else if (selectedPreset === 'training-session') {
-          prompt = `A professional photograph of ${config.influencerName} coaching a fan during a boxing training session, showing technique, focus mitts, gym equipment visible, intense training atmosphere, professional lighting, high detail, realistic photograph, high quality, 4K, sharp focus`;
+          prompt = `A professional photograph of Sugar Shane Mosley (African American former professional boxer, athletic build, goatee, coaching expression) coaching one person (keeping their original face) during a boxing training session, both visible in frame, showing boxing technique with focus mitts, gym equipment visible, training atmosphere, professional lighting, photorealistic, high detail, 4K, sharp focus`;
         } else if (selectedPreset === 'red-carpet') {
-          prompt = `A professional photograph of a fan with ${config.influencerName} at a formal gala event, both in elegant attire, red carpet, step-and-repeat background with logos, camera flashes, professional event lighting, high detail, realistic photograph, high quality, 4K, sharp focus`;
+          prompt = `A professional photograph of one person (keeping their original face) with Sugar Shane Mosley (African American former professional boxer, athletic build, goatee, elegant smile) at a formal gala event, both dressed in elegant attire, standing together on red carpet, step-and-repeat background, camera flashes, professional event lighting, photorealistic, high detail, 4K, sharp focus`;
         } else if (selectedPreset === 'autograph') {
-          prompt = `A professional photograph of ${config.influencerName} signing an autograph for a fan, boxing memorabilia, close-up shot of the signing, fan looking excited, authentic setting, professional lighting, high detail, realistic photograph, high quality, 4K, sharp focus`;
+          prompt = `A professional photograph showing Sugar Shane Mosley (African American former professional boxer, athletic build, goatee, focused expression) signing an autograph for one person (keeping their original face, looking excited), both visible in the shot, Shane signing boxing memorabilia, authentic setting, professional lighting, photorealistic, high detail, 4K, sharp focus`;
+        } else if (selectedPreset === 'shane-special') {
+          prompt = `A professional photograph of two people, one person (keeping their original face) and Sugar Shane Mosley (African American former professional boxer, athletic build, goatee, warm smile), standing together in a special pose, both smiling at camera, professional portrait style, excellent lighting, photorealistic, high detail, 4K, sharp focus`;
         } else {
-          prompt = `A professional photograph of a fan with ${config.influencerName}, standing together, smiling, friendly, professional lighting, high detail, realistic photograph, high quality, 4K, sharp focus`;
+          prompt = `A professional photograph of two people, one person (keeping their original face) and Sugar Shane Mosley (African American former professional boxer, athletic build, goatee, friendly expression), standing together and smiling, friendly pose, professional lighting, photorealistic, high detail, 4K, sharp focus`;
         }
 
-        // Prepare data for API request
+        // Prepare data for API request - Use fan-together with V2 for superior quality
         const data = {
           // Core parameters required by the API
-          model_name: 'kling-v1', // Use V1 model to reduce costs
-          prompt: prompt, // Detailed prompt for the specific pose
+          model_name: 'kling-v2', // Use V2 model for superior face reference and image quality
+          prompt: prompt, // Detailed prompt with Shane's physical description
 
-          // Image-to-Image parameters (for fan-together)
-          image: presetImageBase64, // KlingAI expects base64 without data URL prefix for reference image
-          userImageUrl: `data:image/jpeg;base64,${userImageBase64}`, // For our custom API parameter
+          // Fan-together parameters with V2 enhanced capabilities
+          image: userImageBase64, // User's photo as the primary image (face will be preserved)
+          image_reference: 'face', // V2 parameter for superior face preservation
 
-          // Optional parameters with appropriate values for V1 model
+          // Optional parameters with appropriate values for V2 model
           aspect_ratio: '3:2', // Better for photos with two people standing side by side
           n: 1, // Generate a single image
-          image_fidelity: 0.65, // Higher fidelity for better subject recognition (range 0-1)
 
-          // Custom parameters for our API layer
-          generationType: 'fan-together', // Our API's custom parameter
-          referenceImageUrl: `data:image/jpeg;base64,${presetImageBase64}`, // For our custom API parameter
-          imageReference: 'subject', // For our custom API parameter
+          // Custom parameters for our API layer - Use fan-together with V2
+          generationType: 'fan-together', // Use fan-together with V2's superior capabilities
+          referenceImageUrl: `data:image/jpeg;base64,${influencerImageBase64}`, // Shane's image for reference
+          userImageUrl: `data:image/jpeg;base64,${userImageBase64}`, // User's image as primary
+          influencerImage: `data:image/jpeg;base64,${influencerImageBase64}`, // Shane's image for context
         };
 
         // Log the request parameters (with sensitive data truncated)
-        console.log('🚀 AI Generation Request:', {
+        console.log('🚀 AI Generation Request (Fan-Together V2):', {
           model: data.model_name,
           generationType: data.generationType,
           promptLength: data.prompt.length,
           aspectRatio: data.aspect_ratio,
           hasUserImage: !!data.userImageUrl,
+          hasInfluencerImage: !!data.influencerImage,
           hasReferenceImage: !!data.referenceImageUrl,
-          imageFidelity: data.image_fidelity,
+          imageReference: data.image_reference,
+          selectedPreset: selectedPreset,
+          shaneImagePath: shaneImagePath,
         });
 
         // Create task
@@ -1300,6 +1326,11 @@ export default function AIPhotoGenerator() {
                         {selectedPreset === 'autograph' && (
                           <p className="text-primary text-xs mt-2">
                             Autograph with Sugar Shane Mosley
+                          </p>
+                        )}
+                        {selectedPreset === 'shane-special' && (
+                          <p className="text-primary text-xs mt-2">
+                            Shane Special with Sugar Shane Mosley
                           </p>
                         )}
                       </div>

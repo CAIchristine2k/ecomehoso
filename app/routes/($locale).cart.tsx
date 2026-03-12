@@ -16,7 +16,7 @@ import {downloadAndReuploadToCloudinary} from '~/utils/cloudinaryUpload';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
 
 export const meta: MetaFunction = () => {
-  return [{title: 'Your Cart | Official Store'}];
+  return [{title: 'Votre Panier | HOSO MATCHA'}];
 };
 
 export const headers: HeadersFunction = ({actionHeaders}) => actionHeaders;
@@ -324,36 +324,64 @@ export default function Cart() {
   }, [cart?.id, hasCustomDesigns, cart]);
 
   return (
-    <div className="min-h-screen bg-background">
-      <div 
-        className="cart-page-container container mx-auto px-4"
+    <div style={{minHeight: '100vh', backgroundColor: 'var(--color-cream)'}}>
+      <div
+        className="cart-page-container max-w-[1000px] mx-auto px-6 md:px-10"
         style={{
-          paddingTop: 'calc(var(--header-height-desktop) + 2rem)',
-          paddingBottom: '2rem',
+          paddingTop: 'calc(var(--header-height-desktop) + 3rem)',
+          paddingBottom: '4rem',
         }}
       >
-        <h1 className="text-3xl font-bold text-primary mb-8 text-center">
-          {!cart?.totalQuantity ? 'Your Cart is Empty' : 'Your Cart'}
-        </h1>
+        <div className="text-center mb-12">
+          <span
+            style={{
+              fontSize: '10px',
+              fontWeight: 500,
+              letterSpacing: '0.25em',
+              textTransform: 'uppercase' as const,
+              color: 'var(--color-matcha-mid)',
+              display: 'block',
+              marginBottom: '12px',
+            }}
+          >
+            {!cart?.totalQuantity ? 'Panier vide' : 'Votre selection'}
+          </span>
+          <h1
+            style={{
+              fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
+              fontWeight: 400,
+              color: 'var(--color-charcoal)',
+            }}
+          >
+            {!cart?.totalQuantity ? 'Votre panier est vide' : 'Votre panier'}
+          </h1>
+        </div>
 
-        <center>
-
-        {/* Main cart component - handles empty state and populated cart */}
-        <CartMain 
+        <CartMain
           cart={cart}
           layout="page"
         />
-
-</center>
 
         {/* Continue shopping button when cart is empty */}
         {!cart?.totalQuantity && (
           <div className="flex justify-center mt-10">
             <Link
-              to="/collections"
-              className="inline-block bg-primary hover:bg-primary-600 text-background px-6 py-3 rounded-sm transition-colors duration-200 font-bold"
+              to="/collections/all"
+              style={{
+                display: 'inline-block',
+                padding: '14px 32px',
+                backgroundColor: 'var(--color-matcha-mid)',
+                color: 'white',
+                borderRadius: '6px',
+                fontSize: '12px',
+                fontWeight: 500,
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase' as const,
+                textDecoration: 'none',
+                transition: 'all 0.3s ease',
+              }}
             >
-              Continue Shopping
+              Continuer mes achats
             </Link>
           </div>
         )}

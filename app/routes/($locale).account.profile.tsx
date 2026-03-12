@@ -101,26 +101,26 @@ export default function AccountProfile() {
   const config = useConfig();
 
   return (
-    <div className="bg-gray-900/80 backdrop-blur-sm border border-gray-800 rounded-sm p-8">
+    <div className="rounded-sm p-8" style={{backgroundColor: 'white', border: '1px solid var(--color-cream-dark)'}}>
       {/* Header */}
       <div className="flex items-center mb-8">
-        <User className="w-6 h-6 text-gold-500 mr-3" />
-        <h2 className="text-2xl font-bold text-white">Personal Information</h2>
+        <User className="w-6 h-6 mr-3" style={{color: 'var(--color-matcha-mid)'}} />
+        <h2 className="text-2xl font-bold" style={{color: 'var(--color-charcoal)'}}>Personal Information</h2>
       </div>
 
       {/* Success Message */}
       {action?.customer && !action?.error && (
-        <div className="mb-6 p-4 bg-green-900/20 border border-green-500/30 rounded-sm flex items-center">
-          <CheckCircle className="w-5 h-5 text-green-400 mr-3" />
-          <span className="text-green-300">Profile updated successfully!</span>
+        <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-sm flex items-center">
+          <CheckCircle className="w-5 h-5 text-green-600 mr-3" />
+          <span className="text-green-700">Profile updated successfully!</span>
         </div>
       )}
 
       {/* Error Message */}
       {action?.error && (
-        <div className="mb-6 p-4 bg-red-900/20 border border-red-500/30 rounded-sm flex items-center">
-          <AlertCircle className="w-5 h-5 text-red-400 mr-3" />
-          <span className="text-red-300">{action.error}</span>
+        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-sm flex items-center">
+          <AlertCircle className="w-5 h-5 text-red-600 mr-3" />
+          <span className="text-red-700">{action.error}</span>
         </div>
       )}
 
@@ -131,7 +131,8 @@ export default function AccountProfile() {
           <div>
             <label
               htmlFor="firstName"
-              className="block text-sm font-bold text-gold-500 mb-2"
+              className="block text-sm font-bold mb-2"
+              style={{color: 'var(--color-matcha-mid)'}}
             >
               First Name
             </label>
@@ -145,7 +146,8 @@ export default function AccountProfile() {
               defaultValue={customer.firstName ?? ''}
               minLength={2}
               required
-              className="w-full bg-gray-800 border border-gray-700 rounded-sm py-3 px-4 text-white placeholder-gray-400 focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors duration-300"
+              className="w-full rounded-sm py-3 px-4 focus:outline-none focus:ring-1 transition-colors duration-300"
+              style={{backgroundColor: 'var(--color-cream)', border: '1px solid var(--color-cream-dark)', color: 'var(--color-charcoal)'}}
             />
           </div>
 
@@ -153,7 +155,8 @@ export default function AccountProfile() {
           <div>
             <label
               htmlFor="lastName"
-              className="block text-sm font-bold text-gold-500 mb-2"
+              className="block text-sm font-bold mb-2"
+              style={{color: 'var(--color-matcha-mid)'}}
             >
               Last Name
             </label>
@@ -167,7 +170,8 @@ export default function AccountProfile() {
               defaultValue={customer.lastName ?? ''}
               minLength={2}
               required
-              className="w-full bg-gray-800 border border-gray-700 rounded-sm py-3 px-4 text-white placeholder-gray-400 focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors duration-300"
+              className="w-full rounded-sm py-3 px-4 focus:outline-none focus:ring-1 transition-colors duration-300"
+              style={{backgroundColor: 'var(--color-cream)', border: '1px solid var(--color-cream-dark)', color: 'var(--color-charcoal)'}}
             />
           </div>
         </div>
@@ -177,7 +181,8 @@ export default function AccountProfile() {
           <button
             type="submit"
             disabled={state !== 'idle'}
-            className="inline-flex items-center bg-gold-500 hover:bg-gold-400 disabled:bg-gray-600 disabled:cursor-not-allowed text-black font-bold py-3 px-8 rounded-sm transition-all duration-300 uppercase tracking-wider"
+            className="inline-flex items-center disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3 px-8 rounded-sm transition-all duration-300 uppercase tracking-wider"
+            style={{backgroundColor: 'var(--color-matcha-mid)'}}
           >
             <Save className="w-4 h-4 mr-2" />
             {state !== 'idle' ? 'Updating...' : 'Update Profile'}
@@ -186,8 +191,8 @@ export default function AccountProfile() {
       </Form>
 
       {/* Championship Note */}
-      <div className="mt-8 p-4 bg-gradient-to-r from-gold-900/20 via-gold-500/10 to-gold-900/20 border border-gold-500/30 rounded-sm">
-        <p className="text-gray-300 text-sm leading-relaxed">
+      <div className="mt-8 p-4 rounded-sm" style={{backgroundColor: 'var(--color-cream)', border: '1px solid var(--color-cream-dark)'}}>
+        <p className="text-sm leading-relaxed" style={{color: 'var(--color-stone)'}}>
           Keep your profile updated to ensure you receive the latest news about{' '}
           {config.brandName}'s championship collection and exclusive offers.
         </p>

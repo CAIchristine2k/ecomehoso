@@ -207,10 +207,10 @@ function CheckoutLineItem({ line }: { line: CartLineFragment }) {
   });
 
   return (
-    <div className="flex items-start space-x-4 p-4 bg-white/5 rounded-lg">
+    <div className="flex items-start space-x-4 p-4 rounded-lg" style={{backgroundColor: 'var(--color-cream)'}}>
       {/* Product Image */}
       <div className="flex-shrink-0">
-        <div className="w-20 h-20 rounded-lg overflow-hidden bg-white/10 border border-white/20 relative">
+        <div className="w-20 h-20 rounded-lg overflow-hidden relative" style={{backgroundColor: 'var(--color-cream-warm)', border: '1px solid var(--color-cream-dark)'}}>
           {displayImageUrl ? (
             displayImageType === 'CUSTOM_DESIGN' || displayImageType === 'CUSTOMIZED_BASE' ? (
               // Custom design image - URL or base64
@@ -324,12 +324,12 @@ function CheckoutLineItem({ line }: { line: CartLineFragment }) {
               />
             ) : (
               // Fallback
-              <div className="w-full h-full flex items-center justify-center text-white/40 text-xs">
-                {isCustomDesign ? '🎨' : 'No Image'}
+              <div className="w-full h-full flex items-center justify-center text-xs" style={{color: 'var(--color-stone)'}}>
+                {isCustomDesign ? 'Custom' : 'No Image'}
               </div>
             )
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-white/40 text-xs">
+            <div className="w-full h-full flex items-center justify-center text-xs" style={{color: 'var(--color-stone)'}}>
               No Image
             </div>
           )}
@@ -342,11 +342,11 @@ function CheckoutLineItem({ line }: { line: CartLineFragment }) {
 
       {/* Product Details */}
       <div className="flex-grow">
-        <h3 className="font-semibold text-white text-lg">
+        <h3 className="font-semibold text-lg" style={{color: 'var(--color-charcoal)'}}>
           {merchandise.product.title}
         </h3>
         {merchandise.title && merchandise.title !== 'Default Title' && (
-          <p className="text-white/70 text-sm">{merchandise.title}</p>
+          <p className="text-sm" style={{color: 'var(--color-stone)'}}>{merchandise.title}</p>
         )}
 
         {/* Custom design attributes - user-friendly display */}
@@ -355,7 +355,7 @@ function CheckoutLineItem({ line }: { line: CartLineFragment }) {
             {attributes
               .filter((attr) => !attr.key.startsWith('_')) // Only show non-hidden attributes
               .map((attr) => (
-                <div key={attr.key} className="text-white/60 text-xs">
+                <div key={attr.key} className="text-xs" style={{color: 'var(--color-stone)'}}>
                   <span className="font-medium">{attr.key}:</span> {attr.value}
                 </div>
               ))}
@@ -363,8 +363,8 @@ function CheckoutLineItem({ line }: { line: CartLineFragment }) {
         )}
 
         <div className="flex items-center justify-between mt-3">
-          <div className="text-white/70 text-sm">Quantity: {quantity}</div>
-          <div className="text-white font-bold">
+          <div className="text-sm" style={{color: 'var(--color-stone)'}}>Quantity: {quantity}</div>
+          <div className="font-bold" style={{color: 'var(--color-charcoal)'}}>
             <Money data={merchandise.price} />
           </div>
         </div>
@@ -554,21 +554,22 @@ export default function Checkout() {
   };
 
   return (
-    <div className="min-h-screen bg-secondary/80 backdrop-blur-sm mt-20">
+    <div className="min-h-screen mt-20" style={{backgroundColor: 'var(--color-cream)'}}>
       {/* Header */}
-      <div className="bg-secondary/70 backdrop-blur-md border-b border-primary/20 sticky top-0 z-50 shadow-lg">
+      <div className="bg-white sticky top-0 z-50 shadow-sm" style={{borderBottom: '1px solid var(--color-cream-dark)'}}>
         <div className="container mx-auto px-4 py-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <Link
                 to="/cart"
-                className="text-primary hover:text-primary-600 flex items-center space-x-2"
+                className="flex items-center space-x-2"
+                style={{color: 'var(--color-matcha-mid)'}}
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Back to Cart</span>
               </Link>
             </div>
-            <h1 className="text-xl font-bold text-white">
+            <h1 className="text-xl font-bold" style={{color: 'var(--color-charcoal)'}}>
               {config.brandName} Checkout
             </h1>
             <div className="w-20" /> {/* Spacer for centering */}
@@ -580,8 +581,8 @@ export default function Checkout() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {/* Order Review - Left Side */}
           <div className="order-2 lg:order-1">
-            <div className="bg-secondary/40 backdrop-blur-md border border-primary/20 rounded-lg p-6">
-              <h2 className="text-2xl font-bold text-white mb-6">
+            <div className="bg-white rounded-lg p-6" style={{border: '1px solid var(--color-cream-dark)'}}>
+              <h2 className="text-2xl font-bold mb-6" style={{color: 'var(--color-charcoal)'}}>
                 Order Review
               </h2>
 
@@ -594,13 +595,13 @@ export default function Checkout() {
 
               {/* Customized Designs */}
               {customizedDesigns.length > 0 && (
-                <div className="border-t border-white/10 pt-6 mb-6">
-                  <h3 className="font-semibold text-white mb-4">
+                <div className="pt-6 mb-6" style={{borderTop: '1px solid var(--color-cream-dark)'}}>
+                  <h3 className="font-semibold mb-4" style={{color: 'var(--color-charcoal)'}}>
                     All Customized Designs
                   </h3>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     {customizedDesigns.map((designUrl, index) => (
-                      <div key={index} className="relative overflow-hidden rounded-lg aspect-square bg-black/30">
+                      <div key={index} className="relative overflow-hidden rounded-lg aspect-square" style={{backgroundColor: 'var(--color-cream-warm)'}}>
                         <img
                           src={designUrl}
                           alt={`Custom Design ${index + 1}`}
@@ -617,40 +618,40 @@ export default function Checkout() {
               )}
 
               {/* Security Features */}
-              <div className="border-t border-white/10 pt-6">
-                <h3 className="font-semibold text-white mb-4 flex items-center">
-                  <Shield className="w-5 h-5 mr-2 text-green-400" />
+              <div className="pt-6" style={{borderTop: '1px solid var(--color-cream-dark)'}}>
+                <h3 className="font-semibold mb-4 flex items-center" style={{color: 'var(--color-charcoal)'}}>
+                  <Shield className="w-5 h-5 mr-2" style={{color: 'var(--color-matcha-mid)'}} />
                   Customized Designs
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {customizedDesigns.map((design, index) => (
-                    <div key={index} className="flex items-center space-x-2 text-white/70 text-sm">
+                    <div key={index} className="flex items-center space-x-2 text-sm" style={{color: 'var(--color-stone)'}}>
                       <span>{design.substring(0, 50)}...</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="border-t border-white/10 pt-6">
-                <h3 className="font-semibold text-white mb-4 flex items-center">
-                  <Shield className="w-5 h-5 mr-2 text-green-400" />
+              <div className="pt-6" style={{borderTop: '1px solid var(--color-cream-dark)'}}>
+                <h3 className="font-semibold mb-4 flex items-center" style={{color: 'var(--color-charcoal)'}}>
+                  <Shield className="w-5 h-5 mr-2" style={{color: 'var(--color-matcha-mid)'}} />
                   Secure Checkout Features
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="flex items-center space-x-2 text-white/70 text-sm">
-                    <CreditCard className="w-4 h-4 text-blue-400" />
+                  <div className="flex items-center space-x-2 text-sm" style={{color: 'var(--color-stone)'}}>
+                    <CreditCard className="w-4 h-4" style={{color: 'var(--color-matcha-mid)'}} />
                     <span>Secure payment processing</span>
                   </div>
-                  <div className="flex items-center space-x-2 text-white/70 text-sm">
-                    <Truck className="w-4 h-4 text-green-400" />
+                  <div className="flex items-center space-x-2 text-sm" style={{color: 'var(--color-stone)'}}>
+                    <Truck className="w-4 h-4" style={{color: 'var(--color-matcha-mid)'}} />
                     <span>Fast, reliable shipping</span>
                   </div>
-                  <div className="flex items-center space-x-2 text-white/70 text-sm">
-                    <Shield className="w-4 h-4 text-purple-400" />
+                  <div className="flex items-center space-x-2 text-sm" style={{color: 'var(--color-stone)'}}>
+                    <Shield className="w-4 h-4" style={{color: 'var(--color-matcha-mid)'}} />
                     <span>SSL encrypted transaction</span>
                   </div>
-                  <div className="flex items-center space-x-2 text-white/70 text-sm">
-                    <ExternalLink className="w-4 h-4 text-orange-400" />
+                  <div className="flex items-center space-x-2 text-sm" style={{color: 'var(--color-stone)'}}>
+                    <ExternalLink className="w-4 h-4" style={{color: 'var(--color-matcha-mid)'}} />
                     <span>Shopify secure checkout</span>
                   </div>
                 </div>
@@ -660,19 +661,19 @@ export default function Checkout() {
 
           {/* Order Summary & Payment - Right Side */}
           <div className="order-1 lg:order-2">
-            <div className="bg-secondary/40 backdrop-blur-md border border-primary/20 rounded-lg p-6 sticky top-28">
-              <h2 className="text-2xl font-bold text-white mb-6">
+            <div className="bg-white rounded-lg p-6 sticky top-28" style={{border: '1px solid var(--color-cream-dark)'}}>
+              <h2 className="text-2xl font-bold mb-6" style={{color: 'var(--color-charcoal)'}}>
                 Order Summary
               </h2>
 
               {/* Pricing Breakdown */}
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between items-center">
-                  <span className="text-white/70">
+                  <span style={{color: 'var(--color-stone)'}}>
                     Subtotal ({cart?.totalQuantity || 0} item
                     {(cart?.totalQuantity || 0) !== 1 ? 's' : ''})
                   </span>
-                  <span className="text-white font-medium">
+                  <span className="font-medium" style={{color: 'var(--color-charcoal)'}}>
                     {cart.cost?.subtotalAmount ? (
                       <Money data={cart.cost.subtotalAmount} />
                     ) : (
@@ -683,24 +684,24 @@ export default function Checkout() {
 
                 {cart.cost?.totalTaxAmount?.amount && (
                   <div className="flex justify-between items-center">
-                    <span className="text-white/70">Tax (estimated)</span>
-                    <span className="text-white font-medium">
+                    <span style={{color: 'var(--color-stone)'}}>Tax (estimated)</span>
+                    <span className="font-medium" style={{color: 'var(--color-charcoal)'}}>
                       <Money data={cart.cost.totalTaxAmount} />
                     </span>
                   </div>
                 )}
 
                 <div className="flex justify-between items-center">
-                  <span className="text-white/70">Shipping</span>
-                  <span className="text-white/70 text-sm">
+                  <span style={{color: 'var(--color-stone)'}}>Shipping</span>
+                  <span className="text-sm" style={{color: 'var(--color-stone)'}}>
                     Calculated at checkout
                   </span>
                 </div>
 
-                <div className="border-t border-white/10 pt-4">
+                <div className="pt-4" style={{borderTop: '1px solid var(--color-cream-dark)'}}>
                   <div className="flex justify-between items-center text-lg">
-                    <span className="text-white font-bold">Total</span>
-                    <span className="text-primary font-bold text-xl">
+                    <span className="font-bold" style={{color: 'var(--color-charcoal)'}}>Total</span>
+                    <span className="font-bold text-xl" style={{color: 'var(--color-matcha-mid)'}}>
                       {cart.cost?.totalAmount ? (
                         <Money data={cart.cost.totalAmount} />
                       ) : (
@@ -748,7 +749,8 @@ export default function Checkout() {
               <button
                 onClick={handleProceedToPayment}
                 disabled={isProcessing}
-                className="w-full bg-primary hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed text-background font-bold py-4 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-primary/25 flex items-center justify-center space-x-2"
+                className="w-full disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-4 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-sm flex items-center justify-center space-x-2"
+                style={{backgroundColor: 'var(--color-matcha-mid)'}}
               >
                 {isProcessing ? (
                   <>
@@ -764,23 +766,25 @@ export default function Checkout() {
               </button>
 
               <div className="mt-4 text-center">
-                <p className="text-white/50 text-xs">
+                <p className="text-xs" style={{color: 'var(--color-stone)'}}>
                   You'll be securely redirected to Shopify's payment processor
                 </p>
               </div>
 
               {/* Alternative Actions */}
-              <div className="mt-6 pt-6 border-t border-white/10">
+              <div className="mt-6 pt-6" style={{borderTop: '1px solid var(--color-cream-dark)'}}>
                 <div className="space-y-3">
                   <Link
                     to="/cart"
-                    className="block w-full text-center bg-secondary/60 hover:bg-secondary/80 text-white border border-primary/20 py-3 px-4 rounded-lg transition-colors"
+                    className="block w-full text-center py-3 px-4 rounded-lg transition-colors"
+                    style={{backgroundColor: 'var(--color-cream)', border: '1px solid var(--color-cream-dark)', color: 'var(--color-charcoal)'}}
                   >
-                    ← Back to Cart
+                    Back to Cart
                   </Link>
                   <Link
                     to="/collections"
-                    className="block w-full text-center text-primary hover:text-primary-600 py-2 text-sm"
+                    className="block w-full text-center py-2 text-sm"
+                    style={{color: 'var(--color-matcha-mid)'}}
                   >
                     Continue Shopping
                   </Link>

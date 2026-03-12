@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Star, ShoppingCart, Eye, Heart} from 'lucide-react';
+import {ShoppingCart, Eye} from 'lucide-react';
 import {Link} from 'react-router';
 import {Image, Money} from '@shopify/hydrogen';
 import {AddToCartButton} from '~/components/AddToCartButton';
@@ -37,7 +37,7 @@ export function ProductCard({
   product,
   loading = 'lazy',
   showQuickView = true,
-  showWishlist = true,
+  showWishlist = false,
   customizable = false,
 }: ProductCardProps) {
   const config = useConfig();
@@ -56,178 +56,142 @@ export function ProductCard({
   const isAvailable = Boolean(firstVariant?.availableForSale);
   const variantId = firstVariant?.id;
 
-  // Check if the product is on sale
   const isOnSale =
     compareAtPrice &&
     price &&
     parseFloat(price.amount) < parseFloat(compareAtPrice.amount);
 
-  // Calculate savings percentage
-  const savingsPercentage =
-    isOnSale && compareAtPrice && price
-      ? Math.round(
-          (1 - parseFloat(price.amount) / parseFloat(compareAtPrice.amount)) *
-            100,
-        )
-      : 0;
+  const hasCustomVariant = product?.variants?.nodes?.some(
+    (variant) => variant?.title?.toLowerCase?.() === 'custom',
+  );
 
-  // Generate mock rating and reviews for display (since Shopify doesn't provide this)
-  const rating = 4.8 + Math.random() * 0.2;
-  const reviews = 70 + Math.floor(Math.random() * 60);
+  const customVariant = product?.variants?.nodes?.find(
+    (variant) => variant?.title?.toLowerCase?.() === 'custom',
+  );
 
-  // Check if product is a featured product based on config
-  const isFeatured = config.shopify.featuredProducts.includes(handle);
+  const isCustomVariantOutOfStock =
+    customVariant && !customVariant.availableForSale;
 
-  // Get product label based on tags or sale status
-  const getProductLabel = () => {
-    if (isOnSale) return {text: 'Sale', color: 'bg-red-500'};
-    if (isFeatured) return {text: 'Featured', color: 'bg-primary'};
-    if (tags && tags.includes('new'))
-      return {text: 'New', color: 'bg-green-500'};
-    if (tags && tags.includes('bestseller'))
-      return {text: 'Bestseller', color: 'bg-purple-500'};
+  if (customizable && !hasCustomVariant) {
     return null;
-  };
+  }
 
-  const productLabel = getProductLabel();
-
-  // Format the variant ID to ensure it has the proper Shopify GID prefix
   const formatVariantId = (id: string) => {
     if (!id) return '';
     if (id.startsWith('gid://shopify/ProductVariant/')) return id;
-
-    // Extract the numeric ID if it's already in a GID format
     const numericId = id.includes('/') ? id.split('/').pop() || id : id;
-
     return `gid://shopify/ProductVariant/${numericId}`;
   };
 
-  // Handle add to cart with loading state
   const handleAddToCart = () => {
     setIsAddingToCart(true);
     setTimeout(() => setIsAddingToCart(false), 2000);
   };
 
-  // Check if this product has a "custom" variant option - safely check title exists
-  const hasCustomVariant = product?.variants?.nodes?.some(
-    (variant) => variant?.title?.toLowerCase?.() === 'custom',
-  );
-
-  // Get the custom variant specifically
-  const customVariant = product?.variants?.nodes?.find(
-    (variant) => variant?.title?.toLowerCase?.() === 'custom',
-  );
-
-  // Check if custom variant is out of stock
-  const isCustomVariantOutOfStock =
-    customVariant && !customVariant.availableForSale;
-
-  // If customizable flag is true, only show products with custom variants
-  if (customizable && !hasCustomVariant) {
-    return null;
-  }
-
   return (
-    <div className="group relative bg-gradient-to-br from-gray-900/95 to-gray-800/95 backdrop-blur-sm border border-gray-700/50 rounded-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:border-primary/50 hover:-translate-y-1 hover:scale-[1.01]">
+    <div
+      className="group relative overflow-hidden transition-all duration-400"
+      style={{
+        background: 'white',
+        border: '1px solid var(--color-cream-dark)',
+        borderRadius: '8px',
+      }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)';
+        (e.currentTarget as HTMLElement).style.boxShadow = 'var(--shadow-lg)';
+        (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-matcha-mid)';
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
+        (e.currentTarget as HTMLElement).style.boxShadow = 'none';
+        (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-cream-dark)';
+      }}
+    >
       {/* Image Container */}
-      <div className="relative h-80 overflow-hidden">
+      <div className="relative overflow-hidden" style={{aspectRatio: '4/5'}}>
         <Link
           to={`/products/${handle}`}
           prefetch="intent"
           className="block w-full h-full"
-          aria-label={`View ${title} details`}
+          aria-label={`Voir ${title}`}
         >
           {featuredImage ? (
-            <div className="relative w-full h-full">
+            <div className="relative w-full h-full flex items-center justify-center" style={{padding: '20px'}}>
               {imageLoading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
+                <div className="absolute inset-0 flex items-center justify-center" style={{background: 'transparent'}}>
                   <LoadingSpinner size="lg" color="primary" />
                 </div>
               )}
               <Image
                 data={featuredImage}
-                className="w-full h-full object-cover object-center transition-all duration-700 group-hover:scale-105"
+                className="w-full h-full object-contain object-center transition-transform duration-700 group-hover:scale-[1.08]"
+                style={{
+                  filter: 'drop-shadow(0 8px 20px rgba(0,0,0,0.1)) drop-shadow(0 2px 6px rgba(0,0,0,0.06))',
+                }}
                 sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
                 loading={loading}
                 onLoad={() => setImageLoading(false)}
                 onError={() => setImageLoading(false)}
               />
-              {/* Subtle overlay on hover */}
-              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
           ) : (
-            <div className="h-full w-full bg-gray-800 flex items-center justify-center">
-              <span className="text-gray-400 text-sm">No image available</span>
+            <div
+              className="h-full w-full flex items-center justify-center"
+              style={{background: 'linear-gradient(135deg, #f5f3ef 0%, #e8e4dc 100%)'}}
+            >
+              <span style={{fontSize: '3rem', color: '#c4b5a0'}}>{title.charAt(0)}</span>
             </div>
           )}
         </Link>
 
         {/* Product Labels */}
-        <div className="absolute top-4 left-4 flex flex-col gap-2">
-          {productLabel && (
-            <div
-              className={`${productLabel.color} text-white text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm border border-white/20`}
+        <div className="absolute top-3 left-3 flex flex-col gap-2">
+          {isOnSale && (
+            <span
+              className="text-white text-[11px] font-medium px-3 py-1"
+              style={{
+                backgroundColor: '#c97a5c',
+                borderRadius: '20px',
+              }}
             >
-              {productLabel.text}
-            </div>
-          )}
-          {savingsPercentage > 0 && (
-            <div className="bg-gradient-to-r from-red-500 to-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm border border-white/20">
-              -{savingsPercentage}%
-            </div>
+              Promo
+            </span>
           )}
           {hasCustomVariant && !isCustomVariantOutOfStock && (
-            <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm border border-white/20">
-              Customizable
-            </div>
-          )}
-          {isCustomVariantOutOfStock && (
-            <div className="bg-red-600/90 text-white text-xs font-bold px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/20">
-              Custom Out of Stock
-            </div>
+            <span
+              className="text-white text-[11px] font-medium px-3 py-1"
+              style={{
+                backgroundColor: 'var(--color-matcha-mid)',
+                borderRadius: '20px',
+              }}
+            >
+              Personnalisable
+            </span>
           )}
           {!isAvailable && (
-            <div className="bg-gray-600/90 text-white text-xs font-bold px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/20">
-              Sold Out
-            </div>
+            <span
+              className="text-white text-[11px] font-medium px-3 py-1"
+              style={{
+                backgroundColor: 'var(--color-stone)',
+                borderRadius: '20px',
+              }}
+            >
+              Epuise
+            </span>
           )}
         </div>
 
-        {/* Wishlist Button */}
-        {showWishlist && (
-          <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-            <WishlistButton
-              productId={product.id}
-              productTitle={title}
-              productImage={featuredImage?.url}
-              productPrice={price?.amount}
-              size="md"
-            />
-          </div>
-        )}
-
         {/* Action buttons - visible on hover */}
-        <div className="absolute bottom-4 right-4 transition-all duration-300 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0">
-          <div className="flex gap-3">
+        <div className="absolute bottom-3 right-3 transition-all duration-300 opacity-0 group-hover:opacity-100 transform translate-y-3 group-hover:translate-y-0">
+          <div className="flex gap-2">
             {showQuickView && (
               <Link
                 to={`/products/${handle}`}
-                className="bg-white/95 hover:bg-white text-gray-900 p-3 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl backdrop-blur-sm border border-white/20 hover:scale-105"
-                aria-label={`Quick view ${title}`}
+                className="bg-white/95 hover:bg-white p-2.5 rounded-full transition-all duration-200 shadow-md hover:shadow-lg"
+                style={{color: 'var(--color-charcoal)'}}
+                aria-label={`Voir ${title}`}
               >
                 <Eye className="w-4 h-4" />
-              </Link>
-            )}
-
-            {hasCustomVariant && !isCustomVariantOutOfStock && (
-              <Link
-                to={`/customize-product/${handle}`}
-                className="bg-blue-500/95 hover:bg-blue-500 text-white p-3 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl backdrop-blur-sm border border-blue-400/30 hover:scale-105"
-                aria-label={`Customize ${title}`}
-              >
-                <div className="w-4 h-4 flex items-center justify-center">
-                  🎨
-                </div>
               </Link>
             )}
 
@@ -243,8 +207,7 @@ export function ProductCard({
                   selectedVariant={firstVariant}
                   onClick={handleAddToCart}
                   disabled={isAddingToCart}
-                  className="bg-primary hover:bg-primary-600 text-black p-3 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center backdrop-blur-sm border border-primary/30 hover:scale-105"
-                  aria-label={`Add ${title} to cart`}
+                  className="text-white p-2.5 rounded-full transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center bg-[var(--color-matcha-mid)]"
                 >
                   {isAddingToCart ? (
                     <LoadingSpinner size="sm" color="white" />
@@ -259,75 +222,70 @@ export function ProductCard({
       </div>
 
       {/* Product Info */}
-      <div className="p-6 space-y-4">
+      <div className="p-5">
         <Link
           to={`/products/${handle}`}
           prefetch="intent"
-          className="block group"
+          className="block"
         >
-          <h3 className="text-white font-bold text-lg leading-tight line-clamp-2">
+          <h3
+            className="mb-2 transition-colors duration-300 group-hover:text-[#3d6b4f]"
+            style={{
+              color: 'var(--color-charcoal)',
+              fontWeight: 500,
+              fontSize: '15px',
+              lineHeight: 1.4,
+            }}
+          >
             {title}
           </h3>
         </Link>
 
-        {/* Rating stars */}
-        <div className="flex items-center gap-3">
-          <div
-            className="flex text-primary"
-            role="img"
-            aria-label={`Rating: ${rating.toFixed(1)} out of 5 stars`}
+        {/* Description snippet */}
+        {product.description && (
+          <p
+            className="mb-3 line-clamp-2"
+            style={{
+              fontSize: '13px',
+              color: 'var(--color-stone)',
+              lineHeight: 1.6,
+            }}
           >
-            {[...Array(Math.floor(rating))].map((_, i) => (
-              <Star key={`full-${i}`} className="w-4 h-4 fill-current" />
-            ))}
-            {rating % 1 >= 0.5 && (
-              <Star className="w-4 h-4 fill-current opacity-50" />
-            )}
-            {[...Array(5 - Math.ceil(rating))].map((_, i) => (
-              <Star
-                key={`empty-${i}`}
-                className="w-4 h-4 stroke-current fill-transparent opacity-30"
-              />
-            ))}
-          </div>
-          <span className="text-sm text-gray-400 font-medium price-no-hover">
-            ({reviews})
-          </span>
-        </div>
+            {product.description}
+          </p>
+        )}
 
         {/* Price Section */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            {price && (
-              <span className="font-bold text-primary text-xl price-no-hover">
-                <Money data={price} />
-              </span>
-            )}
+        <div className="flex items-center gap-3">
+          {price && (
+            <span
+              className="price-no-hover"
+              style={{
+                fontWeight: 600,
+                fontSize: '1rem',
+                color: 'var(--color-matcha-light)',
+              }}
+            >
+              <Money data={price} />
+            </span>
+          )}
 
-            {isOnSale && compareAtPrice && (
-              <span className="text-sm text-gray-400 line-through font-medium price-no-hover">
-                <Money data={compareAtPrice} />
-              </span>
-            )}
-          </div>
-
-          {/* Availability Status */}
-          <div className="text-right">
-            {isAvailable ? (
-              <span className="text-green-400 text-sm font-semibold bg-green-400/10 px-2 py-1 rounded-full">
-                In Stock
-              </span>
-            ) : (
-              <span className="text-red-400 text-sm font-semibold bg-red-400/10 px-2 py-1 rounded-full">
-                Sold Out
-              </span>
-            )}
-          </div>
+          {isOnSale && compareAtPrice && (
+            <span
+              className="line-through price-no-hover"
+              style={{
+                fontSize: '0.85rem',
+                color: 'var(--color-mist)',
+              }}
+            >
+              <Money data={compareAtPrice} />
+            </span>
+          )}
         </div>
 
-        {/* Mobile Add to Cart (visible on mobile only) */}
+        {/* Mobile Add to Cart */}
         {isAvailable && variantId && (
-          <div className="md:hidden pt-2">
+          <div className="md:hidden pt-3">
             <AddToCartButton
               lines={[
                 {
@@ -338,17 +296,17 @@ export function ProductCard({
               selectedVariant={firstVariant}
               onClick={handleAddToCart}
               disabled={isAddingToCart}
-              className="w-full bg-gradient-to-r from-primary to-primary-600 hover:from-primary-600 hover:to-primary-700 text-black py-3 px-4 rounded-lg transition-all duration-300 font-bold uppercase tracking-wider text-sm shadow-lg hover:shadow-xl hover:scale-[1.01]"
+              className="w-full text-white py-3 px-4 rounded-md transition-all duration-300 font-medium text-[11px] uppercase tracking-[0.1em] bg-[var(--color-matcha-mid)]"
             >
               {isAddingToCart ? (
-                <div className="flex items-center justify-center gap-3">
+                <div className="flex items-center justify-center gap-2">
                   <LoadingSpinner size="sm" color="white" />
-                  Adding...
+                  Ajout...
                 </div>
               ) : (
-                <div className="flex items-center justify-center gap-3">
+                <div className="flex items-center justify-center gap-2">
                   <ShoppingCart className="w-4 h-4" />
-                  Add to Cart
+                  Ajouter au panier
                 </div>
               )}
             </AddToCartButton>

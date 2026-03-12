@@ -167,13 +167,16 @@ export default function SearchPage() {
   ];
 
   return (
-    <div data-theme={config.theme} className="min-h-screen bg-black text-white">
+    <div data-theme={config.theme} className="min-h-screen" style={{backgroundColor: 'var(--color-cream)', color: 'var(--color-charcoal)'}}>
       <div className="container mx-auto px-4 py-24">
         {/* Back Navigation */}
         <div className="mb-8">
           <Link
             to="/"
-            className="inline-flex items-center text-primary hover:text-primary/80 transition-colors duration-300"
+            className="inline-flex items-center transition-colors duration-300"
+            style={{color: 'var(--color-matcha-mid)'}}
+            onMouseEnter={(e) => e.currentTarget.style.opacity = '0.8'}
+            onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Home
@@ -182,13 +185,13 @@ export default function SearchPage() {
 
         {/* Search Header */}
         <div className="text-center mb-12">
-          <div className="inline-block px-4 py-1 bg-primary/20 text-primary text-sm font-bold tracking-wider uppercase mb-4 rounded-sm">
+          <div className="inline-block px-4 py-1 text-sm font-bold tracking-wider uppercase mb-4 rounded-sm" style={{backgroundColor: 'color-mix(in srgb, var(--color-matcha-mid) 20%, transparent)', color: 'var(--color-matcha-mid)'}}>
             Search
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            Find Your <span className="text-primary">Championship</span> Gear
+            Find Your <span style={{color: 'var(--color-matcha-mid)'}}>Championship</span> Gear
           </h1>
-          <p className="text-gray-300 max-w-2xl mx-auto mb-8">
+          <p className="max-w-2xl mx-auto mb-8" style={{color: 'var(--color-stone)'}}>
             Search through {config.influencerName}'s premium collection of
             boxing equipment, apparel, and exclusive merchandise.
           </p>
@@ -199,18 +202,20 @@ export default function SearchPage() {
           <SearchForm>
             {({inputRef}) => (
               <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-6 w-6 text-gray-400" />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-6 w-6" style={{color: 'var(--color-stone)'}} />
                 <input
                   defaultValue={term}
                   name="q"
                   placeholder="Search for products, collections, or articles..."
                   ref={inputRef}
                   type="search"
-                  className="w-full bg-gray-900/80 backdrop-blur-sm border border-gray-800 rounded-sm py-4 pl-14 pr-32 text-white text-lg placeholder-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors duration-300"
+                  className="w-full backdrop-blur-sm rounded-sm py-4 pl-14 pr-32 text-lg focus:outline-none transition-colors duration-300"
+                  style={{backgroundColor: 'var(--color-cream-warm)', border: '1px solid var(--color-cream-dark)', color: 'var(--color-charcoal)', '--tw-ring-color': 'var(--color-matcha-mid)'} as React.CSSProperties}
                 />
                 <button
                   type="submit"
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary hover:bg-primary/90 text-black font-bold py-2 px-6 rounded-sm transition-all duration-300 uppercase tracking-wider"
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 font-bold py-2 px-6 rounded-sm transition-all duration-300 uppercase tracking-wider"
+                  style={{backgroundColor: 'var(--color-matcha-mid)', color: 'white'}}
                 >
                   Search
                 </button>
@@ -223,8 +228,8 @@ export default function SearchPage() {
         {!term && !error && (
           <div className="max-w-2xl mx-auto mb-12">
             <div className="flex items-center mb-4">
-              <TrendingUp className="h-5 w-5 text-primary mr-2" />
-              <span className="text-gray-400 font-medium">
+              <TrendingUp className="h-5 w-5 mr-2" style={{color: 'var(--color-matcha-mid)'}} />
+              <span className="font-medium" style={{color: 'var(--color-stone)'}}>
                 Popular Searches
               </span>
             </div>
@@ -233,7 +238,8 @@ export default function SearchPage() {
                 <Link
                   key={index}
                   to={`/search?q=${encodeURIComponent(search)}`}
-                  className="px-4 py-2 bg-gray-900/80 backdrop-blur-sm hover:bg-gray-800 border border-gray-800 hover:border-primary rounded-sm text-sm transition-all duration-300 hover:text-primary"
+                  className="px-4 py-2 backdrop-blur-sm rounded-sm text-sm transition-all duration-300"
+                  style={{backgroundColor: 'var(--color-cream-warm)', border: '1px solid var(--color-cream-dark)', color: 'var(--color-charcoal)'}}
                 >
                   {search}
                 </Link>
@@ -257,11 +263,11 @@ export default function SearchPage() {
             {!result?.total ? (
               <div className="text-center py-16">
                 <div className="mb-8">
-                  <Search className="h-24 w-24 text-gray-600 mx-auto mb-6" />
-                  <h2 className="text-2xl font-bold text-gray-400 mb-4">
+                  <Search className="h-24 w-24 mx-auto mb-6" style={{color: 'var(--color-cream-dark)'}} />
+                  <h2 className="text-2xl font-bold mb-4" style={{color: 'var(--color-stone)'}}>
                     No results found for "{term}"
                   </h2>
-                  <p className="text-gray-500 mb-8 max-w-md mx-auto leading-relaxed">
+                  <p className="mb-8 max-w-md mx-auto leading-relaxed" style={{color: 'var(--color-stone)'}}>
                     Try searching with different keywords or browse our popular
                     categories.
                   </p>
@@ -269,7 +275,8 @@ export default function SearchPage() {
 
                 <Link
                   to="/collections/all"
-                  className="group inline-flex items-center justify-center bg-primary hover:bg-primary/90 text-black font-bold py-4 px-8 rounded-sm transition-all duration-300 uppercase tracking-wider shadow-lg hover:shadow-xl transform hover:scale-105"
+                  className="group inline-flex items-center justify-center font-bold py-4 px-8 rounded-sm transition-all duration-300 uppercase tracking-wider shadow-lg hover:shadow-xl transform hover:scale-105"
+                  style={{backgroundColor: 'var(--color-matcha-mid)', color: 'white'}}
                 >
                   Browse All Products
                 </Link>
@@ -279,9 +286,9 @@ export default function SearchPage() {
                 <div className="mb-8">
                   <h2 className="text-2xl font-bold mb-2">
                     Search Results for "
-                    <span className="text-primary">{term}</span>"
+                    <span style={{color: 'var(--color-matcha-mid)'}}>{term}</span>"
                   </h2>
-                  <p className="text-gray-400">Found {result.total} results</p>
+                  <p style={{color: 'var(--color-stone)'}}>Found {result.total} results</p>
                 </div>
 
                 {/* TODO: Fix type mismatch - response includes 'collections' which should only be in predictive search */}

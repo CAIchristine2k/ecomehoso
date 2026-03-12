@@ -1,210 +1,226 @@
 import React, {useState} from 'react';
-import {Mail, ChevronRight, Check, Trophy} from 'lucide-react';
-import {useConfig} from '~/utils/themeContext';
-import type {LandingPageConfig} from '~/utils/config';
+import {Check} from 'lucide-react';
 
-interface NewsletterSignupProps {
-  config?: LandingPageConfig;
-}
-
-export default function NewsletterSignup({config}: NewsletterSignupProps) {
-  const configFromContext = useConfig();
-  const effectiveConfig = config || configFromContext;
+export default function NewsletterSignup() {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
-  const [interests, setInterests] = useState<string[]>(['products']);
-
-  // Skip rendering if newsletter is disabled in config
-  if (!effectiveConfig.newsletterEnabled) {
-    return null;
-  }
-
-  const benefits = [
-    'Early access to limited-edition boxing gear',
-    `Exclusive training tips from ${effectiveConfig.influencerName}`,
-    '10% off your first purchase',
-    `Invites to virtual Q&A sessions with ${effectiveConfig.influencerName.split(' ')[0]}`,
-  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!email) {
-      setError('Please enter your email address');
+      setError('Veuillez entrer votre adresse email');
       return;
     }
 
     if (!/\S+@\S+\.\S+/.test(email)) {
-      setError('Please enter a valid email address');
+      setError('Veuillez entrer une adresse email valide');
       return;
     }
 
-    // In a real implementation, you would send this to a Shopify customer API endpoint or store's newsletter service
     console.log('Email submitted:', email);
-    console.log('Interests:', interests);
     setSubmitted(true);
     setError('');
   };
 
-  const handleInterestChange = (value: string) => {
-    setInterests((prev) =>
-      prev.includes(value)
-        ? prev.filter((interest) => interest !== value)
-        : [...prev, value],
-    );
-  };
-
   return (
-    <section id="newsletter" className="py-20 bg-black">
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto bg-gradient-to-r from-gray-900 to-black rounded-2xl p-8 md:p-12 shadow-xl border border-gray-800 relative overflow-hidden">
-          {/* Boxing glove decorative element */}
-          <div className="absolute -right-16 -bottom-16 opacity-10">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="240"
-              height="240"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-primary"
+    <section
+      id="newsletter"
+      style={{
+        position: 'relative',
+        padding: '100px 24px',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Background image */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: 'url(/images/preset/bghero.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+      {/* Overlay */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background:
+            'linear-gradient(180deg, rgba(26,47,35,0.5) 0%, rgba(26,47,35,0.4) 50%, rgba(26,47,35,0.6) 100%)',
+        }}
+      />
+
+      <div
+        style={{
+          position: 'relative',
+          zIndex: 2,
+          maxWidth: '700px',
+          margin: '0 auto',
+          textAlign: 'center',
+        }}
+      >
+        {!submitted ? (
+          <>
+            <span
+              style={{
+                display: 'inline-block',
+                fontSize: '11px',
+                fontWeight: 500,
+                letterSpacing: '0.3em',
+                textTransform: 'uppercase' as const,
+                color: 'white',
+                marginBottom: '20px',
+              }}
             >
-              <path d="M12 6v4l2 2" />
-              <path d="M15.536 13.9a3 3 0 1 0-4.072-4.4 7.1 7.1 0 0 0-2.464 5.5v1" />
-              <path d="M9 16a2 2 0 1 1 4 0v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-2z" />
-              <path d="M9 19h4" />
-            </svg>
-          </div>
+              Join the community
+            </span>
 
-          <div className="flex flex-col md:flex-row items-center relative z-10">
-            <div className="md:w-1/2 mb-8 md:mb-0 md:pr-8">
-              <div className="inline-block bg-primary text-black font-bold py-1 px-4 rounded-full text-sm mb-4">
-                CHAMPION'S INNER CIRCLE
+            <h2
+              style={{
+                fontFamily: "'Poppins', sans-serif",
+                fontSize: 'clamp(1.25rem, 3vw, 1.75rem)',
+                fontWeight: 400,
+                lineHeight: 1.4,
+                color: 'white',
+                marginBottom: '12px',
+              }}
+            >
+              Ne ratez rien de notre actualite
+            </h2>
+            <p style={{fontFamily: "'Noto Serif JP', serif", fontSize: '0.75rem', color: 'var(--color-matcha-light)', letterSpacing: '0.3em', marginTop: '6px'}}>
+              ニュースレター
+            </p>
+
+            <p
+              style={{
+                fontSize: '14px',
+                fontWeight: 300,
+                color: 'rgba(255,255,255,0.75)',
+                lineHeight: 1.7,
+                marginBottom: '36px',
+              }}
+            >
+              Profitez d'avantages exclusifs, soyez informes des prochaines
+              sorties en avant-premiere.
+            </p>
+
+            <form
+              onSubmit={handleSubmit}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                background: 'rgba(255,255,255,0.15)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
+                border: '1px solid rgba(255,255,255,0.25)',
+                borderRadius: '60px',
+                padding: '6px 6px 6px 28px',
+                maxWidth: '560px',
+                margin: '0 auto',
+              }}
+            >
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setError('');
+                }}
+                placeholder="E-MAIL"
+                style={{
+                  flex: 1,
+                  background: 'transparent',
+                  border: 'none',
+                  outline: 'none',
+                  color: 'white',
+                  fontSize: '13px',
+                  letterSpacing: '0.1em',
+                  fontWeight: 400,
+                }}
+              />
+              <button
+                type="submit"
+                style={{
+                  background: 'rgba(255,255,255,0.15)',
+                  border: '1px solid rgba(255,255,255,0.3)',
+                  borderRadius: '60px',
+                  color: 'white',
+                  padding: '14px 28px',
+                  fontSize: '11px',
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase' as const,
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  whiteSpace: 'nowrap',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.25)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.15)';
+                }}
+              >
+                S'inscrire
+              </button>
+            </form>
+
+            {error && (
+              <div
+                style={{
+                  color: '#ff9999',
+                  fontSize: '12px',
+                  marginTop: '12px',
+                }}
+              >
+                {error}
               </div>
-
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">
-                JOIN{' '}
-                <span className="text-primary">
-                  {effectiveConfig.brandName}
-                </span>{' '}
-                EXCLUSIVE COMMUNITY
-              </h2>
-
-              <p className="text-gray-300 mb-6 leading-relaxed">
-                Get ringside access to {effectiveConfig.influencerName}'s world
-                with early product releases, training tips from a{' '}
-                {effectiveConfig.influencerTitle.toLowerCase()}, and exclusive
-                content you won't find anywhere else.
-              </p>
-
-              <ul className="space-y-3">
-                {benefits.map((benefit, index) => (
-                  <li key={index} className="flex items-start">
-                    <div className="bg-primary rounded-full p-1 mr-3 mt-0.5">
-                      <Check className="h-3 w-3 text-black" />
-                    </div>
-                    <span className="text-gray-300">{benefit}</span>
-                  </li>
-                ))}
-              </ul>
+            )}
+          </>
+        ) : (
+          <div style={{padding: '32px 0'}}>
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '56px',
+                height: '56px',
+                borderRadius: '50%',
+                backgroundColor: 'rgba(255,255,255,0.2)',
+                marginBottom: '24px',
+              }}
+            >
+              <Check style={{width: '24px', height: '24px', color: 'white'}} />
             </div>
 
-            <div className="md:w-1/2 w-full">
-              <div className="bg-black bg-opacity-50 rounded-lg p-6 border border-gray-800 shadow-lg backdrop-blur-sm">
-                {!submitted ? (
-                  <>
-                    <h3 className="text-xl font-bold mb-4 text-white">
-                      Get Ringside Updates
-                    </h3>
+            <h3
+              style={{
+                fontSize: '1.25rem',
+                fontWeight: 400,
+                color: 'white',
+                marginBottom: '12px',
+              }}
+            >
+              Merci pour votre inscription
+            </h3>
 
-                    <form onSubmit={handleSubmit}>
-                      <div className="mb-4 relative">
-                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
-                          <Mail className="h-5 w-5" />
-                        </div>
-                        <input
-                          type="email"
-                          value={email}
-                          onChange={(e) => {
-                            setEmail(e.target.value);
-                            setError('');
-                          }}
-                          className="w-full py-3 pl-10 pr-4 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-primary text-white placeholder-gray-400"
-                          placeholder="Enter your email address"
-                        />
-                      </div>
-
-                      <div className="mb-4">
-                        <label className="flex items-start">
-                          <input
-                            type="checkbox"
-                            checked={interests.includes('products')}
-                            onChange={() => handleInterestChange('products')}
-                            className="mt-1 h-4 w-4 rounded border-gray-600 bg-gray-700 text-primary focus:ring-primary"
-                          />
-                          <span className="ml-2 text-sm text-gray-300">
-                            New product releases &amp; merch drops
-                          </span>
-                        </label>
-                      </div>
-
-                      <div className="mb-4">
-                        <label className="flex items-start">
-                          <input
-                            type="checkbox"
-                            checked={interests.includes('events')}
-                            onChange={() => handleInterestChange('events')}
-                            className="mt-1 h-4 w-4 rounded border-gray-600 bg-gray-700 text-primary focus:ring-primary"
-                          />
-                          <span className="ml-2 text-sm text-gray-300">
-                            Boxing events &amp; appearances
-                          </span>
-                        </label>
-                      </div>
-
-                      {error && (
-                        <div className="text-red-500 text-sm mb-4">{error}</div>
-                      )}
-
-                      <button
-                        type="submit"
-                        className="group w-full bg-primary hover:bg-primary/90 text-black font-bold py-3 px-6 rounded-sm transition-all duration-300 flex items-center justify-center"
-                      >
-                        JOIN THE INNER CIRCLE
-                        <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                      </button>
-                    </form>
-
-                    <p className="text-gray-500 text-xs mt-4 text-center">
-                      By subscribing, you agree to receive marketing emails from
-                      us. You can unsubscribe at any time.
-                    </p>
-                  </>
-                ) : (
-                  <div className="text-center py-8">
-                    <div className="bg-primary rounded-full p-3 inline-flex items-center justify-center mb-4">
-                      <Trophy className="h-8 w-8 text-black" />
-                    </div>
-
-                    <h3 className="text-xl font-bold mb-2 text-white">
-                      Welcome to the Champion's Circle!
-                    </h3>
-
-                    <p className="text-gray-300">
-                      You've successfully joined{' '}
-                      {effectiveConfig.influencerName}'s exclusive community.
-                      Check your inbox soon for your 10% discount code!
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
+            <p
+              style={{
+                fontSize: '14px',
+                fontWeight: 300,
+                color: 'rgba(255,255,255,0.7)',
+                lineHeight: 1.8,
+              }}
+            >
+              Vous recevrez bientot nos dernieres actualites et offres
+              exclusives.
+            </p>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );

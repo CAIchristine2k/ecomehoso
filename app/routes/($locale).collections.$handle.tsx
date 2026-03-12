@@ -55,18 +55,43 @@ export default function Collection() {
   }
 
   return (
-    <div className="py-24">
-      <div className="container mx-auto px-4">
+    <div className="py-24" style={{backgroundColor: 'var(--color-cream)', color: 'var(--color-charcoal)'}}>
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         {/* Collection Hero */}
         <div className="mb-16 text-center">
-          <div className="inline-block px-4 py-1 bg-primary/20 text-primary text-sm font-bold tracking-wider uppercase mb-4 rounded-sm">
+          <span
+            className="inline-block mb-4"
+            style={{
+              fontSize: '10px',
+              fontWeight: 500,
+              letterSpacing: '0.25em',
+              textTransform: 'uppercase' as const,
+              color: 'var(--color-matcha-mid)',
+            }}
+          >
             Collection
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
+          </span>
+          <h1
+            className="mb-6"
+            style={{
+              fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
+              fontWeight: 400,
+              lineHeight: 1.2,
+              color: 'var(--color-charcoal)',
+            }}
+          >
             {collection.title}
           </h1>
           {collection.description && (
-            <p className="text-text/80 max-w-3xl mx-auto leading-relaxed">
+            <p
+              className="max-w-3xl mx-auto"
+              style={{
+                color: 'var(--color-stone)',
+                fontSize: '15px',
+                fontWeight: 300,
+                lineHeight: 1.8,
+              }}
+            >
               {collection.description}
             </p>
           )}
@@ -75,18 +100,25 @@ export default function Collection() {
         {/* Product Grid */}
         {collection.products.nodes.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-lg mb-6">
-              No products found in this collection.
+            <p className="text-lg mb-6" style={{color: 'var(--color-stone)'}}>
+              Aucun produit dans cette collection.
             </p>
             <Link
-              to="/collections"
-              className="bg-primary text-background px-6 py-3 rounded-sm"
+              to="/collections/all"
+              className="inline-block py-3 px-8 rounded-sm transition-all duration-300"
+              style={{
+                backgroundColor: 'var(--color-matcha-mid)',
+                color: 'white',
+                fontSize: '11px',
+                letterSpacing: '0.18em',
+                textTransform: 'uppercase' as const,
+              }}
             >
-              Back to Collections
+              Voir tous les produits
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {collection.products.nodes.map((product: any) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -94,14 +126,33 @@ export default function Collection() {
         )}
 
         {/* Collection Banner */}
-        <div className="mt-16 bg-primary/10 border border-primary/30 rounded-sm p-8 text-center">
-          <h3 className="text-2xl font-bold text-primary mb-4">
-            {config.influencerName}'s Championship Collection
+        <div
+          className="mt-16 rounded-lg p-10 text-center"
+          style={{
+            backgroundColor: 'var(--color-cream-warm)',
+            border: '1px solid var(--color-cream-dark)',
+          }}
+        >
+          <h3
+            className="mb-4"
+            style={{
+              fontSize: '1.25rem',
+              fontWeight: 400,
+              color: 'var(--color-charcoal)',
+            }}
+          >
+            Qualite & Tradition
           </h3>
-          <p className="text-text/80 mb-6 max-w-2xl mx-auto">
-            Every product in this collection is designed to meet the highest
-            standards of quality and performance, approved by{' '}
-            {config.influencerName} himself.
+          <p
+            className="max-w-2xl mx-auto"
+            style={{
+              color: 'var(--color-stone)',
+              fontSize: '14px',
+              fontWeight: 300,
+              lineHeight: 1.8,
+            }}
+          >
+            Chaque produit de cette collection est selectionne avec soin pour vous offrir le meilleur du matcha japonais, fidele aux traditions seculaires d'Uji.
           </p>
         </div>
       </div>

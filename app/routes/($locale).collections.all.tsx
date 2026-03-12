@@ -64,31 +64,55 @@ export default function Collection() {
   const {products, config} = useLoaderData<typeof loader>();
 
   return (
-    <div data-theme={config.theme} className="min-h-screen bg-black text-white">
-      <div className="container mx-auto px-4 py-24">
+    <div data-theme={config.theme} className="min-h-screen" style={{backgroundColor: 'var(--color-cream)', color: 'var(--color-charcoal)'}}>
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-24">
         {/* Back Navigation */}
         <div className="mb-8">
           <Link
             to="/"
-            className="inline-flex items-center text-primary hover:text-primary/80 transition-colors duration-300"
+            className="inline-flex items-center transition-colors duration-300"
+            style={{color: 'var(--color-matcha-mid)', fontSize: '13px'}}
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Home
+            Retour
           </Link>
         </div>
 
         {/* Page Header */}
         <div className="text-center mb-16">
-          <div className="inline-block px-4 py-1 bg-primary/20 text-primary text-sm font-bold tracking-wider uppercase mb-4 rounded-sm">
-            All Products
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="text-primary">CHAMPIONSHIP</span> COLLECTION
+          <span
+            className="inline-block mb-4"
+            style={{
+              fontSize: '10px',
+              fontWeight: 500,
+              letterSpacing: '0.25em',
+              textTransform: 'uppercase' as const,
+              color: 'var(--color-matcha-mid)',
+            }}
+          >
+            Collection
+          </span>
+          <h1
+            className="mb-6"
+            style={{
+              fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
+              fontWeight: 400,
+              lineHeight: 1.2,
+              color: 'var(--color-charcoal)',
+            }}
+          >
+            Tous nos produits
           </h1>
-          <p className="text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            Explore our complete collection of premium{' '}
-            {config.industry || 'sports'} equipment and exclusive merchandise
-            inspired by {config.influencerName}'s legendary career.
+          <p
+            className="max-w-2xl mx-auto"
+            style={{
+              color: 'var(--color-stone)',
+              fontSize: '15px',
+              fontWeight: 300,
+              lineHeight: 1.8,
+            }}
+          >
+            Decouvrez notre selection de matchas d'exception, accessoires traditionnels et coffrets soigneusement composes.
           </p>
         </div>
 
@@ -96,7 +120,7 @@ export default function Collection() {
         <div className="mb-16">
           <PaginatedResourceSection
             connection={products}
-            resourcesClassName="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+            resourcesClassName="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
           >
             {({node: product, index}) => {
               const typedProduct =
@@ -113,21 +137,47 @@ export default function Collection() {
           </PaginatedResourceSection>
         </div>
 
-        {/* Championship Banner */}
-        <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 border border-primary/30 rounded-sm p-8 text-center">
-          <h3 className="text-2xl font-bold text-primary mb-4">
-            Train Like a Champion
+        {/* Bottom Banner */}
+        <div
+          className="rounded-lg p-10 text-center"
+          style={{
+            backgroundColor: 'var(--color-cream-warm)',
+            border: '1px solid var(--color-cream-dark)',
+          }}
+        >
+          <h3
+            className="mb-4"
+            style={{
+              fontSize: '1.25rem',
+              fontWeight: 400,
+              color: 'var(--color-charcoal)',
+            }}
+          >
+            L'excellence du matcha japonais
           </h3>
-          <p className="text-gray-300 mb-6 max-w-2xl mx-auto leading-relaxed">
-            Every product in our collection is crafted to championship standards
-            and designed for those who refuse to settle for anything less than
-            excellence.
+          <p
+            className="max-w-2xl mx-auto mb-6"
+            style={{
+              color: 'var(--color-stone)',
+              fontSize: '14px',
+              fontWeight: 300,
+              lineHeight: 1.8,
+            }}
+          >
+            Chaque produit est selectionne avec soin pour vous offrir une experience authentique du matcha, fidele aux traditions seculaires d'Uji, Kyoto.
           </p>
           <Link
             to="/"
-            className="inline-flex items-center bg-primary hover:bg-primary/90 text-black font-bold py-3 px-6 rounded-sm transition-all duration-300 uppercase tracking-wider"
+            className="inline-flex items-center gap-2 transition-all duration-300 hover:gap-3"
+            style={{
+              fontSize: '12px',
+              fontWeight: 500,
+              letterSpacing: '0.15em',
+              textTransform: 'uppercase' as const,
+              color: 'var(--color-matcha-mid)',
+            }}
           >
-            Explore {config.influencerName}'s Story
+            Notre histoire &rarr;
           </Link>
         </div>
       </div>

@@ -20,11 +20,11 @@ export function CartSummary({cart, layout, checkoutDomain}: CartSummaryProps) {
       aria-labelledby="cart-summary"
       className={`p-6 ${layout === 'page' ? 'max-w-md ml-auto' : ''}`}
     >
-      <h4 className="text-lg font-bold text-white mb-6">Order Summary</h4>
+      <h4 className="text-lg font-bold mb-6" style={{color: 'var(--color-charcoal)'}}>Recapitulatif</h4>
       <dl className="space-y-4">
         <div className="flex justify-between items-center">
-          <dt className="text-white/70 font-medium">Subtotal</dt>
-          <dd className="font-bold text-white">
+          <dt className="font-medium" style={{color: 'var(--color-stone)'}}>Sous-total</dt>
+          <dd className="font-bold" style={{color: 'var(--color-charcoal)'}}>
             {cart.cost?.subtotalAmount?.amount ? (
               <Money data={cart.cost?.subtotalAmount} />
             ) : (
@@ -35,16 +35,16 @@ export function CartSummary({cart, layout, checkoutDomain}: CartSummaryProps) {
 
         {cart.cost?.totalTaxAmount?.amount ? (
           <div className="flex justify-between items-center">
-            <dt className="text-white/70 font-medium">Tax (estimated)</dt>
-            <dd className="font-bold text-white">
+            <dt className="font-medium" style={{color: 'var(--color-stone)'}}>TVA (estimee)</dt>
+            <dd className="font-bold" style={{color: 'var(--color-charcoal)'}}>
               <Money data={cart.cost.totalTaxAmount} />
             </dd>
           </div>
         ) : null}
 
-        <div className="flex justify-between items-center pt-4 mt-4 border-t border-white/10">
-          <dt className="text-white font-bold text-lg">Total</dt>
-          <dd className="text-primary font-bold text-xl">
+        <div className="flex justify-between items-center pt-4 mt-4" style={{borderTop: '1px solid var(--color-cream-dark)'}}>
+          <dt className="font-bold text-lg" style={{color: 'var(--color-charcoal)'}}>Total</dt>
+          <dd className="font-bold text-xl" style={{color: 'var(--color-matcha-mid)'}}>
             {cart.cost?.totalAmount?.amount ? (
               <Money data={cart.cost?.totalAmount} />
             ) : (
@@ -101,13 +101,14 @@ function CartCheckoutActions({
         <Link
           to="/checkout"
           onClick={close}
-          className="block w-full bg-primary hover:bg-primary-600 text-black text-center py-4 px-6 rounded-xl font-bold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-primary/25"
+          className="block w-full text-white text-center py-4 px-6 rounded-lg font-medium transition-all duration-300 hover:-translate-y-0.5"
+        style={{backgroundColor: 'var(--color-matcha-mid)', fontSize: '12px', letterSpacing: '0.15em', textTransform: 'uppercase' as const}}
         >
-          Review & Checkout →
+          Passer commande {'\u2192'}
         </Link>
         <div className="mt-4 flex items-center justify-center">
-          <p className="text-xs text-white/50 text-center">
-            Review your designs, then secure checkout
+          <p className="text-xs text-center" style={{color: 'var(--color-mist)'}}>
+            Paiement securise
           </p>
         </div>
       </div>
@@ -147,13 +148,14 @@ function CartCheckoutActions({
       <Link
         to="/checkout"
         onClick={close}
-        className="block w-full bg-primary hover:bg-primary-600 text-black text-center py-4 px-6 rounded-xl font-bold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-primary/25"
+        className="block w-full text-white text-center py-4 px-6 rounded-lg font-medium transition-all duration-300 hover:-translate-y-0.5"
+        style={{backgroundColor: 'var(--color-matcha-mid)', fontSize: '12px', letterSpacing: '0.15em', textTransform: 'uppercase' as const}}
       >
-        Review & Checkout →
+        Passer commande &rarr;
       </Link>
       <div className="mt-4 flex items-center justify-center">
-        <p className="text-xs text-white/50 text-center">
-          Review your designs, then secure checkout
+        <p className="text-xs text-center" style={{color: 'var(--color-mist)'}}>
+          Paiement securise
         </p>
       </div>
     </div>

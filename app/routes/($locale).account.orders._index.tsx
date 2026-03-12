@@ -92,11 +92,11 @@ export default function Orders() {
   const {orders} = customer;
 
   return (
-    <div className="bg-gray-900/80 backdrop-blur-sm border border-gray-800 rounded-sm p-8">
+    <div className="rounded-sm p-8" style={{backgroundColor: 'white', border: '1px solid var(--color-cream-dark)'}}>
       {/* Header */}
       <div className="flex items-center mb-8">
-        <Package className="w-6 h-6 text-primary mr-3" />
-        <h2 className="text-2xl font-bold text-white">Order History</h2>
+        <Package className="w-6 h-6 mr-3" style={{color: 'var(--color-matcha-mid)'}} />
+        <h2 className="text-2xl font-bold" style={{color: 'var(--color-charcoal)'}}>Order History</h2>
       </div>
 
       {orders.nodes.length ? <OrdersTable orders={orders} /> : <EmptyOrders />}
@@ -123,9 +123,9 @@ function EmptyOrders() {
   return (
     <div className="text-center py-16">
       <div className="mb-8">
-        <ShoppingBag className="h-24 w-24 text-gray-600 mx-auto mb-6" />
-        <h3 className="text-xl font-bold text-gray-400 mb-4">No orders yet</h3>
-        <p className="text-gray-500 mb-8 max-w-md mx-auto leading-relaxed">
+        <ShoppingBag className="h-24 w-24 mx-auto mb-6" style={{color: 'var(--color-cream-dark)'}} />
+        <h3 className="text-xl font-bold mb-4" style={{color: 'var(--color-stone)'}}>No orders yet</h3>
+        <p className="mb-8 max-w-md mx-auto leading-relaxed" style={{color: 'var(--color-stone)'}}>
           You haven't placed any orders yet. Start building your championship
           collection with {config.influencerName}'s premium gear.
         </p>
@@ -133,7 +133,8 @@ function EmptyOrders() {
 
       <Link
         to="/collections/all"
-        className="group inline-flex items-center justify-center bg-primary hover:bg-primary/90 text-black font-bold py-4 px-8 rounded-sm transition-all duration-300 uppercase tracking-wider shadow-lg hover:shadow-xl transform hover:scale-105"
+        className="group inline-flex items-center justify-center text-white font-bold py-4 px-8 rounded-sm transition-all duration-300 uppercase tracking-wider shadow-lg hover:shadow-xl transform hover:scale-105"
+        style={{backgroundColor: 'var(--color-matcha-mid)'}}
       >
         <ShoppingBag className="mr-2 h-5 w-5" />
         Start Shopping
@@ -147,32 +148,33 @@ function OrderItem({order}: {order: OrderItemFragment}) {
     flattenConnection(order.fulfillments)[0]?.status || 'UNFULFILLED';
 
   const getStatusColor = (status: string | null | undefined) => {
-    if (!status) return 'text-gray-400 bg-gray-900/20 border-gray-500/30';
+    if (!status) return 'text-gray-500 bg-gray-50 border-gray-200';
 
     switch (status.toLowerCase()) {
       case 'paid':
       case 'fulfilled':
-        return 'text-green-400 bg-green-900/20 border-green-500/30';
+        return 'text-green-700 bg-green-50 border-green-200';
       case 'pending':
       case 'unfulfilled':
-        return 'text-yellow-400 bg-yellow-900/20 border-yellow-500/30';
+        return 'text-yellow-700 bg-yellow-50 border-yellow-200';
       case 'cancelled':
       case 'refunded':
-        return 'text-red-400 bg-red-900/20 border-red-500/30';
+        return 'text-red-700 bg-red-50 border-red-200';
       default:
-        return 'text-gray-400 bg-gray-900/20 border-gray-500/30';
+        return 'text-gray-500 bg-gray-50 border-gray-200';
     }
   };
 
   return (
-    <div className="border-b border-gray-800 py-6 last:border-b-0">
+    <div className="py-6 last:border-b-0" style={{borderBottom: '1px solid var(--color-cream-dark)'}}>
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         {/* Order Info */}
         <div className="flex-1">
           <div className="flex items-center mb-3">
             <Link
               to={`/account/orders/${btoa(order.id)}`}
-              className="text-xl font-bold text-primary hover:text-primary/80 transition-colors duration-300"
+              className="text-xl font-bold transition-colors duration-300"
+              style={{color: 'var(--color-matcha-mid)'}}
             >
               #{order.number}
             </Link>
@@ -180,14 +182,14 @@ function OrderItem({order}: {order: OrderItemFragment}) {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
             {/* Date */}
-            <div className="flex items-center text-gray-300">
-              <Calendar className="w-4 h-4 mr-2 text-gray-400" />
+            <div className="flex items-center" style={{color: 'var(--color-stone)'}}>
+              <Calendar className="w-4 h-4 mr-2" style={{color: 'var(--color-stone)'}} />
               <span>{new Date(order.processedAt).toLocaleDateString()}</span>
             </div>
 
             {/* Financial Status */}
             <div className="flex items-center">
-              <CreditCard className="w-4 h-4 mr-2 text-gray-400" />
+              <CreditCard className="w-4 h-4 mr-2" style={{color: 'var(--color-stone)'}} />
               <span
                 className={`px-2 py-1 rounded-sm text-xs font-bold border ${getStatusColor(order.financialStatus)}`}
               >
@@ -198,7 +200,7 @@ function OrderItem({order}: {order: OrderItemFragment}) {
             {/* Fulfillment Status */}
             {fulfillmentStatus && (
               <div className="flex items-center">
-                <Truck className="w-4 h-4 mr-2 text-gray-400" />
+                <Truck className="w-4 h-4 mr-2" style={{color: 'var(--color-stone)'}} />
                 <span
                   className={`px-2 py-1 rounded-sm text-xs font-bold border ${getStatusColor(fulfillmentStatus)}`}
                 >
@@ -212,16 +214,18 @@ function OrderItem({order}: {order: OrderItemFragment}) {
         {/* Order Total & Actions */}
         <div className="flex items-center justify-between lg:justify-end gap-4">
           <div className="text-right">
-            <div className="text-sm text-gray-400 mb-1">Total</div>
+            <div className="text-sm mb-1" style={{color: 'var(--color-stone)'}}>Total</div>
             <Money
               data={order.totalPrice}
-              className="text-xl font-bold text-primary"
+              className="text-xl font-bold"
+              style={{color: 'var(--color-matcha-mid)'}}
             />
           </div>
 
           <Link
             to={`/account/orders/${btoa(order.id)}`}
-            className="inline-flex items-center bg-gray-700 hover:bg-primary text-white hover:text-black px-4 py-2 rounded-sm transition-all duration-300 text-sm font-bold"
+            className="inline-flex items-center px-4 py-2 rounded-sm transition-all duration-300 text-sm font-bold"
+            style={{backgroundColor: 'var(--color-cream)', color: 'var(--color-charcoal)', border: '1px solid var(--color-cream-dark)'}}
           >
             <Eye className="w-4 h-4 mr-2" />
             View Order

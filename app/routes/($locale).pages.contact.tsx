@@ -114,7 +114,7 @@ export default function Contact() {
   const config = useConfig();
 
   return (
-    <div className="min-h-screen bg-background text-text">
+    <div className="min-h-screen" style={{backgroundColor: 'var(--color-cream)', color: 'var(--color-charcoal)'}}>
       <div
         className="container mx-auto px-4 py-16"
         style={{
@@ -122,7 +122,7 @@ export default function Contact() {
         }}
       >
         <div className="max-w-2xl mx-auto">
-          <div className="bg-secondary/40 backdrop-blur-md border border-primary/20 rounded-lg p-8">
+          <div className="bg-white rounded-lg p-8" style={{border: '1px solid var(--color-cream-dark)'}}>
             {success ? (
               <div className="text-center py-12">
                 <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -140,16 +140,17 @@ export default function Contact() {
                     ></path>
                   </svg>
                 </div>
-                <h2 className="text-2xl font-bold text-white mb-4">
+                <h2 className="text-2xl font-bold mb-4" style={{color: 'var(--color-charcoal)'}}>
                   Message Sent!
                 </h2>
-                <p className="text-gray-300 mb-6">
+                <p className="mb-6" style={{color: 'var(--color-stone)'}}>
                   Thank you for reaching out. We've received your message and
                   will get back to you as soon as possible.
                 </p>
                 <Link
                   to="/collections/all"
-                  className="inline-flex items-center bg-primary hover:bg-primary-600 text-black font-bold py-3 px-6 rounded-sm transition-all duration-300"
+                  className="inline-flex items-center font-bold py-3 px-6 rounded-sm transition-all duration-300 text-white"
+                  style={{backgroundColor: 'var(--color-matcha-mid)'}}
                 >
                   Continue Shopping
                   <ArrowRight className="ml-2 w-4 h-4" />
@@ -157,7 +158,7 @@ export default function Contact() {
               </div>
             ) : (
               <>
-                <h2 className="text-2xl font-bold text-white mb-6 text-center">
+                <h2 className="text-2xl font-bold mb-6 text-center" style={{color: 'var(--color-charcoal)'}}>
                   Contact Us
                 </h2>
 
@@ -166,7 +167,7 @@ export default function Contact() {
                     <div>
                       <label
                         htmlFor="name"
-                        className="block text-white/70 font-medium text-sm mb-2"
+                        className="block font-medium text-sm mb-2" style={{color: 'var(--color-stone)'}}
                       >
                         Name *
                       </label>
@@ -175,7 +176,8 @@ export default function Contact() {
                         name="name"
                         type="text"
                         required
-                        className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-primary/50 focus:bg-white/10 transition-all duration-200"
+                        className="w-full rounded-lg px-4 py-3 focus:outline-none transition-all duration-200"
+                        style={{backgroundColor: 'var(--color-cream)', border: '1px solid var(--color-cream-dark)', color: 'var(--color-charcoal)'}}
                         placeholder="Your name"
                       />
                     </div>
@@ -183,7 +185,7 @@ export default function Contact() {
                     <div>
                       <label
                         htmlFor="email"
-                        className="block text-white/70 font-medium text-sm mb-2"
+                        className="block font-medium text-sm mb-2" style={{color: 'var(--color-stone)'}}
                       >
                         Email *
                       </label>
@@ -192,7 +194,8 @@ export default function Contact() {
                         name="email"
                         type="email"
                         required
-                        className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-primary/50 focus:bg-white/10 transition-all duration-200"
+                        className="w-full rounded-lg px-4 py-3 focus:outline-none transition-all duration-200"
+                        style={{backgroundColor: 'var(--color-cream)', border: '1px solid var(--color-cream-dark)', color: 'var(--color-charcoal)'}}
                         placeholder="Your email"
                       />
                     </div>
@@ -201,7 +204,7 @@ export default function Contact() {
                   <div>
                     <label
                       htmlFor="subject"
-                      className="block text-white/70 font-medium text-sm mb-2"
+                      className="block font-medium text-sm mb-2" style={{color: 'var(--color-stone)'}}
                     >
                       Subject
                     </label>
@@ -209,7 +212,8 @@ export default function Contact() {
                       id="subject"
                       name="subject"
                       type="text"
-                      className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-primary/50 focus:bg-white/10 transition-all duration-200"
+                      className="w-full rounded-lg px-4 py-3 focus:outline-none transition-all duration-200"
+                      style={{backgroundColor: 'var(--color-cream)', border: '1px solid var(--color-cream-dark)', color: 'var(--color-charcoal)'}}
                       placeholder="Message subject"
                     />
                   </div>
@@ -217,7 +221,7 @@ export default function Contact() {
                   <div>
                     <label
                       htmlFor="message"
-                      className="block text-white/70 font-medium text-sm mb-2"
+                      className="block font-medium text-sm mb-2" style={{color: 'var(--color-stone)'}}
                     >
                       Message *
                     </label>
@@ -226,7 +230,8 @@ export default function Contact() {
                       name="message"
                       required
                       rows={6}
-                      className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-primary/50 focus:bg-white/10 transition-all duration-200 resize-none"
+                      className="w-full rounded-lg px-4 py-3 focus:outline-none transition-all duration-200 resize-none"
+                      style={{backgroundColor: 'var(--color-cream)', border: '1px solid var(--color-cream-dark)', color: 'var(--color-charcoal)'}}
                       placeholder="Your message"
                     ></textarea>
                   </div>
@@ -234,7 +239,8 @@ export default function Contact() {
                   <div className="text-center">
                     <button
                       type="submit"
-                      className="bg-primary hover:bg-primary-600 text-black font-bold py-3 px-8 rounded-lg transition-all duration-200 inline-flex items-center"
+                      className="font-bold py-3 px-8 rounded-lg transition-all duration-200 inline-flex items-center text-white"
+                      style={{backgroundColor: 'var(--color-matcha-mid)'}}
                     >
                       Send Message
                       <ArrowRight className="ml-2 h-5 w-5" />

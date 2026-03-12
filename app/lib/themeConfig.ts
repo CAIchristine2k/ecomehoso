@@ -1,4 +1,4 @@
-// Theme configuration system for Hydrogen - matches Vue template's theming
+// Theme configuration system for Hydrogen - Hoso Matcha themed
 import type {LandingPageConfig} from '~/utils/config';
 
 export interface ThemeColors {
@@ -36,68 +36,66 @@ export interface ThemeConfig {
   };
 }
 
-// Predefined color schemes
+// Predefined color schemes - all updated for Hoso Matcha
 export const colorSchemes: Record<
   Exclude<BrandStyle, 'custom'>,
   ThemeColors
 > = {
   luxury: {
-    primary: '#D4AF37', // Gold
-    secondary: '#1F1F1F', // Dark gray
-    accent: '#FFFFFF', // White
-    background: '#000000', // Black
-    text: '#FFFFFF', // White
-  },
-  sporty: {
-    primary: '#FF4C29', // Energetic red
-    secondary: '#082032', // Navy blue
-    accent: '#00A8CC', // Bright blue
-    background: '#2C394B', // Dark blue-gray
-    text: '#FFFFFF', // White
-  },
-  casual: {
-    primary: '#A5BECC', // Soft blue
-    secondary: '#F2F2F2', // Light gray
-    accent: '#DF7861', // Coral
-    background: '#FFFFFF', // White
-    text: '#333333', // Dark gray
-  },
-  technical: {
-    primary: '#00D1FF', // Bright cyan
-    secondary: '#1E1E1E', // Very dark gray
-    accent: '#FF008C', // Bright pink
-    background: '#121212', // Almost black
-    text: '#FFFFFF', // White
+    primary: '#3d6b4f', // Matcha green
+    secondary: '#f5f0e6', // Warm cream
+    accent: '#c9a55c', // Gold accent
+    background: '#f5f0e6', // Cream background
+    text: '#1a1a18', // Charcoal text
   },
   minimalist: {
-    primary: '#F5F5F5', // Off-white
-    secondary: '#E0E0E0', // Light gray
-    accent: '#333333', // Dark gray
-    background: '#FFFFFF', // White
-    text: '#121212', // Near black
+    primary: '#3d6b4f',
+    secondary: '#f5f0e6',
+    accent: '#c9a55c',
+    background: '#faf8f3',
+    text: '#1a1a18',
+  },
+  sporty: {
+    primary: '#3d6b4f',
+    secondary: '#f5f0e6',
+    accent: '#c9a55c',
+    background: '#f5f0e6',
+    text: '#1a1a18',
+  },
+  casual: {
+    primary: '#5a8a6a',
+    secondary: '#f5f0e6',
+    accent: '#d4b87a',
+    background: '#faf8f3',
+    text: '#2a2a28',
+  },
+  technical: {
+    primary: '#3d6b4f',
+    secondary: '#f5f0e6',
+    accent: '#c9a55c',
+    background: '#f5f0e6',
+    text: '#1a1a18',
   },
   vibrant: {
-    primary: '#FF6B6B', // Coral red
-    secondary: '#4ECDC4', // Turquoise
-    accent: '#FFE66D', // Yellow
-    background: '#292F36', // Dark blue-gray
-    text: '#F7FFF7', // Off-white
+    primary: '#3d6b4f',
+    secondary: '#f5f0e6',
+    accent: '#c9a55c',
+    background: '#f5f0e6',
+    text: '#1a1a18',
   },
 };
 
-// Default theme configuration
+// Default theme configuration - Hoso Matcha
 const defaultTheme: ThemeConfig = {
   colors: colorSchemes.luxury,
-  brandName: 'BRAND',
+  brandName: 'HOSO MATCHA',
   brandStyle: 'luxury',
-  brandLogo: '/logo.svg',
-  influencerName: 'Influencer Name',
-  influencerTitle: 'Professional Title',
-  influencerImage: '/influencer.jpeg',
+  brandLogo: '/images/logo.png',
+  influencerName: 'Hoso Matcha',
+  influencerTitle: 'Matcha Premium depuis Uji, Kyoto',
+  influencerImage: '/images/hero-background.jpg',
   socialLinks: {
-    instagram: 'https://instagram.com/',
-    twitter: 'https://twitter.com/',
-    youtube: 'https://youtube.com/',
+    instagram: 'https://instagram.com/hosomatcha',
   },
 };
 
@@ -108,7 +106,6 @@ let currentTheme: ThemeConfig = {...defaultTheme};
 export function setTheme(newTheme: Partial<ThemeConfig>): void {
   currentTheme = {...currentTheme, ...newTheme};
 
-  // If brandStyle is provided and not 'custom', update colors to match the style
   if (
     newTheme.brandStyle &&
     newTheme.brandStyle !== 'custom' &&
@@ -118,7 +115,6 @@ export function setTheme(newTheme: Partial<ThemeConfig>): void {
       colorSchemes[newTheme.brandStyle as Exclude<BrandStyle, 'custom'>];
   }
 
-  // Update CSS variables to apply theme colors (client-side only)
   if (typeof document !== 'undefined') {
     updateCssVariables(currentTheme.colors);
   }
@@ -142,18 +138,16 @@ export function setColorTheme(style: BrandStyle | ThemeColors): void {
   }
 }
 
-// Update CSS custom properties (variables) based on theme colors
+// Update CSS custom properties based on theme colors
 function updateCssVariables(colors: ThemeColors): void {
   const root = document.documentElement;
 
-  // Set main colors as CSS variables
   root.style.setProperty('--color-primary', colors.primary);
   root.style.setProperty('--color-secondary', colors.secondary);
   root.style.setProperty('--color-accent', colors.accent);
   root.style.setProperty('--color-background', colors.background);
   root.style.setProperty('--color-text', colors.text);
 
-  // Set additional variables for Tailwind CSS
   root.style.setProperty(
     '--color-primary-50',
     adjustColorBrightness(colors.primary, 0.85),
@@ -192,7 +186,6 @@ function updateCssVariables(colors: ThemeColors): void {
     adjustColorBrightness(colors.primary, -0.8),
   );
 
-  // Do the same for secondary colors
   root.style.setProperty(
     '--color-secondary-50',
     adjustColorBrightness(colors.secondary, 0.85),
@@ -234,17 +227,14 @@ function updateCssVariables(colors: ThemeColors): void {
 
 // Helper function to adjust color brightness
 function adjustColorBrightness(hex: string, factor: number): string {
-  // Convert hex to RGB
   let r = parseInt(hex.substring(1, 3), 16);
   let g = parseInt(hex.substring(3, 5), 16);
   let b = parseInt(hex.substring(5, 7), 16);
 
-  // Adjust brightness
   r = Math.min(255, Math.max(0, Math.round(r + factor * 255)));
   g = Math.min(255, Math.max(0, Math.round(g + factor * 255)));
   b = Math.min(255, Math.max(0, Math.round(b + factor * 255)));
 
-  // Convert back to hex
   return `#${r.toString(16).padStart(2, '0')}${g
     .toString(16)
     .padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
@@ -252,18 +242,14 @@ function adjustColorBrightness(hex: string, factor: number): string {
 
 // Helper function to convert hex to RGB
 export function hexToRgb(hex: string): string {
-  // Remove # if present
   hex = hex.replace('#', '');
-
-  // Convert to RGB
   const r = parseInt(hex.substring(0, 2), 16);
   const g = parseInt(hex.substring(2, 4), 16);
   const b = parseInt(hex.substring(4, 6), 16);
-
   return `${r}, ${g}, ${b}`;
 }
 
-// CSS variables for easy access in components - with safety checks
+// CSS variables for easy access in components
 export const cssVars = {
   get primary() {
     if (typeof document === 'undefined') return currentTheme.colors.primary;
@@ -319,7 +305,6 @@ export function initThemeFromConfig(config: LandingPageConfig): void {
     socialLinks: config.socialLinks,
   });
 
-  // Update layout CSS variables if layout config is provided
   if (config.layout && typeof document !== 'undefined') {
     updateLayoutVariables(config.layout);
   }
@@ -330,7 +315,6 @@ function updateLayoutVariables(layout: LandingPageConfig['layout']): void {
   if (!layout || typeof document === 'undefined') return;
 
   const root = document.documentElement;
-  // Cart variables
   if (layout.cart) {
     root.style.setProperty('--cart-width-mobile', layout.cart.width.mobile);
     root.style.setProperty('--cart-width-tablet', layout.cart.width.tablet);
@@ -362,7 +346,6 @@ function updateLayoutVariables(layout: LandingPageConfig['layout']): void {
     );
   }
 
-  // Header variables
   if (layout.header) {
     root.style.setProperty(
       '--header-height-mobile',
@@ -374,7 +357,6 @@ function updateLayoutVariables(layout: LandingPageConfig['layout']): void {
     );
   }
 
-  // Spacing variables
   if (layout.spacing) {
     root.style.setProperty(
       '--container-padding',
@@ -390,7 +372,6 @@ export function initializeTheme(): void {
   if (typeof document !== 'undefined') {
     updateCssVariables(currentTheme.colors);
 
-    // Set RGB versions for shadows and opacity
     const root = document.documentElement;
     root.style.setProperty(
       '--color-primary-rgb',

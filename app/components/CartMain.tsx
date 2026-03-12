@@ -127,17 +127,18 @@ export function CartMain({
           {/* Header - Minimal padding for maximum content space */}
           <div className="flex-shrink-0 p-3 pb-2">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-bold text-white">Cart</h2>
+              <h2 style={{fontSize: '16px', fontWeight: 500, color: 'var(--color-charcoal)'}}>Panier</h2>
               <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1 text-xs text-white/70">
+                <div className="flex items-center gap-1" style={{fontSize: '12px', color: 'var(--color-stone)'}}>
                   <span>{cart?.totalQuantity || 0}</span>
                   <span>
-                    {(cart?.totalQuantity || 0) === 1 ? 'item' : 'items'}
+                    {(cart?.totalQuantity || 0) === 1 ? 'article' : 'articles'}
                   </span>
                 </div>
                 {layout === 'aside' && (
                   <button
-                    className="w-6 h-6 flex items-center justify-center text-white/70 hover:text-white rounded-sm hover:bg-white/10 transition-all duration-200"
+                    className="w-6 h-6 flex items-center justify-center rounded-sm transition-all duration-200"
+                    style={{color: 'var(--color-stone)'}}
                     onClick={close}
                     aria-label="Close cart"
                   >
@@ -173,7 +174,7 @@ export function CartMain({
 
           {/* Cart Summary - Compact bottom */}
           <div className="cart-summary-container">
-            <div className="border-t border-white/10 bg-black/40 backdrop-blur-xl">
+            <div style={{borderTop: '1px solid var(--color-cream-dark)', backgroundColor: 'var(--color-cream-warm)'}}>
                           {/* Prepare designs for checkout */}
             <PrepareDesignsForCheckout 
               cart={cart} 
@@ -213,25 +214,43 @@ function CartEmpty({
   return (
     <div className="flex flex-col items-center justify-center h-full p-8 text-center">
       <div className="relative mb-8">
-        <div className="w-20 h-20 rounded-full bg-white/5 backdrop-blur-sm border flex items-center justify-center">
-          <ShoppingBag className="w-10 h-10 text-white/40" />
+        <div
+          className="w-20 h-20 rounded-full flex items-center justify-center"
+          style={{backgroundColor: 'var(--color-cream)', border: '1px solid var(--color-cream-dark)'}}
+        >
+          <ShoppingBag className="w-10 h-10" style={{color: 'var(--color-stone)'}} />
         </div>
-        <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-primary/20 to-primary/5 blur-sm -z-10"></div>
       </div>
 
-      <h3 className="text-2xl font-bold text-white mb-3">Your cart is empty</h3>
-      <p className="text-white/60 mb-8 max-w-sm text-sm leading-relaxed">
-        Discover amazing products and start building your collection today.
+      <h3 style={{fontSize: '1.25rem', fontWeight: 400, color: 'var(--color-charcoal)', marginBottom: '12px'}}>
+        Votre panier est vide
+      </h3>
+      <p style={{color: 'var(--color-stone)', fontSize: '14px', fontWeight: 300, lineHeight: 1.7, marginBottom: '32px', maxWidth: '320px'}}>
+        Decouvrez nos matchas d'exception et commencez votre selection.
       </p>
 
       <Link
-        to="/collections"
+        to="/collections/all"
         onClick={close}
         prefetch="viewport"
-        className="inline-flex items-center gap-2 bg-primary hover:bg-primary-600 text-black font-bold px-6 py-3 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-primary/25"
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '8px',
+          padding: '14px 28px',
+          backgroundColor: 'var(--color-matcha-mid)',
+          color: 'white',
+          borderRadius: '6px',
+          fontSize: '12px',
+          fontWeight: 500,
+          letterSpacing: '0.15em',
+          textTransform: 'uppercase' as const,
+          textDecoration: 'none',
+          transition: 'all 0.3s ease',
+        }}
       >
         <ShoppingBag className="w-4 h-4" />
-        Start Shopping
+        Decouvrir nos produits
       </Link>
     </div>
   );

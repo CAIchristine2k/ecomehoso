@@ -1,163 +1,166 @@
-import React, {useEffect, useRef} from 'react';
-import {ShoppingBag, Trophy} from 'lucide-react';
+import React from 'react';
 import {Link} from 'react-router';
 import {useConfig} from '~/utils/themeContext';
 
 export function Hero() {
-  // Get config from context instead of props
   const config = useConfig();
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 0.8;
-
-      // Try to play the video - handle autoplay restrictions
-      const playPromise = videoRef.current.play();
-
-      if (playPromise !== undefined) {
-        playPromise.catch((error) => {
-          console.log('Auto-play was prevented by browser:', error);
-          // We'll show the poster image as fallback
-        });
-      }
-    }
-  }, []);
 
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-10"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Video/Image Background with Overlay - follows Vue template structure */}
+      {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
-        {config.heroVideoUrl ? (
-          <video
-            ref={videoRef}
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster={config.heroBackgroundImage}
-            className="w-full h-full object-cover"
+        <img
+          src={config.heroBackgroundImage}
+          alt={config.brandName}
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{filter: 'saturate(0.85)', opacity: 0.75}}
+        />
+        {/* Multi-layer overlay for depth */}
+        <div className="absolute inset-0 z-10" style={{
+          background: `
+            radial-gradient(ellipse at 50% 0%, rgba(26, 47, 35, 0.2) 0%, transparent 60%),
+            radial-gradient(ellipse at 50% 100%, rgba(26, 47, 35, 0.6) 0%, transparent 50%),
+            linear-gradient(180deg, rgba(26, 47, 35, 0.3) 0%, rgba(26, 47, 35, 0.1) 40%, rgba(26, 47, 35, 0.5) 100%)
+          `
+        }}></div>
+        {/* Subtle noise texture */}
+        <div className="absolute inset-0 z-11 opacity-[0.03]" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+        }}></div>
+      </div>
+
+      {/* Hero Content - Centered, minimal */}
+      <div className="relative z-20 text-center px-4">
+        <h1
+          className="text-white pb-6 hero-title-glow hero-title-breathe"
+          style={{
+            fontFamily: "'Brusher', 'Poppins', sans-serif",
+            fontSize: 'clamp(4rem, 12vw, 10rem)',
+            fontWeight: 400,
+            letterSpacing: '0.4em',
+            lineHeight: 1,
+            textIndent: '0.4em',
+          }}
+        >
+          {config.heroTitle}
+        </h1>
+
+        {/* Japanese subtitle */}
+        <p
+          className="text-white/80"
+          style={{
+            fontFamily: "'Noto Serif JP', serif",
+            fontSize: 'clamp(1rem, 2vw, 1.5rem)',
+            letterSpacing: '1em',
+          }}
+        >
+          宇治
+        </p>
+
+        <p
+          className="text-white/70 max-w-lg mx-auto mb-12"
+          style={{
+            fontFamily: "'Poppins', sans-serif",
+            fontSize: '15px',
+            fontWeight: 300,
+            lineHeight: 1.9,
+            letterSpacing: '0.02em',
+          }}
+        >
+          {config.heroSubtitle}
+        </p>
+
+        <Link
+          to={config.ctaLink}
+          className="inline-block text-white border border-white/40 hover:border-white/80 transition-all duration-500 hover:-translate-y-0.5"
+          style={{
+            fontFamily: "'Brusher', 'Poppins', sans-serif",
+            padding: '16px 48px',
+            fontSize: '11px',
+            letterSpacing: '0.25em',
+            textTransform: 'uppercase' as const,
+            fontWeight: 500,
+          }}
+        >
+          {config.ctaText}
+        </Link>
+      </div>
+
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-30">
+        <span
+          className="text-white/60 mb-3"
+          style={{
+            fontFamily: "'Brusher', 'Poppins', sans-serif",
+            fontSize: '9px',
+            letterSpacing: '0.3em',
+            textTransform: 'uppercase' as const,
+          }}
+        >
+          SCROLL
+        </span>
+        <div className="w-px h-10 bg-white/30 animate-pulse"></div>
+      </div>
+
+      {/* Bottom tagline bar */}
+      <div
+        className="absolute bottom-0 left-0 right-0 z-20 flex items-center justify-center gap-8 py-4 px-6"
+        style={{
+          background: 'rgba(26, 47, 35, 0.85)',
+          backdropFilter: 'blur(20px)',
+          borderTop: '1px solid rgba(255, 255, 255, 0.12)',
+        }}
+      >
+        {['Matcha d\'exception', 'Origine Uji, Kyoto', 'Artisanal', 'Livraison offerte'].map((item, i) => (
+          <span
+            key={i}
+            className="text-white/60 hidden sm:inline"
+            style={{
+              fontFamily: "'Poppins', sans-serif",
+              fontSize: '10px',
+              letterSpacing: '0.3em',
+              textTransform: 'uppercase' as const,
+              fontWeight: 400,
+            }}
           >
-            <source src={config.heroVideoUrl} type="video/mp4" />
-            {/* Fallback to image if video doesn't load */}
-            <img
-              src={config.heroBackgroundImage}
-              alt={config.influencerName}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          </video>
-        ) : (
-          <img
-            src={config.heroBackgroundImage}
-            alt={config.influencerName}
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/90 z-10"></div>
-      </div>
-
-      {/* Hero Content - closely matches Vue template structure */}
-      <div className="relative container mx-auto px-4 z-20 py-20">
-        <div className="max-w-3xl">
-          <div className="inline-block bg-primary text-black font-bold py-1 px-4 mb-6 tracking-wider rounded-sm">
-            {config.influencerTitle}
-          </div>
-
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            <span className="text-white">THE LEGACY OF</span>
-            <br />
-            <span className="text-primary tracking-wider hero-title-glow">
-              {config.brandName}
-            </span>
-          </h1>
-
-          <p className="text-lg md:text-xl text-gray-200 mb-10 max-w-xl leading-relaxed">
-            {config.heroSubtitle}
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-5">
-            <Link
-              to={config.ctaLink}
-              className="group bg-primary hover:bg-primary-400 text-black font-bold py-4 px-8 rounded-sm transition-all duration-300 flex items-center justify-center sm:justify-start shadow-glow"
-            >
-              {config.ctaText}
-              <ShoppingBag className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </Link>
-
-            <Link
-              to="#career"
-              className="group bg-transparent border-2 border-white hover:border-primary text-white hover:text-primary font-bold py-4 px-8 rounded-sm transition-all duration-300 flex items-center justify-center sm:justify-start"
-            >
-              EXPLORE CAREER
-              <Trophy className="ml-2 h-5 w-5 transition-transform group-hover:translate-y-[-2px]" />
-            </Link>
-          </div>
-
-          {/* Boxing statistics badges - directly from Vue template */}
-          <div className="mt-16 mb-16 md:mb-24 grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div className="bg-black/60 backdrop-blur-sm border border-primary/30 p-4 rounded-sm text-center transform transition-transform hover:scale-105 hover:border-primary/80">
-              <div className="text-primary text-3xl font-bold hero-stat-glow">
-                49
-              </div>
-              <div className="text-white text-sm tracking-wider">
-                CAREER WINS
-              </div>
-            </div>
-            <div className="bg-black/60 backdrop-blur-sm border border-primary/30 p-4 rounded-sm text-center transform transition-transform hover:scale-105 hover:border-primary/80">
-              <div className="text-primary text-3xl font-bold hero-stat-glow">
-                41
-              </div>
-              <div className="text-white text-sm tracking-wider">KOs</div>
-            </div>
-            <div className="bg-black/60 backdrop-blur-sm border border-primary/30 p-4 rounded-sm text-center transform transition-transform hover:scale-105 hover:border-primary/80">
-              <div className="text-primary text-3xl font-bold hero-stat-glow">
-                9
-              </div>
-              <div className="text-white text-sm tracking-wider">
-                WORLD TITLES
-              </div>
-            </div>
-            <div className="bg-black/60 backdrop-blur-sm border border-primary/30 p-4 rounded-sm text-center transform transition-transform hover:scale-105 hover:border-primary/80">
-              <div className="text-primary text-3xl font-bold hero-stat-glow">
-                3
-              </div>
-              <div className="text-white text-sm tracking-wider">
-                WEIGHT DIVISIONS
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-pulse z-30 md:bottom-8">
-          <span className="text-white text-xs mb-2 tracking-widest">
-            SCROLL DOWN
+            {i > 0 && <span className="mr-8 text-white/30">·</span>}
+            {item}
           </span>
-          <div className="w-0.5 h-12 bg-primary"></div>
-        </div>
+        ))}
+        {/* Mobile: show only first two */}
+        {['Matcha d\'exception', 'Uji, Kyoto'].map((item, i) => (
+          <span
+            key={`mobile-${i}`}
+            className="text-white/60 sm:hidden"
+            style={{
+              fontFamily: "'Poppins', sans-serif",
+              fontSize: '9px',
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase' as const,
+              fontWeight: 400,
+            }}
+          >
+            {i > 0 && <span className="mr-6 text-white/30">·</span>}
+            {item}
+          </span>
+        ))}
       </div>
 
-      {/* Add the CSS styles directly to match Vue template */}
       <style
         dangerouslySetInnerHTML={{
           __html: `
           .hero-title-glow {
-            text-shadow: 0 0 15px rgba(var(--color-primary-rgb), 0.4);
+            text-shadow: 0 4px 40px rgba(0, 0, 0, 0.3);
           }
-          
-          .hero-stat-glow {
-            text-shadow: 0 0 8px rgba(var(--color-primary-rgb), 0.3);
+          .hero-title-breathe {
+            animation: heroBreathe 4s ease-in-out infinite;
           }
-          
-          .shadow-glow {
-            box-shadow: 0 4px 20px rgba(var(--color-primary-rgb), 0.25);
-          }
-          
-          video {
-            filter: brightness(0.9) contrast(1.1);
+          @keyframes heroBreathe {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
           }
         `,
         }}

@@ -247,150 +247,147 @@ export interface LandingPageConfig {
   }>;
 }
 
-// Shane Mosley specific configuration
+// Hoso Matcha configuration
 export const defaultConfig: LandingPageConfig = {
   // Brand & Influencer Details
-  influencerName: 'Shane Mosley',
-  influencerTitle: 'Boxing Legend & 9-Time World Champion',
+  influencerName: 'Hoso Matcha',
+  influencerTitle: 'Matcha Premium depuis Uji, Kyoto',
   influencerBio:
-    "Known as 'Sugar' Shane Mosley, one of boxing's most decorated champions with titles in three weight divisions and a legacy of spectacular performances against the sport's greatest names.",
-  influencerImage: '/images/influencer.jpeg',
-  brandName: 'SUGAR SHANE',
-  brandLogo: '/images/logo.png',
-  industry: 'boxing',
+    "Hoso Matcha est ne de la rencontre entre l'art ancestral du matcha japonais et la patisserie artisanale. Nos matchas d'exception sont selectionnes a Uji, berceau du matcha depuis le XIVe siecle.",
+  influencerImage: '/images/hero-background.jpg',
+  brandName: 'HOSO MATCHA',
+  brandLogo: '/images/logo/hoso-logo-noir.png',
+  industry: 'matcha',
 
-  // Visual Theme - Boxing champions typically go with luxury styling
+  // Visual Theme
   brandStyle: 'luxury',
-  heroBackgroundImage: '/images/hero-background.jpg',
-  heroVideoUrl: '/videos/boxing-hero.mp4',
+  heroBackgroundImage: '/images/preset/bghero.png',
+  heroVideoUrl: undefined,
 
   // Content
-  heroTitle: 'CHAMPIONSHIP LEGACY',
+  heroTitle: 'HOSO',
   heroSubtitle:
-    'Premium boxing equipment and apparel from a 9-time world champion',
-  ctaText: 'SHOP THE COLLECTION',
+    "L'art du matcha d'exception, directement depuis les jardins d'Uji, Kyoto",
+  ctaText: 'DECOUVRIR',
   ctaLink: '/collections/all',
 
   // Navigation
   navigation: [
-    {name: 'Home', href: '/'},
-    {name: 'Shop', href: '/collections/all'},
-    {name: 'About', href: '/about'},
-    {name: 'Career', href: '/about#highlights'},
-    {name: 'Contact', href: '/pages/contact'},
+    {name: 'Accueil', href: '/'},
+    {name: 'Boutique', href: '/collections/all'},
+    {name: 'Notre Histoire', href: '/notre-histoire'},
+    {name: 'Notre Magasin', href: '/notre-magasin'},
   ],
 
   // Product Information
   mainProduct: {
-    name: 'Champion Gloves',
+    name: 'Matcha Ceremonial',
     description:
-      'Professional-grade boxing gloves designed by Shane Mosley. Ideal for training and competition.',
-    price: '$149.99',
+      "Notre matcha ceremonial de grade superieur, cultive dans les jardins traditionnels d'Uji. Un gout umami profond et une texture soyeuse.",
+    price: '34.00',
     image: '/images/product-1.png',
-    handle: 'champion-gloves',
+    handle: 'matcha-ceremonial',
     features: [
-      'Premium leather construction',
-      'Perfect weight distribution',
-      'Pro-level wrist support',
-      'Sweat-resistant lining',
+      'Grade ceremonial superieur',
+      'Origine Uji, Kyoto',
+      'Recolte premiere flush',
+      'Mouture sur meule de pierre',
     ],
   },
   additionalProducts: [
     {
-      name: 'Sugar Shane Hoodie',
+      name: 'Matcha Culinaire',
       description:
-        'Comfortable and stylish hoodie featuring the Sugar Shane logo. Perfect for pre and post workout.',
-      price: '$89.99',
+        'Ideal pour vos patisseries et boissons. Un matcha riche en saveur, parfait pour les lattes et les recettes.',
+      price: '24.00',
       image: '/images/product-2.png',
-      handle: 'sugar-shane-hoodie',
+      handle: 'matcha-culinaire',
       features: [
-        'Premium cotton blend',
-        'Embroidered logo',
-        'Comfortable fit',
-        'Available in multiple sizes',
+        'Parfait pour les lattes',
+        'Ideal en patisserie',
+        'Saveur riche et equilibree',
+        'Format genereux',
       ],
     },
     {
-      name: 'Training DVD Set',
+      name: 'Chasen - Fouet en Bambou',
       description:
-        "Complete training program featuring Shane's signature techniques and workout routines.",
-      price: '$49.99',
+        'Fouet traditionnel en bambou, fabrique a la main au Japon. Indispensable pour une preparation authentique.',
+      price: '28.00',
       image: '/images/product-3.png',
-      handle: 'training-dvd-set',
+      handle: 'chasen-fouet-bambou',
       features: [
-        'Over 10 hours of content',
-        'Beginner to advanced techniques',
-        'Fitness and conditioning routines',
-        'Strategy and mental preparation',
+        'Bambou naturel',
+        'Fabrication artisanale',
+        '80 brins',
+        'Traditionnel japonais',
       ],
     },
     {
-      name: 'Pro Hand Wraps',
+      name: 'Chawan - Bol a Matcha',
       description:
-        'Professional hand wraps used by Shane throughout his championship career.',
-      price: '$24.99',
+        "Bol en ceramique artisanale, concu pour la preparation traditionnelle du matcha. Chaque piece est unique.",
+      price: '42.00',
       image: '/images/product-4.png',
-      handle: 'pro-hand-wraps',
+      handle: 'chawan-bol-matcha',
       features: [
-        'Perfect length and elasticity',
-        'Secure thumb loop',
-        'Machine washable',
-        'Prevents injuries',
+        'Ceramique artisanale',
+        'Forme traditionnelle',
+        'Piece unique',
+        'Fabrique au Japon',
       ],
     },
   ],
 
-  // Social Media - using Shane's actual handles where possible
-  instagramHandle: 'sugarshanemosley',
-  twitterHandle: 'ShaneMosley_',
-  youtubeChannel: '@SugarShaneM',
-  tiktokHandle: 'sugarshanemosley',
+  // Social Media
+  instagramHandle: 'hosomatcha',
+  twitterHandle: undefined,
+  youtubeChannel: undefined,
+  tiktokHandle: 'hosomatcha',
 
   // Social Links
   socialLinks: {
-    instagram: 'https://instagram.com/sugarshanemosley',
-    twitter: 'https://twitter.com/ShaneMosley_',
-    youtube: 'https://youtube.com/@SugarShaneM',
-    tiktok: 'https://tiktok.com/@sugarshanemosley',
+    instagram: 'https://instagram.com/hosomatcha',
+    tiktok: 'https://tiktok.com/@hosomatcha',
   },
 
   // Contact Information
-  contactEmail: 'team@sugarshanemosley.com',
+  contactEmail: 'contact@hosomatcha.com',
   contactInfo: {
-    address: '123 Main St, Anytown, USA',
-    phone: '(555) 123-4567',
-    email: 'team@sugarshanemosley.com',
+    address: 'Paris, France',
+    phone: undefined,
+    email: 'contact@hosomatcha.com',
   },
   newsletterEnabled: true,
 
   // Features & Sections
-  showLimitedEdition: true,
-  showCareerHighlights: true,
+  showLimitedEdition: false,
+  showCareerHighlights: false,
   showTestimonials: true,
-  showSocialFeed: true,
-  showAIMediaGeneration: true,
-  showTrainingSection: true,
+  showSocialFeed: false,
+  showAIMediaGeneration: false,
+  showTrainingSection: false,
 
   // Customizable Products
   customizableProducts: {
-    title: 'Customize Your Own',
+    title: 'Personnalisez votre coffret',
     subtitle:
-      'Create one-of-a-kind products featuring your own photos, text, and designs.',
-    badgeText: 'Personalization',
-    showcaseTitle: 'Create Custom Products',
-    showcaseTitleHighlight: 'Your Way',
+      'Composez votre coffret matcha sur mesure avec nos produits selectionnes.',
+    badgeText: 'Sur mesure',
+    showcaseTitle: 'Votre coffret',
+    showcaseTitleHighlight: 'personnalise',
     showcaseDescription:
-      'Upload your photos, add text, and personalize our products with our easy-to-use design tool.',
+      'Choisissez vos matchas et accessoires pour creer le coffret ideal.',
     features: [
-      'Upload your own photos',
-      'Add custom text and styling',
-      'Choose colors and designs',
+      'Choix des matchas',
+      'Accessoires traditionnels',
+      'Emballage cadeau',
     ],
-    ctaText: 'Start Designing',
+    ctaText: 'Composer mon coffret',
     ctaLink: '/customize-products',
     showcaseImage: '/images/customization-preview.jpg',
-    showcaseImageAlt: 'Product customization preview',
-    viewAllText: 'View All Customizable Products',
+    showcaseImageAlt: 'Coffret matcha personnalise',
+    viewAllText: 'Voir les coffrets',
     viewAllLink: '/customize-products',
   },
 
@@ -421,238 +418,193 @@ export const defaultConfig: LandingPageConfig = {
     },
     spacing: {
       containerPadding: '1rem',
-      sectionSpacing: '4rem',
+      sectionSpacing: '6.5rem',
       cardSpacing: '1.5rem',
     },
   },
 
   // AI Media Generation
   aiMediaGeneration: {
-    title: 'CHAMPION PHOTO EXPERIENCE',
-    subtitle: 'AI-Powered Fan Experience',
+    title: 'EXPERIENCE MATCHA',
+    subtitle: 'Creez votre moment matcha',
     description:
-      'Upload your photo and see yourself alongside Sugar Shane Mosley using cutting-edge AI technology. Create your own championship moment!',
-    buttonText: 'Generate My Photo',
-    influencerReferenceImage: '/images/influencer.jpeg',
-    placeholderText: 'Upload your photo to get started',
-    successMessage: 'Your training photo is ready! Check it out below.',
+      'Decouvrez nos recettes et partagez votre experience matcha avec notre communaute.',
+    buttonText: 'Creer',
+    influencerReferenceImage: '/images/hero-background.jpg',
+    placeholderText: 'Partagez votre photo',
+    successMessage: 'Votre creation est prete !',
     errorMessage:
-      'Something went wrong generating your photo. Please try again.',
+      'Une erreur est survenue. Veuillez reessayer.',
     processingMessage:
-      'Creating your championship moment... This may take a few minutes.',
+      'Creation en cours... Cela peut prendre quelques instants.',
     shareText:
-      'Check out my AI-generated training photo with Sugar Shane Mosley! 🥊✨',
+      'Decouvrez mon moment matcha avec Hoso Matcha !',
     maxFileSize: 10,
     allowedFormats: ['jpg', 'jpeg', 'png'],
     features: [
-      'High-quality AI generation',
-      'Instant training scenarios',
-      'Shareable results',
-      'Multiple poses available',
+      'Generation IA de qualite',
+      'Resultats instantanes',
+      'Partage facile',
+      'Plusieurs styles disponibles',
     ],
-    // Pose options
     poseOptions: [
       {
         id: 'celebrity',
-        name: 'Celebrity Style',
-        description: 'Photo with Sugar Shane Mosley',
+        name: 'Style Matcha',
+        description: 'Votre moment matcha',
         icon: 'users',
-      },
-      {
-        id: 'hugging',
-        name: 'Meet & Greet',
-        description: 'Photo with Sugar Shane Mosley',
-        icon: 'users',
-      },
-      {
-        id: 'heart',
-        name: 'Fan Love',
-        description: 'Show your support with a heart gesture',
-        icon: 'heart',
       },
       {
         id: 'try-on',
-        name: 'Virtual Try-On',
-        description: 'Try on official merchandise',
+        name: 'Essai virtuel',
+        description: 'Essayez nos accessoires',
         icon: 'shirt',
       },
     ],
-    // Photo ordering features
-    enablePrinting: true,
-    printProductId: 'ai-photo-print',
-    printProductName: 'AI Photo Print',
-    // Product try-on options
-    productOptions: [
-      {
-        id: 'product-1',
-        name: 'Championship Tee',
-        description: 'Official championship t-shirt',
-        imagePath: '/images/product-1.png',
-        price: '$39.99',
-      },
-      {
-        id: 'product-2',
-        name: 'Training Hoodie',
-        description: 'Premium training hoodie',
-        imagePath: '/images/product-2.png',
-        price: '$59.99',
-      },
-      {
-        id: 'product-3',
-        name: 'Elite Jersey',
-        description: 'Elite fighter jersey',
-        imagePath: '/images/product-3.png',
-        price: '$79.99',
-      },
-      {
-        id: 'product-4',
-        name: 'Limited Cap',
-        description: 'Limited edition cap',
-        imagePath: '/images/product-4.png',
-        price: '$34.99',
-      },
-    ],
-    // Authentication and limits
+    enablePrinting: false,
+    printProductId: '',
+    printProductName: '',
+    productOptions: [],
     requiresAuth: true,
     usageLimit: 10,
     resetPeriod: 'monthly',
-    loginPromptTitle: 'Authentication Required',
-    loginPromptMessage: 'Please log in to generate more photos.',
-    limitReachedTitle: 'Usage Limit Reached',
+    loginPromptTitle: 'Connexion requise',
+    loginPromptMessage: 'Veuillez vous connecter pour continuer.',
+    limitReachedTitle: 'Limite atteinte',
     limitReachedMessage:
-      "You've reached the maximum number of photos you can generate this month.",
+      'Vous avez atteint le nombre maximum de creations pour ce mois.',
   },
 
   // Limited Edition
   limitedEdition: {
-    title: 'CHAMPIONSHIP COLLECTION',
+    title: 'EDITION LIMITEE',
     description:
-      'Exclusive limited edition gloves signed by Shane Mosley. Only 100 pairs available. Each pair includes a certificate of authenticity.',
-    productHandle: 'championship-signed-gloves',
-    originalPrice: '$249.99',
-    salePrice: '$199.99',
-    endDate: '2024-12-31T23:59:59', // ISO date string
+      'Notre matcha ceremonial grand cru, recolte de printemps. Edition limitee, seulement 50 boites disponibles.',
+    productHandle: 'matcha-grand-cru',
+    originalPrice: '59.00',
+    salePrice: '49.00',
+    endDate: '2026-12-31T23:59:59',
   },
 
   // Products
   products: [
     {
-      name: 'Champion Gloves',
+      name: 'Matcha Ceremonial',
       description:
-        'Professional-grade boxing gloves designed by Shane Mosley. Ideal for training and competition.',
-      price: '$149.99',
+        "Notre matcha ceremonial de grade superieur, cultive dans les jardins traditionnels d'Uji.",
+      price: '34.00',
       image: '/images/product-1.png',
-      handle: 'champion-gloves',
+      handle: 'matcha-ceremonial',
       label: 'Bestseller',
       features: [
-        'Premium leather construction',
-        'Perfect weight distribution',
-        'Pro-level wrist support',
-        'Sweat-resistant lining',
+        'Grade ceremonial superieur',
+        'Origine Uji, Kyoto',
+        'Recolte premiere flush',
+        'Mouture sur meule de pierre',
       ],
     },
     {
-      name: 'Sugar Shane Hoodie',
+      name: 'Matcha Culinaire',
       description:
-        'Comfortable and stylish hoodie featuring the Sugar Shane logo. Perfect for pre and post workout.',
-      price: '$89.99',
+        'Ideal pour vos patisseries et boissons. Un matcha riche en saveur.',
+      price: '24.00',
       image: '/images/product-2.png',
-      handle: 'sugar-shane-hoodie',
-      label: 'New',
+      handle: 'matcha-culinaire',
+      label: 'Populaire',
       features: [
-        'Premium cotton blend',
-        'Embroidered logo',
-        'Comfortable fit',
-        'Available in multiple sizes',
+        'Parfait pour les lattes',
+        'Ideal en patisserie',
+        'Saveur riche',
+        'Format genereux',
       ],
     },
     {
-      name: 'Training DVD Set',
+      name: 'Chasen - Fouet en Bambou',
       description:
-        "Complete training program featuring Shane's signature techniques and workout routines.",
-      price: '$49.99',
+        'Fouet traditionnel en bambou, fabrique a la main au Japon.',
+      price: '28.00',
       image: '/images/product-3.png',
-      handle: 'training-dvd-set',
+      handle: 'chasen-fouet-bambou',
       features: [
-        'Over 10 hours of content',
-        'Beginner to advanced techniques',
-        'Fitness and conditioning routines',
-        'Strategy and mental preparation',
+        'Bambou naturel',
+        'Fabrication artisanale',
+        '80 brins',
+        'Traditionnel japonais',
       ],
     },
     {
-      name: 'Pro Hand Wraps',
+      name: 'Chawan - Bol a Matcha',
       description:
-        'Professional hand wraps used by Shane throughout his championship career.',
-      price: '$24.99',
+        'Bol en ceramique artisanale pour la preparation traditionnelle.',
+      price: '42.00',
       image: '/images/product-4.png',
-      handle: 'pro-hand-wraps',
+      handle: 'chawan-bol-matcha',
       features: [
-        'Perfect length and elasticity',
-        'Secure thumb loop',
-        'Machine washable',
-        'Prevents injuries',
+        'Ceramique artisanale',
+        'Forme traditionnelle',
+        'Piece unique',
+        'Fabrique au Japon',
       ],
     },
   ],
 
-  // Career Highlights
+  // Career Highlights - Repurposed as Brand Milestones
   careerHighlights: [
     {
-      year: '2000',
-      title: 'WBC Welterweight Champion',
+      year: '2020',
+      title: 'Naissance de Hoso Matcha',
       description:
-        'Defeated Oscar De La Hoya to capture the WBC welterweight title in a stunning upset victory.',
+        "Premiere selection de matcha d'Uji, debut de l'aventure entre tradition japonaise et savoir-faire francais.",
       image: '/images/product-1.png',
     },
     {
-      year: '2001',
-      title: 'Unified Welterweight Champion',
+      year: '2021',
+      title: 'Partenariat avec les producteurs d\'Uji',
       description:
-        'Added the WBA and IBF welterweight titles to become the undisputed champion.',
+        'Accord exclusif avec des producteurs familiaux de la region d\'Uji, berceau du matcha depuis le XIVe siecle.',
       image: '/images/product-2.png',
     },
     {
-      year: '2003',
-      title: 'Light Middleweight Champion',
+      year: '2023',
+      title: 'Lancement de la boutique',
       description:
-        'Moved up in weight to capture the WBA and WBC light middleweight titles.',
+        'Ouverture de notre boutique en ligne et premiere collection d\'accessoires traditionnels.',
       image: '/images/product-3.png',
     },
     {
-      title: 'Professional Debut',
-      year: '1993',
+      year: '2024',
+      title: 'Collection Grand Cru',
       description:
-        'Made professional boxing debut, winning by TKO in the first round.',
+        'Lancement de notre gamme Grand Cru, les matchas les plus raffines selectionnes a la source.',
       image: '/images/product-4.png',
     },
   ],
 
-  // Training Programs
+  // Training Programs - Repurposed as Matcha Guides
   trainingPrograms: [
     {
-      id: 'personal',
-      title: 'PERSONAL TRAINING',
+      id: 'preparation',
+      title: 'L\'ART DE LA PREPARATION',
       description:
-        'One-on-one sessions with championship techniques and personalized feedback',
-      icon: 'dumbbell',
-      link: '/collections/training',
+        'Apprenez a preparer un matcha parfait avec les techniques traditionnelles japonaises',
+      icon: 'coffee',
+      link: '/about',
     },
     {
-      id: 'masterclass',
-      title: 'BOXING MASTERCLASS',
+      id: 'selection',
+      title: 'NOTRE SELECTION',
       description:
-        'Learn the strategies and techniques that made Sugar Shane a 9-time world champion',
-      icon: 'medal',
-      link: '/collections/masterclass',
+        'Decouvrez comment nous selectionnons les meilleurs matchas directement a Uji, Kyoto',
+      icon: 'leaf',
+      link: '/about',
     },
     {
-      id: 'community',
-      title: 'CHAMPION COMMUNITY',
+      id: 'bienfaits',
+      title: 'LES BIENFAITS',
       description:
-        'Join an exclusive community of fighters and fans with special events and content',
-      icon: 'users',
-      link: '/collections/community',
+        'Le matcha est riche en antioxydants, L-theanine et chlorophylle pour votre bien-etre',
+      icon: 'heart',
+      link: '/about',
     },
   ],
 
@@ -660,31 +612,31 @@ export const defaultConfig: LandingPageConfig = {
   shopify: {
     featuredCollections: [
       {
-        handle: 'boxing-gloves',
-        title: 'Boxing Gloves',
+        handle: 'matcha',
+        title: 'Nos Matchas',
         featured: true,
       },
       {
-        handle: 'training-equipment',
-        title: 'Training Equipment',
+        handle: 'accessoires',
+        title: 'Accessoires',
         featured: true,
       },
       {
-        handle: 'apparel',
-        title: 'Apparel',
+        handle: 'coffrets',
+        title: 'Coffrets',
         featured: true,
       },
       {
-        handle: 'accessories',
-        title: 'Accessories',
+        handle: 'patisserie',
+        title: 'Patisserie',
         featured: false,
       },
     ],
     featuredProducts: [
-      'champion-gloves',
-      'sugar-shane-hoodie',
-      'pro-hand-wraps',
-      'training-dvd-set',
+      'matcha-ceremonial',
+      'matcha-culinaire',
+      'chasen-fouet-bambou',
+      'chawan-bol-matcha',
     ],
     mainCollectionHandle: 'featured',
     limitedEditionCollectionHandle: 'limited-edition',
@@ -696,27 +648,24 @@ export const defaultConfig: LandingPageConfig = {
   // Testimonials
   testimonials: [
     {
-      name: 'Marcus Rodriguez',
-      role: 'Amateur Boxer',
+      name: 'Marie L.',
+      role: 'Cliente fidele',
       content:
-        "Training with Shane's techniques has completely transformed my boxing game. The AI photo feature is incredible - seeing myself train alongside the champ is pure motivation!",
-      image: '/images/testimonial-2.jpeg',
+        "Le matcha ceremonial de Hoso est d'une qualite exceptionnelle. La saveur umami est profonde et l'arriere-gout est doux et elegant. Je ne peux plus m'en passer pour mes rituels du matin.",
       rating: 5,
     },
     {
-      name: 'Sarah Johnson',
-      role: 'Fitness Enthusiast',
+      name: 'Thomas D.',
+      role: 'Patissier',
       content:
-        "The Sugar Shane gear is top quality, and the AI training photos are such a unique experience. It's like having a personal session with a legend!",
-      image: '/images/testimonial-3.jpeg',
+        "En tant que patissier, je suis tres exigeant sur la qualite des ingredients. Le matcha culinaire de Hoso apporte une couleur et un gout incomparables a mes creations. Un produit d'exception.",
       rating: 5,
     },
     {
-      name: 'Tony Martinez',
-      role: 'Boxing Coach',
+      name: 'Sophie M.',
+      role: 'Passionnee de the',
       content:
-        "My students love generating AI photos with Shane. It's become a huge motivation tool in our gym. The quality is incredible and it brings real excitement to training.",
-      image: '/images/social-feed-1.jpeg',
+        "La difference avec les autres matchas est flagrante des la premiere gorgee. On sent le soin apporte a la selection et la mouture. L'emballage est aussi tres raffine, parfait pour offrir.",
       rating: 5,
     },
   ],

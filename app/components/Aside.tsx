@@ -136,16 +136,17 @@ export function Aside({
     >
       {/* Enhanced Overlay with gradient */}
       <div
-        className={`absolute inset-0 bg-gradient-to-r from-black/60 via-black/50 to-black/70 backdrop-blur-md transition-all duration-500 ${
+        className={`absolute inset-0 backdrop-blur-sm transition-all duration-500 ${
           expanded ? 'opacity-100' : 'opacity-0'
         }`}
+        style={{backgroundColor: 'rgba(26,47,35,0.3)'}}
         onClick={close}
       ></div>
 
-      {/* Cart/Aside Container with proper header clearance */}
+      {/* Cart/Aside Container */}
       <aside
         ref={asideRef}
-        className={`cart-aside-container aside-glow ${expanded ? 'aside-visible open' : ''} fixed right-0 bg-background/95 backdrop-blur-xl shadow-2xl border-l border-primary/20 transition-all duration-500 ease-out flex flex-col ${className}`}
+        className={`cart-aside-container ${expanded ? 'aside-visible open' : ''} fixed right-0 shadow-2xl transition-all duration-500 ease-out flex flex-col ${className}`}
         style={{
           zIndex: 100,
           height: 'calc(100% - var(--header-height-desktop))',
@@ -157,22 +158,28 @@ export function Aside({
           minWidth: 'var(--cart-min-width)',
           maxWidth: 'var(--cart-max-width-desktop)',
           transform: expanded ? 'translateX(0)' : 'translateX(100%)',
+          backgroundColor: 'var(--color-cream)',
+          borderLeft: '1px solid var(--color-cream-dark)',
           boxShadow: expanded
-            ? '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(var(--color-primary-rgb), 0.1)'
+            ? '0 25px 50px -12px rgba(0,0,0,0.15)'
             : 'none',
         }}
       >
-        <header className="flex items-center justify-between p-6 border-b border-primary/20 flex-shrink-0 bg-gradient-to-r from-background/50 to-background backdrop-blur-sm">
-          <h3 className="text-xl font-bold text-primary tracking-wide">
+        <header
+          className="flex items-center justify-between p-6 flex-shrink-0"
+          style={{borderBottom: '1px solid var(--color-cream-dark)'}}
+        >
+          <h3 style={{fontSize: '14px', fontWeight: 500, letterSpacing: '0.15em', textTransform: 'uppercase' as const, color: 'var(--color-charcoal)'}}>
             {heading}
           </h3>
           <button
-            className="close-button-enhanced group w-10 h-10 flex items-center justify-center text-primary hover:text-primary-600 rounded-full hover:bg-primary/10 transition-all duration-300 hover:scale-110 hover:rotate-90"
+            className="group w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 hover:scale-110"
+            style={{color: 'var(--color-stone)'}}
             onClick={close}
             aria-label="Close"
           >
             <svg
-              className="w-5 h-5 transition-transform duration-300"
+              className="w-5 h-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -180,15 +187,14 @@ export function Aside({
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2}
+                strokeWidth={1.5}
                 d="M6 18L18 6M6 6l12 12"
               />
             </svg>
           </button>
         </header>
-        <main className="flex-1 overflow-hidden bg-gradient-to-b from-background/80 to-background text-text min-h-0 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-primary/5 pointer-events-none"></div>
-          <div className="aside-content-slide-in relative h-full overflow-y-auto scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent">
+        <main className="flex-1 overflow-hidden min-h-0 relative">
+          <div className="relative h-full overflow-y-auto">
             {children}
           </div>
         </main>

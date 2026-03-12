@@ -29,14 +29,11 @@ import favicon from '~/assets/favicon.svg';
 export const links: LinksFunction = () => {
   return [
     {rel: 'stylesheet', href: appStyles},
-    {
-      rel: 'preconnect',
-      href: 'https://cdn.shopify.com',
-    },
-    {
-      rel: 'preconnect',
-      href: 'https://shop.app',
-    },
+    {rel: 'preconnect', href: 'https://cdn.shopify.com'},
+    {rel: 'preconnect', href: 'https://shop.app'},
+    {rel: 'preconnect', href: 'https://fonts.googleapis.com'},
+    {rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' as const},
+    {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Noto+Serif+JP:wght@400;500&display=swap'},
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
   ];
 };
@@ -180,7 +177,12 @@ function hexToRgb(hex: string) {
 }
 
 export function Layout({children}: {children?: React.ReactNode}) {
-  const nonce = useNonce();
+  let nonce: string | undefined;
+  try {
+    nonce = useNonce();
+  } catch {
+    // useNonce requires Hydrogen context which may not be available during initial client render
+  }
   const data = useLoaderData<typeof loader>();
 
   // Initialize theme on client side
@@ -214,7 +216,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
   const hasUserConsent = true;
 
   return (
-    <html lang="en">
+    <html lang="fr">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -224,40 +226,19 @@ export function Layout({children}: {children?: React.ReactNode}) {
         <style
           dangerouslySetInnerHTML={{
             __html: `
-              /* Theme CSS Variables - matches Vue template approach */
               :root {
-                --color-primary: #D4AF37;
-                --color-secondary: #1F1F1F;
-                --color-accent: #FFFFFF;
-                --color-background: #000000;
-                --color-text: #FFFFFF;
-                
-                /* RGB versions for opacity/shadows */
-                --color-primary-rgb: 212, 175, 55;
-                --color-secondary-rgb: 31, 31, 31;
-                
-                /* Gold color theme variables - Vue template compatibility */
-                --color-gold-400: #E5C158;
-                --color-gold-500: #D4AF37;
-                --color-gold-600: #BF9B2F;
-                
-                /* Primary color variants */
-                --color-primary-50: #F9F7F0;
-                --color-primary-100: #F3EFE1;
-                --color-primary-200: #E7DFC3;
-                --color-primary-300: #DBCFA5;
-                --color-primary-400: #CFBF87;
-                --color-primary-500: #D4AF37;
-                --color-primary-600: #AA8C2C;
-                --color-primary-700: #806921;
-                --color-primary-800: #554616;
-                --color-primary-900: #2B230B;
-                
-                /* Typography - use system fonts instead of Google Fonts */
-                --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
-                --font-secondary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
-                
-                /* Spacing scale */
+                --color-primary: #3d6b4f;
+                --color-secondary: #f5f0e6;
+                --color-accent: #c9a55c;
+                --color-background: #f5f0e6;
+                --color-text: #1a1a18;
+
+                --color-primary-rgb: 61, 107, 79;
+                --color-secondary-rgb: 245, 240, 230;
+
+                --font-primary: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                --font-secondary: 'Noto Serif JP', Georgia, serif;
+
                 --spacing-xs: 0.25rem;
                 --spacing-sm: 0.5rem;
                 --spacing-md: 1rem;
@@ -265,27 +246,17 @@ export function Layout({children}: {children?: React.ReactNode}) {
                 --spacing-xl: 2rem;
                 --spacing-2xl: 3rem;
                 --spacing-3xl: 4rem;
-                
-                /* Border radius */
+
                 --radius-sm: 0.25rem;
                 --radius-md: 0.5rem;
                 --radius-lg: 0.75rem;
                 --radius-xl: 1rem;
-                
-                /* Shadows */
+
                 --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-                --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-                --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-                --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-                --shadow-primary: 0 0 15px rgba(var(--color-primary-rgb), 0.3);
-              }
-              
-              /* Dark theme support */
-              @media (prefers-color-scheme: dark) {
-                :root {
-                  --color-background: #000000;
-                  --color-text: #FFFFFF;
-                }
+                --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+                --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+                --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08);
+                --shadow-primary: 0 0 15px rgba(61, 107, 79, 0.15);
               }
             `,
           }}

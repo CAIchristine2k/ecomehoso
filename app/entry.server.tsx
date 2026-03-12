@@ -20,8 +20,7 @@ export default async function handleRequest(
     connectSrc: [
       "'self'",
       'https://monorail-edge.shopifysvc.com',
-      'https://fqte0v-n1.myshopify.com',
-      'https://k1fymm-g3.myshopify.com',
+      'https://1vp61h-dm.myshopify.com',
       'http://localhost:*',
       'ws://localhost:*',
       'ws://127.0.0.1:*',

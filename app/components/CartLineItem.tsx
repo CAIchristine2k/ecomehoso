@@ -451,7 +451,7 @@ export function CartLineItem({
         {/* Product Image - Slightly smaller for more text space */}
         <div className="relative flex-shrink-0">
           <Link to={lineItemUrl} prefetch="intent" className="block">
-            <div className="group w-[90px] h-[90px] overflow-hidden bg-black rounded-md flex items-center justify-center">
+            <div className="group w-[90px] h-[90px] overflow-hidden rounded-md flex items-center justify-center">
               {displayImageUrl ? (
                 <img
                   src={displayImageUrl}
@@ -491,7 +491,7 @@ export function CartLineItem({
                   }}
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-white/40 text-xs font-medium">
+                <div className="w-full h-full flex items-center justify-center text-xs font-medium" style={{color: 'var(--color-stone)'}}>
                   No Image
                 </div>
               )}
@@ -524,14 +524,14 @@ export function CartLineItem({
               prefetch="intent"
               className="block group/title"
             >
-              <h3 className="font-semibold text-white text-sm leading-tight group-hover/title:text-primary transition-colors duration-200 line-clamp-2">
+              <h3 className="font-medium text-sm leading-tight group-hover/title:text-primary transition-colors duration-200 line-clamp-2">
                 {product.title || 'Untitled Product'}
               </h3>
             </Link>
 
             {/* Variant Details */}
             {title && title !== 'Default Title' && (
-              <p className="text-white/60 text-xs font-medium">{title}</p>
+              <p className="text-xs font-medium">{title}</p>
             )}
 
             {/* Selected Options */}
@@ -542,7 +542,7 @@ export function CartLineItem({
                   {selectedOptions.map((option) => (
                     <span
                       key={option.name}
-                      className="inline-flex items-center px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-white/70 text-xs font-medium"
+                      className="inline-flex items-center px-2 py-0.5 rounded-md border text-xs font-medium"
                     >
                       {option.value}
                     </span>
@@ -581,17 +581,17 @@ export function CartLineItem({
               {merchandise.price ? (
                 <Money
                   data={merchandise.price}
-                  className="text-white font-bold text-sm"
+                  className="font-semibold text-sm"
                 />
               ) : (
-                <span className="text-white font-bold text-sm">
+                <span className="font-semibold text-sm">
                   Price unavailable
                 </span>
               )}
               {merchandise.compareAtPrice && (
                 <Money
                   data={merchandise.compareAtPrice}
-                  className="text-white/40 line-through text-xs"
+                  className="line-through text-xs"
                 />
               )}
             </div>
@@ -637,13 +637,13 @@ function CartLineQuantityAdjust({
           disabled={quantity <= 1 || !!line.isOptimistic}
           className="w-8 h-8 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center transition-all duration-200 hover:bg-white/20 hover:border-primary/40 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white/10 disabled:hover:border-white/20"
         >
-          <Minus className="w-4 h-4 text-white" />
+          <Minus className="w-4 h-4" />
         </button>
       </CartForm>
 
       {/* Quantity display */}
       <div className="min-w-[3rem] px-3 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg text-center">
-        <span className="text-white font-semibold text-sm">{quantity}</span>
+        <span className="font-medium text-sm">{quantity}</span>
       </div>
 
       {/* Increase button */}
@@ -659,7 +659,7 @@ function CartLineQuantityAdjust({
           disabled={!!line.isOptimistic}
           className="w-8 h-8 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center transition-all duration-200 hover:bg-white/20 hover:border-primary/40 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white/10 disabled:hover:border-white/20"
         >
-          <Plus className="w-4 h-4 text-white" />
+          <Plus className="w-4 h-4" />
         </button>
       </CartForm>
     </div>

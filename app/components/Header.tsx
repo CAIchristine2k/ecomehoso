@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {
   Menu,
   X,
-  ChevronRight,
   ShoppingBag,
   Instagram,
   Twitter,
@@ -15,7 +14,6 @@ import {Logo} from './Logo';
 import {useConfig} from '~/utils/themeContext';
 import {useCart} from '~/providers/CartProvider';
 import {useAside} from './Aside';
-// Import removed - we'll handle navigation directly
 
 export function Header() {
   const config = useConfig();
@@ -25,12 +23,10 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
-  // Get cart count
   const cartCount = totalQuantity || 0;
 
-  // Build social links from config
   const socialLinks = Object.entries(config.socialLinks || {})
-    .filter(([_, url]) => url) // Only include links that have URLs
+    .filter(([_, url]) => url)
     .map(([platform, url]) => ({
       name: platform.charAt(0).toUpperCase() + platform.slice(1),
       icon: getSocialIcon(platform),
@@ -60,19 +56,13 @@ export function Header() {
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
-    // Set initial scroll state
     handleScroll();
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleNavClick = (link: string) => {
     setIsOpen(false);
-    // Handle hash links with smooth scrolling
     if (link.startsWith('#')) {
-      // If we're on homepage, scroll to section
       if (location.pathname === '/') {
         const id = link.replace('#', '');
         const element = document.getElementById(id);
@@ -82,43 +72,43 @@ export function Header() {
           const elementPosition =
             element.getBoundingClientRect().top + window.pageYOffset;
           const offsetPosition = elementPosition - headerHeight - 20;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth',
-          });
+          window.scrollTo({top: offsetPosition, behavior: 'smooth'});
         }
       } else {
-        // If not on homepage, redirect to homepage with hash
         window.location.href = `/${link}`;
       }
     }
-    // For regular links, React Router will handle them naturally
   };
 
   const handleCartClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    // Use the openCart method from CartProvider
     openCart();
   };
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
         isScrolled
-          ? 'bg-black/95 backdrop-blur-sm shadow-xl py-3'
-          : 'bg-gradient-to-b from-black/90 to-black/50 py-5'
+          ? 'py-3'
+          : 'py-5'
       }`}
+      style={{
+        background: isScrolled
+          ? 'rgba(250, 248, 243, 0.95)'
+          : 'transparent',
+        backdropFilter: isScrolled ? 'blur(20px)' : 'none',
+        WebkitBackdropFilter: isScrolled ? 'blur(20px)' : 'none',
+      }}
     >
-      <div className="container mx-auto px-4 flex justify-between items-center">
-        {/* Logo Area */}
-        <div className="flex items-center space-x-2">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 flex justify-between items-center">
+        {/* Logo */}
+        <div className="flex items-center">
           <Logo isScrolled={isScrolled} />
         </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center">
-          <div className="flex space-x-10">
+          <div className="flex items-center gap-10">
             {config.navigation.map((item) => (
               <Link
                 key={item.name}
@@ -129,10 +119,23 @@ export function Header() {
                     handleNavClick(item.href);
                   }
                 }}
-                className="text-white hover:text-primary transition-all duration-300 font-medium relative group uppercase tracking-wider text-sm"
+                className={`relative group transition-all duration-300 ${
+                  isScrolled ? 'text-[#1a1a18]' : 'text-white'
+                }`}
+                style={{
+                  fontSize: '11px',
+                  fontWeight: 400,
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase' as const,
+                }}
               >
                 {item.name}
-                <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-primary transform -translate-x-1/2 transition-all duration-300 group-hover:w-full"></span>
+                <span
+                  className="absolute -bottom-1 left-0 w-0 h-px transition-all duration-300 group-hover:w-full"
+                  style={{
+                    backgroundColor: isScrolled ? '#3d6b4f' : 'white',
+                  }}
+                ></span>
               </Link>
             ))}
           </div>
@@ -140,12 +143,17 @@ export function Header() {
           {/* Cart Button */}
           <button
             onClick={handleCartClick}
-            className="ml-10 bg-primary hover:bg-primary-400 text-black font-bold py-2.5 px-5 rounded-sm transition-all duration-300 flex items-center text-sm uppercase shadow-glow relative"
+            className="ml-10 relative transition-all duration-300 hover:scale-105"
+            aria-label="Panier"
           >
-            <ShoppingBag className="mr-1.5 h-4 w-4" />
-            Cart
+            <ShoppingBag
+              className={`h-5 w-5 ${isScrolled ? 'text-[#1a1a18]' : 'text-white'}`}
+            />
             {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-black text-primary text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+              <span
+                className="absolute -top-2 -right-2 text-white text-[10px] font-medium rounded-full h-[18px] w-[18px] flex items-center justify-center"
+                style={{backgroundColor: '#3d6b4f'}}
+              >
                 {cartCount > 99 ? '99+' : cartCount}
               </span>
             )}
@@ -153,24 +161,29 @@ export function Header() {
         </nav>
 
         {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center space-x-4">
+        <div className="md:hidden flex items-center gap-4">
           <button
             onClick={handleCartClick}
-            className="bg-primary hover:bg-primary-400 text-black p-2 rounded-sm transition-all duration-300 shadow-glow relative"
-            aria-label="Cart"
+            className="relative p-2 transition-all duration-300"
+            aria-label="Panier"
           >
-            <ShoppingBag className="h-5 w-5" />
+            <ShoppingBag
+              className={`h-5 w-5 ${isScrolled ? 'text-[#1a1a18]' : 'text-white'}`}
+            />
             {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-black text-primary text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+              <span
+                className="absolute -top-1 -right-1 text-white text-[10px] font-medium rounded-full h-[18px] w-[18px] flex items-center justify-center"
+                style={{backgroundColor: '#3d6b4f'}}
+              >
                 {cartCount > 99 ? '99+' : cartCount}
               </span>
             )}
           </button>
 
           <button
-            className="text-white focus:outline-none p-1.5 border border-white/20 rounded-sm hover:border-primary transition-all duration-300"
+            className={`p-1.5 transition-all duration-300 ${isScrolled ? 'text-[#1a1a18]' : 'text-white'}`}
             onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle Menu"
+            aria-label="Menu"
           >
             {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -178,69 +191,82 @@ export function Header() {
       </div>
 
       {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-sm shadow-xl border-t border-gray-800">
-          <div className="container mx-auto py-4">
-            <nav className="flex flex-col divide-y divide-gray-800/50">
-              {config.navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  onClick={(e) => {
-                    if (item.href.startsWith('#')) {
-                      e.preventDefault();
-                      handleNavClick(item.href);
-                    } else {
-                      // For regular links, just close the mobile menu
-                      setIsOpen(false);
-                    }
-                  }}
-                  className="text-white hover:text-primary hover:bg-gray-900/30 transition-all duration-300 py-4 px-4 text-sm uppercase font-medium tracking-wider flex items-center justify-between"
-                >
-                  {item.name}
-                  <ChevronRight className="h-4 w-4 text-gray-500" />
-                </Link>
-              ))}
-            </nav>
-
-            {/* Social Icons (Mobile) - built from config */}
-            {socialLinks.length > 0 && (
-              <div className="flex justify-center space-x-8 mt-6 pt-6 border-t border-gray-800/50">
-                {socialLinks.map((social) => {
-                  const IconComponent = social.icon;
-                  return (
-                    <a
-                      key={social.name}
-                      href={social.link as string}
-                      className="text-gray-400 hover:text-primary transition-all duration-300"
-                      aria-label={social.name}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <IconComponent className="h-5 w-5" />
-                    </a>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Add the subtle gold underline animation and shadow-glow effects */}
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-          .group:hover span {
-            box-shadow: 0 0 8px rgba(var(--color-primary-rgb), 0.5);
-          }
-          
-          .shadow-glow {
-            box-shadow: 0 4px 15px rgba(var(--color-primary-rgb), 0.2);
-          }
-        `,
+      <div
+        className={`md:hidden fixed top-0 right-0 h-full transition-transform duration-700 z-[200] ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+        style={{
+          width: '340px',
+          maxWidth: '85vw',
+          background: 'rgba(250, 248, 243, 0.98)',
+          backdropFilter: 'blur(20px)',
         }}
-      />
+      >
+        <div className="p-8">
+          <button
+            onClick={() => setIsOpen(false)}
+            className="absolute top-6 right-6 text-[#1a1a18]"
+            aria-label="Fermer"
+          >
+            <X className="h-5 w-5" />
+          </button>
+
+          <nav className="mt-16 flex flex-col">
+            {config.navigation.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                onClick={(e) => {
+                  if (item.href.startsWith('#')) {
+                    e.preventDefault();
+                    handleNavClick(item.href);
+                  } else {
+                    setIsOpen(false);
+                  }
+                }}
+                className="text-[#1a1a18] py-4 border-b border-[#e8e4dc] transition-colors duration-300 hover:text-[#3d6b4f]"
+                style={{
+                  fontSize: '13px',
+                  letterSpacing: '0.15em',
+                  textTransform: 'uppercase' as const,
+                  fontWeight: 400,
+                }}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+
+          {socialLinks.length > 0 && (
+            <div className="flex gap-6 mt-10">
+              {socialLinks.map((social) => {
+                const IconComponent = social.icon;
+                return (
+                  <a
+                    key={social.name}
+                    href={social.link as string}
+                    className="text-[#7a7a75] hover:text-[#3d6b4f] transition-colors duration-300"
+                    aria-label={social.name}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <IconComponent className="h-4 w-4" />
+                  </a>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Mobile menu overlay */}
+      {isOpen && (
+        <div
+          className="md:hidden fixed inset-0 z-[199]"
+          style={{background: 'rgba(0,0,0,0.4)'}}
+          onClick={() => setIsOpen(false)}
+        />
+      )}
     </header>
   );
 }
