@@ -110,13 +110,13 @@ export default function AIPhotoGenerator() {
       {
         id: 'celebrity-style',
         name: 'Celebrity Style',
-        description: 'Photo with Sugar Shane Mosley',
+        description: 'Photo with Hoso Matcha',
         imagePath: '/images/preset/celebrity-style.png',
       },
       {
         id: 'meet-greet',
         name: 'Meet & Greet',
-        description: 'Photo with Sugar Shane Mosley',
+        description: 'Photo with Hoso Matcha',
         imagePath: '/images/preset/meet-greet.png',
       },
       {
@@ -140,7 +140,7 @@ export default function AIPhotoGenerator() {
       {
         id: 'training-session',
         name: 'Training Session',
-        description: 'Get coached by Sugar Shane',
+        description: 'Get coached by Hoso Matcha',
         imagePath: '/images/preset/training-session.png',
       },
       {
@@ -156,10 +156,10 @@ export default function AIPhotoGenerator() {
         imagePath: '/images/preset/autograph.png',
       },
       {
-        id: 'shane-special',
-        name: 'Shane Special',
-        description: 'Special pose with Sugar Shane Mosley',
-        imagePath: '/images/preset/shane1.jpg',
+        id: 'hoso-special',
+        name: 'Hoso Special',
+        description: 'Special pose with Hoso Matcha',
+        imagePath: '/images/preset/hoso1.jpg',
       },
     ];
 
@@ -591,7 +591,7 @@ export default function AIPhotoGenerator() {
         }
 
         if (!selectedPreset) {
-          throw new Error('Please select a pose with Sugar Shane Mosley');
+          throw new Error('Please select a pose with Hoso Matcha');
         }
 
         // Get user uploaded image as base64
@@ -605,20 +605,20 @@ export default function AIPhotoGenerator() {
           throw new Error('Invalid preset selected');
         }
 
-        // Determine which Shane Mosley image to use based on preset
-        // Use shane1.jpg for specific presets, otherwise use the default influencer image
-        let shaneImagePath = config.aiMediaGeneration.influencerReferenceImage;
+        // Determine which Hoso Matcha image to use based on preset
+        // Use hoso1.jpg for specific presets, otherwise use the default influencer image
+        let hosoImagePath = config.aiMediaGeneration.influencerReferenceImage;
         
-        // Use shane1.jpg for these specific presets that should feature Shane prominently
-        if (['shane-special', 'celebrity-style', 'meet-greet', 'boxing-ring'].includes(selectedPreset)) {
-          shaneImagePath = '/images/preset/shane1.jpg'; // Use the specific Shane image
-          console.log(`🥊 Using shane1.jpg for preset: ${selectedPreset}`);
+        // Use hoso1.jpg for these specific presets that should feature Hoso prominently
+        if (['hoso-special', 'celebrity-style', 'meet-greet', 'boxing-ring'].includes(selectedPreset)) {
+          hosoImagePath = '/images/preset/hoso1.jpg'; // Use the specific Hoso image
+          console.log(`🥊 Using hoso1.jpg for preset: ${selectedPreset}`);
         } else {
           console.log(`🥊 Using default influencer image for preset: ${selectedPreset}`);
         }
         
-        // Load the Shane Mosley reference image
-        const influencerImageBase64 = await loadImageAsBase64(shaneImagePath);
+        // Load the Hoso Matcha reference image
+        const influencerImageBase64 = await loadImageAsBase64(hosoImagePath);
 
         // Map the selected preset to a pose
         let poseName = 'default';
@@ -638,41 +638,41 @@ export default function AIPhotoGenerator() {
           poseName = 'formal'; // New pose name
         } else if (selectedPreset === 'autograph') {
           poseName = 'signing'; // New pose name
-        } else if (selectedPreset === 'shane-special') {
-          poseName = 'special'; // New pose name for shane1
+        } else if (selectedPreset === 'hoso-special') {
+          poseName = 'special'; // New pose name for hoso1
         }
 
         // Create a specific prompt based on the selected pose
-        // For V2 with image_reference='face', describe Shane's appearance clearly
+        // For V2 with image_reference='face', describe Hoso Matcha's appearance clearly
         // V2 offers superior face preservation and scene understanding
         let prompt = '';
         if (selectedPreset === 'celebrity-style') {
-          prompt = `A professional studio photograph showing two people training together in a gym setting, one person (keeping their original face) and Sugar Shane Mosley (African American former professional boxer, athletic build, goatee, wearing boxing gloves), both in boxing poses side by side, gym equipment in background, professional lighting, photorealistic, high detail, 4K, sharp focus`;
+          prompt = `A professional studio photograph showing two people training together in a gym setting, one person (keeping their original face) and Hoso Matcha (African American former professional boxer, athletic build, goatee, wearing boxing gloves), both in boxing poses side by side, gym equipment in background, professional lighting, photorealistic, high detail, 4K, sharp focus`;
         } else if (selectedPreset === 'meet-greet') {
-          prompt = `A professional photograph of two people at a meet and greet event, one person (keeping their original face) meeting Sugar Shane Mosley (African American former professional boxer, athletic build, goatee, friendly smile), both standing together and smiling, handshake or friendly pose, professional event lighting, photorealistic, high detail, 4K, sharp focus`;
+          prompt = `A professional photograph of two people at a meet and greet event, one person (keeping their original face) meeting Hoso Matcha (African American former professional boxer, athletic build, goatee, friendly smile), both standing together and smiling, handshake or friendly pose, professional event lighting, photorealistic, high detail, 4K, sharp focus`;
         } else if (selectedPreset === 'fan-love') {
-          prompt = `A professional photograph of two people, one person (keeping their original face) and Sugar Shane Mosley (African American former professional boxer, athletic build, goatee, charismatic smile), both making a heart gesture together with their hands, smiling and looking at camera, friendly atmosphere, professional lighting, photorealistic, high detail, 4K, sharp focus`;
+          prompt = `A professional photograph of two people, one person (keeping their original face) and Hoso Matcha (African American former professional boxer, athletic build, goatee, charismatic smile), both making a heart gesture together with their hands, smiling and looking at camera, friendly atmosphere, professional lighting, photorealistic, high detail, 4K, sharp focus`;
         } else if (selectedPreset === 'boxing-ring') {
-          prompt = `A professional photograph of two people in a boxing ring, one person (keeping their original face) and Sugar Shane Mosley (African American former professional boxer, athletic build, goatee, wearing boxing gloves), standing together in the ring, boxing ropes visible, professional sports lighting, photorealistic, high detail, 4K, sharp focus`;
+          prompt = `A professional photograph of two people in a boxing ring, one person (keeping their original face) and Hoso Matcha (African American former professional boxer, athletic build, goatee, wearing boxing gloves), standing together in the ring, boxing ropes visible, professional sports lighting, photorealistic, high detail, 4K, sharp focus`;
         } else if (selectedPreset === 'championship') {
-          prompt = `A professional photograph of two people celebrating together, one person (keeping their original face) and Sugar Shane Mosley (African American former professional boxer, athletic build, goatee, victory expression), both holding a championship belt, confetti falling around them, victory celebration, arena background, professional lighting, photorealistic, high detail, 4K, sharp focus`;
+          prompt = `A professional photograph of two people celebrating together, one person (keeping their original face) and Hoso Matcha (African American former professional boxer, athletic build, goatee, victory expression), both holding a championship belt, confetti falling around them, victory celebration, arena background, professional lighting, photorealistic, high detail, 4K, sharp focus`;
         } else if (selectedPreset === 'training-session') {
-          prompt = `A professional photograph of Sugar Shane Mosley (African American former professional boxer, athletic build, goatee, coaching expression) coaching one person (keeping their original face) during a boxing training session, both visible in frame, showing boxing technique with focus mitts, gym equipment visible, training atmosphere, professional lighting, photorealistic, high detail, 4K, sharp focus`;
+          prompt = `A professional photograph of Hoso Matcha (African American former professional boxer, athletic build, goatee, coaching expression) coaching one person (keeping their original face) during a boxing training session, both visible in frame, showing boxing technique with focus mitts, gym equipment visible, training atmosphere, professional lighting, photorealistic, high detail, 4K, sharp focus`;
         } else if (selectedPreset === 'red-carpet') {
-          prompt = `A professional photograph of one person (keeping their original face) with Sugar Shane Mosley (African American former professional boxer, athletic build, goatee, elegant smile) at a formal gala event, both dressed in elegant attire, standing together on red carpet, step-and-repeat background, camera flashes, professional event lighting, photorealistic, high detail, 4K, sharp focus`;
+          prompt = `A professional photograph of one person (keeping their original face) with Hoso Matcha (African American former professional boxer, athletic build, goatee, elegant smile) at a formal gala event, both dressed in elegant attire, standing together on red carpet, step-and-repeat background, camera flashes, professional event lighting, photorealistic, high detail, 4K, sharp focus`;
         } else if (selectedPreset === 'autograph') {
-          prompt = `A professional photograph showing Sugar Shane Mosley (African American former professional boxer, athletic build, goatee, focused expression) signing an autograph for one person (keeping their original face, looking excited), both visible in the shot, Shane signing boxing memorabilia, authentic setting, professional lighting, photorealistic, high detail, 4K, sharp focus`;
-        } else if (selectedPreset === 'shane-special') {
-          prompt = `A professional photograph of two people, one person (keeping their original face) and Sugar Shane Mosley (African American former professional boxer, athletic build, goatee, warm smile), standing together in a special pose, both smiling at camera, professional portrait style, excellent lighting, photorealistic, high detail, 4K, sharp focus`;
+          prompt = `A professional photograph showing Hoso Matcha (African American former professional boxer, athletic build, goatee, focused expression) signing an autograph for one person (keeping their original face, looking excited), both visible in the shot, Hoso signing boxing memorabilia, authentic setting, professional lighting, photorealistic, high detail, 4K, sharp focus`;
+        } else if (selectedPreset === 'hoso-special') {
+          prompt = `A professional photograph of two people, one person (keeping their original face) and Hoso Matcha (African American former professional boxer, athletic build, goatee, warm smile), standing together in a special pose, both smiling at camera, professional portrait style, excellent lighting, photorealistic, high detail, 4K, sharp focus`;
         } else {
-          prompt = `A professional photograph of two people, one person (keeping their original face) and Sugar Shane Mosley (African American former professional boxer, athletic build, goatee, friendly expression), standing together and smiling, friendly pose, professional lighting, photorealistic, high detail, 4K, sharp focus`;
+          prompt = `A professional photograph of two people, one person (keeping their original face) and Hoso Matcha (African American former professional boxer, athletic build, goatee, friendly expression), standing together and smiling, friendly pose, professional lighting, photorealistic, high detail, 4K, sharp focus`;
         }
 
         // Prepare data for API request - Use fan-together with V2 for superior quality
         const data = {
           // Core parameters required by the API
           model_name: 'kling-v2', // Use V2 model for superior face reference and image quality
-          prompt: prompt, // Detailed prompt with Shane's physical description
+          prompt: prompt, // Detailed prompt with Hoso Matcha's physical description
 
           // Fan-together parameters with V2 enhanced capabilities
           image: userImageBase64, // User's photo as the primary image (face will be preserved)
@@ -684,9 +684,9 @@ export default function AIPhotoGenerator() {
 
           // Custom parameters for our API layer - Use fan-together with V2
           generationType: 'fan-together', // Use fan-together with V2's superior capabilities
-          referenceImageUrl: `data:image/jpeg;base64,${influencerImageBase64}`, // Shane's image for reference
+          referenceImageUrl: `data:image/jpeg;base64,${influencerImageBase64}`, // Hoso Matcha's image for reference
           userImageUrl: `data:image/jpeg;base64,${userImageBase64}`, // User's image as primary
-          influencerImage: `data:image/jpeg;base64,${influencerImageBase64}`, // Shane's image for context
+          influencerImage: `data:image/jpeg;base64,${influencerImageBase64}`, // Hoso Matcha's image for context
         };
 
         // Log the request parameters (with sensitive data truncated)
@@ -700,7 +700,7 @@ export default function AIPhotoGenerator() {
           hasReferenceImage: !!data.referenceImageUrl,
           imageReference: data.image_reference,
           selectedPreset: selectedPreset,
-          shaneImagePath: shaneImagePath,
+          hosoImagePath: hosoImagePath,
         });
 
         // Create task
@@ -1108,11 +1108,11 @@ export default function AIPhotoGenerator() {
                   <div className="bg-secondary/40 backdrop-blur-md border border-primary/20 rounded-lg p-6 shadow-md">
                     <h3 className="text-lg font-bold text-white mb-2 flex items-center">
                       <Users className="w-4 h-4 text-primary mr-2" />
-                      Step 1: Choose a Pose with Sugar Shane
+                      Step 1: Choose a Pose with Hoso Matcha
                     </h3>
 
                     <p className="text-gray-300 text-xs mb-4">
-                      Select how you want to appear with Sugar Shane Mosley in
+                      Select how you want to appear with Hoso Matcha in
                       your AI-generated photo
                     </p>
 
@@ -1161,7 +1161,7 @@ export default function AIPhotoGenerator() {
 
                     <p className="text-gray-300 text-xs mb-4">
                       Upload a clear photo of yourself to generate a picture
-                      with Sugar Shane Mosley
+                      with Hoso Matcha
                     </p>
 
                     {!selectedFile ? (
@@ -1234,7 +1234,7 @@ export default function AIPhotoGenerator() {
                     ) : (
                       <>
                         <Camera className="w-4 h-4 mr-2" />
-                        Generate Your Photo with Sugar Shane
+                        Generate Your Photo with Hoso Matcha
                       </>
                     )}
                   </button>
@@ -1286,51 +1286,51 @@ export default function AIPhotoGenerator() {
                       <div className="bg-secondary/30 rounded-md p-8 text-center border border-primary/10">
                         <Sparkles className="w-8 h-8 text-gray-500 mx-auto mb-3" />
                         <p className="text-gray-400 text-xs">
-                          Your AI photo with Sugar Shane Mosley will appear here
+                          Your AI photo with Hoso Matcha will appear here
                         </p>
                         {selectedPreset === 'celebrity-style' && (
                           <p className="text-primary text-xs mt-2">
-                            Celebrity Style with Sugar Shane Mosley
+                            Celebrity Style with Hoso Matcha
                           </p>
                         )}
                         {selectedPreset === 'meet-greet' && (
                           <p className="text-primary text-xs mt-2">
-                            Meet & Greet with Sugar Shane Mosley
+                            Meet & Greet with Hoso Matcha
                           </p>
                         )}
                         {selectedPreset === 'fan-love' && (
                           <p className="text-primary text-xs mt-2">
-                            Fan Love with Sugar Shane Mosley
+                            Fan Love with Hoso Matcha
                           </p>
                         )}
                         {selectedPreset === 'boxing-ring' && (
                           <p className="text-primary text-xs mt-2">
-                            Boxing Ring with Sugar Shane Mosley
+                            Boxing Ring with Hoso Matcha
                           </p>
                         )}
                         {selectedPreset === 'championship' && (
                           <p className="text-primary text-xs mt-2">
-                            Championship with Sugar Shane Mosley
+                            Championship with Hoso Matcha
                           </p>
                         )}
                         {selectedPreset === 'training-session' && (
                           <p className="text-primary text-xs mt-2">
-                            Training Session with Sugar Shane Mosley
+                            Training Session with Hoso Matcha
                           </p>
                         )}
                         {selectedPreset === 'red-carpet' && (
                           <p className="text-primary text-xs mt-2">
-                            Red Carpet with Sugar Shane Mosley
+                            Red Carpet with Hoso Matcha
                           </p>
                         )}
                         {selectedPreset === 'autograph' && (
                           <p className="text-primary text-xs mt-2">
-                            Autograph with Sugar Shane Mosley
+                            Autograph with Hoso Matcha
                           </p>
                         )}
-                        {selectedPreset === 'shane-special' && (
+                        {selectedPreset === 'hoso-special' && (
                           <p className="text-primary text-xs mt-2">
-                            Shane Special with Sugar Shane Mosley
+                            Hoso Special with Hoso Matcha
                           </p>
                         )}
                       </div>

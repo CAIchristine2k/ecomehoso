@@ -718,7 +718,7 @@ export function initConfig(
  * Get the current configuration - can be extended to support multiple influencers
  */
 export function getConfig(influencerId?: string): LandingPageConfig {
-  // For now, return default Shane Mosley config
+  // For now, return default Hoso Matcha config
   // Later this can be extended to support multiple influencers
   return defaultConfig;
 }

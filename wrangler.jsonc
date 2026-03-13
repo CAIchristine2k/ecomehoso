@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "shane-hydrogen",
+  "name": "hoso-matcha",
   "main": "./workers/app.ts",
   "compatibility_date": "2025-05-23",
   "compatibility_flags": ["no_handle_cross_request_promise_resolution"],

@@ -455,14 +455,14 @@ export async function action({request, context}: ActionFunctionArgs) {
         // and uses the prompt to generate the scene with improved quality
         if (referenceImageUrl) {
           try {
-            const shaneBase64 = await fetchImageAsBase64(referenceImageUrl);
-            console.log('✅ Shane reference image processed for V2 enhancement');
+            const hosoBase64 = await fetchImageAsBase64(referenceImageUrl);
+            console.log('✅ Hoso reference image processed for V2 enhancement');
             
             // V2 model with face reference offers superior face preservation
             // and better understanding of detailed prompt descriptions
             // The enhanced V2 capabilities should produce more realistic results
           } catch (error) {
-            console.error('Failed to fetch Shane reference image:', error);
+            console.error('Failed to fetch Hoso reference image:', error);
           }
         }
 

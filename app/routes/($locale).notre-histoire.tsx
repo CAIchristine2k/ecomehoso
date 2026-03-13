@@ -433,6 +433,7 @@ export default function NotreHistoire() {
             position: 'absolute',
             inset: 0,
             background: 'rgba(26, 47, 35, 0.5)',
+            zIndex: 2,
           }}
         />
         <style dangerouslySetInnerHTML={{__html: `
@@ -453,7 +454,7 @@ export default function NotreHistoire() {
             margin: '0 auto',
             textAlign: 'center',
             position: 'relative',
-            zIndex: 1,
+            zIndex: 3,
           }}
         >
           <p
