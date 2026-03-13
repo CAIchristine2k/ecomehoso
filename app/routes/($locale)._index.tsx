@@ -400,6 +400,9 @@ export default function Home() {
       {/* Testimonials section */}
       <Testimonials />
 
+      {/* Newsletter signup section */}
+      <NewsletterSignup />
+
       {/* Suivez-nous Section */}
       <section
         style={{
@@ -535,8 +538,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Newsletter signup section */}
-      <NewsletterSignup />
     </main>
   );
 }

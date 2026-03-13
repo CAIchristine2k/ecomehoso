@@ -57,33 +57,25 @@ export default function NotreHistoire() {
             maxWidth: '800px',
           }}
         >
-          <p
+          <div
+            className="mx-auto overflow-hidden"
             style={{
-              fontFamily: "'Noto Serif JP', serif",
-              fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-              fontWeight: 300,
-              color: 'white',
-              opacity: 0.7,
-              letterSpacing: '0.5em',
-              marginBottom: '24px',
-            }}
-          >
-            品牌故事
-          </p>
-          <h1
-            style={{
-              fontFamily: "'Brusher', 'Poppins', sans-serif",
-              fontSize: 'clamp(3.5rem, 10vw, 8rem)',
-              fontWeight: 400,
-              color: 'white',
-              letterSpacing: '0.4em',
-              lineHeight: 1,
+              height: 'clamp(120px, 25vw, 300px)',
+              width: 'clamp(200px, 45vw, 500px)',
               marginBottom: '32px',
-              paddingRight: '0.4em',
             }}
           >
-            HOSO
-          </h1>
+            <img
+              src="/images/hoso-logo-brush.png"
+              alt="HOSO"
+              className="w-full h-full"
+              style={{
+                filter: 'brightness(0) invert(1)',
+                objectFit: 'cover',
+                transform: 'scale(0.9)',
+              }}
+            />
+          </div>
           <div
             style={{
               width: '60px',
@@ -107,17 +99,16 @@ export default function NotreHistoire() {
           </p>
           <p
             style={{
-              fontFamily: "'Poppins', sans-serif",
-              fontSize: 'clamp(0.85rem, 1.5vw, 1rem)',
+              fontFamily: "'Noto Serif JP', serif",
+              fontSize: 'clamp(1.5rem, 3vw, 2rem)',
               fontWeight: 300,
               color: 'white',
-              opacity: 0.6,
-              letterSpacing: '0.1em',
-              lineHeight: 1.6,
-              marginTop: '8px',
+              opacity: 0.7,
+              letterSpacing: '0.5em',
+              marginBottom: '24px',
             }}
           >
-            La quete du matcha parfait
+            品牌故事
           </p>
         </div>
 
@@ -165,21 +156,9 @@ export default function NotreHistoire() {
         </div>
       </section>
 
-      {/* Section 1 - Introduction */}
-      <section style={{padding: '120px 24px', textAlign: 'center'}}>
-        <div style={{maxWidth: '800px', margin: '0 auto'}}>
-          <p
-            style={{
-              fontSize: '10px',
-              fontWeight: 500,
-              letterSpacing: '0.25em',
-              textTransform: 'uppercase' as const,
-              color: 'var(--color-matcha-mid)',
-              marginBottom: '32px',
-            }}
-          >
-            Notre histoire
-          </p>
+      {/* Section 1 - Introduction & Essence */}
+      <section style={{padding: '100px 24px', textAlign: 'center', backgroundColor: '#e8f0e8'}}>
+        <div style={{maxWidth: '700px', margin: '0 auto'}}>
           <p
             style={{
               fontFamily: "'Poppins', sans-serif",
@@ -187,185 +166,41 @@ export default function NotreHistoire() {
               fontWeight: 300,
               lineHeight: 1.8,
               color: 'var(--color-charcoal)',
-              marginBottom: '32px',
+              marginBottom: '24px',
             }}
           >
-            Dans un monde qui va toujours plus vite, ou les saveurs se
-            multiplient et se complexifient, le sens de l'essentiel se perd
-            souvent.
+            <span style={{fontWeight: 500}}>HOSO</span>
+            <br />
+            <span style={{fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', opacity: 0.6, letterSpacing: '0.15em'}}>
+              fin · pur · delicat
+            </span>
           </p>
           <div
             style={{
               width: '40px',
               height: '1px',
               backgroundColor: 'var(--color-matcha-mid)',
-              margin: '0 auto 32px',
-              opacity: 0.4,
+              margin: '0 auto 24px',
+              opacity: 0.3,
             }}
           />
           <p
             style={{
-              fontSize: '16px',
+              fontSize: '15px',
               fontWeight: 300,
               lineHeight: 2,
               color: 'var(--color-stone)',
+              marginBottom: '40px',
             }}
           >
-            Chez HOSO MATCHA, nous croyons au contraire que la vraie force
-            reside dans la simplicite et la purete.
+            Dans un monde qui va toujours plus vite, le sens de l'essentiel se perd souvent.
+            Chez HOSO MATCHA, nous croyons que la vraie force reside dans la simplicite.
           </p>
         </div>
       </section>
 
-      {/* Section 2 - La question */}
-      <section
-        style={{
-          padding: '100px 24px',
-          backgroundColor: 'var(--color-cream-warm)',
-        }}
-      >
-        <div style={{maxWidth: '900px', margin: '0 auto'}}>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr',
-              gap: '64px',
-              alignItems: 'center',
-            }}
-          >
-            {/* The question */}
-            <div style={{textAlign: 'center'}}>
-              <p
-                style={{
-                  fontSize: '15px',
-                  fontWeight: 300,
-                  lineHeight: 2,
-                  color: 'var(--color-stone)',
-                  marginBottom: '40px',
-                }}
-              >
-                Notre histoire est nee d'une question simple :
-              </p>
-              <blockquote
-                style={{
-                  fontFamily: "'Poppins', sans-serif",
-                  fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)',
-                  fontWeight: 400,
-                  fontStyle: 'italic',
-                  color: 'var(--color-charcoal)',
-                  lineHeight: 1.7,
-                  padding: '40px 0',
-                  borderTop: '1px solid var(--color-cream-dark)',
-                  borderBottom: '1px solid var(--color-cream-dark)',
-                }}
-              >
-                Si nous ne devions faire qu'une seule chose dans une vie,
-                quelle serait-elle ?
-              </blockquote>
-              <p
-                style={{
-                  fontSize: '16px',
-                  fontWeight: 300,
-                  color: 'var(--color-stone)',
-                  marginTop: '40px',
-                  lineHeight: 1.8,
-                }}
-              >
-                La reponse s'est imposee naturellement :
-              </p>
-              <p
-                style={{
-                  fontSize: '18px',
-                  fontWeight: 500,
-                  color: 'var(--color-matcha-mid)',
-                  marginTop: '12px',
-                }}
-              >
-                creer un matcha parfait.
-              </p>
-            </div>
-
-            {/* HOSO meaning */}
-            <div
-              style={{
-                textAlign: 'center',
-                padding: '60px 40px',
-                backgroundColor: 'white',
-                borderRadius: '16px',
-                boxShadow: 'var(--shadow-md)',
-              }}
-            >
-              <p
-                style={{
-                  fontSize: '10px',
-                  fontWeight: 500,
-                  letterSpacing: '0.25em',
-                  textTransform: 'uppercase' as const,
-                  color: 'var(--color-matcha-mid)',
-                  marginBottom: '32px',
-                }}
-              >
-                L'essence de HOSO
-              </p>
-              <p
-                style={{
-                  fontFamily: "'Noto Serif JP', serif",
-                  fontSize: '4rem',
-                  color: 'var(--color-matcha-mid)',
-                  marginBottom: '16px',
-                  lineHeight: 1,
-                }}
-              >
-                細
-              </p>
-              <p
-                style={{
-                  fontSize: '13px',
-                  fontWeight: 500,
-                  letterSpacing: '0.2em',
-                  textTransform: 'uppercase' as const,
-                  color: 'var(--color-charcoal)',
-                  marginBottom: '24px',
-                }}
-              >
-                HOSO
-              </p>
-              <p
-                style={{
-                  fontSize: '15px',
-                  fontWeight: 300,
-                  lineHeight: 1.9,
-                  color: 'var(--color-stone)',
-                  maxWidth: '500px',
-                  margin: '0 auto 24px',
-                }}
-              >
-                Le nom HOSO — 細 — signifie en japonais « fin », « pur »,
-                « delicat ».
-              </p>
-              <p
-                style={{
-                  fontSize: '15px',
-                  fontWeight: 300,
-                  lineHeight: 1.9,
-                  color: 'var(--color-stone)',
-                  maxWidth: '500px',
-                  margin: '0 auto',
-                }}
-              >
-                Un mot simple, mais qui resume toute notre philosophie.
-                <br />
-                <br />
-                Chez HOSO MATCHA, nous avons fait un choix radical : aller a
-                l'essentiel.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Section 3 - Origine Uji */}
-      <section style={{padding: '100px 24px'}}>
+      <section style={{padding: '100px 24px', backgroundColor: '#336234'}}>
         <div
           style={{
             maxWidth: '900px',
@@ -380,7 +215,7 @@ export default function NotreHistoire() {
                   fontWeight: 500,
                   letterSpacing: '0.25em',
                   textTransform: 'uppercase' as const,
-                  color: 'var(--color-matcha-mid)',
+                  color: 'rgba(255,255,255,0.6)',
                   marginBottom: '16px',
                 }}
               >
@@ -388,12 +223,13 @@ export default function NotreHistoire() {
               </p>
               <h2
                 style={{
-                  fontFamily: "'Poppins', sans-serif",
+                  fontFamily: "'Playfair Display', 'Georgia', serif",
                   fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-                  fontWeight: 400,
-                  color: 'var(--color-charcoal)',
+                  fontWeight: 500,
+                  color: 'white',
                   marginBottom: '24px',
                   lineHeight: 1.3,
+                  fontStyle: 'italic',
                 }}
               >
                 Uji, Japon
@@ -403,38 +239,22 @@ export default function NotreHistoire() {
                   fontSize: '15px',
                   fontWeight: 300,
                   lineHeight: 2,
-                  color: 'var(--color-stone)',
+                  color: 'rgba(255,255,255,0.7)',
                   marginBottom: '20px',
                 }}
               >
-                Notre matcha provient d'un lieu unique : Uji, au Japon, considere
-                comme le berceau historique du matcha et l'une des regions les plus
-                prestigieuses au monde pour la culture du the.
-              </p>
-              <p
-                style={{
-                  fontSize: '15px',
-                  fontWeight: 300,
-                  lineHeight: 2,
-                  color: 'var(--color-stone)',
-                  marginBottom: '20px',
-                }}
-              >
-                Depuis des siecles, les maitres de the d'Uji perfectionnent un
-                savoir-faire unique : cultiver les feuilles de the a l'ombre, les
-                recolter avec precision et les broyer lentement a la pierre pour
-                obtenir une poudre d'une finesse exceptionnelle.
+                Uji, berceau historique du matcha au Japon. Depuis des siecles, les maitres de the y cultivent les feuilles a l'ombre et les broient lentement a la pierre pour obtenir une poudre d'une finesse exceptionnelle.
               </p>
               <p
                 style={{
                   fontSize: '15px',
                   fontWeight: 400,
                   lineHeight: 2,
-                  color: 'var(--color-charcoal)',
+                  color: 'rgba(255,255,255,0.9)',
                   fontStyle: 'italic',
                 }}
               >
-                Parce que pour creer un matcha d'exception, l'origine est tout.
+                L'origine est tout.
               </p>
             </div>
             <div
@@ -442,8 +262,8 @@ export default function NotreHistoire() {
               style={{backgroundColor: 'var(--color-matcha-deep)'}}
             >
               <img
-                src="/images/preset/bghero.png"
-                alt="Plantations de the a Uji, Japon"
+                src="/images/uji-harvest.jpg"
+                alt="Recolte du the a Uji, Japon"
                 className="w-full h-full object-cover"
                 style={{opacity: 0.85}}
               />
@@ -455,333 +275,137 @@ export default function NotreHistoire() {
       {/* Section 4 - Les 3 piliers */}
       <section
         style={{
-          padding: '100px 24px',
-          backgroundColor: 'var(--color-cream-warm)',
+          padding: '120px 24px',
+          backgroundColor: 'white',
+          position: 'relative',
+          overflow: 'hidden',
         }}
       >
-        <div style={{maxWidth: '1200px', margin: '0 auto'}}>
-          <div style={{textAlign: 'center', marginBottom: '72px'}}>
+        {/* Background image */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: 'url(/images/matcha-bg-piliers.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'rgba(255, 255, 255, 0.88)',
+          }}
+        />
+        <div style={{maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1}}>
+          <div style={{textAlign: 'center', marginBottom: '80px'}}>
             <p
               style={{
-                fontSize: '10px',
-                fontWeight: 500,
-                letterSpacing: '0.25em',
-                textTransform: 'uppercase' as const,
-                color: 'var(--color-matcha-mid)',
-                marginBottom: '16px',
+                fontFamily: "'Noto Serif JP', serif",
+                fontSize: '1.5rem',
+                color: 'var(--color-matcha-light)',
+                opacity: 0.4,
+                marginBottom: '20px',
               }}
             >
-              La philosophie de la simplicite
+              純粋さの選択
             </p>
             <h2
               style={{
                 fontFamily: "'Poppins', sans-serif",
                 fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
-                fontWeight: 400,
+                fontWeight: 300,
                 color: 'var(--color-charcoal)',
-                marginBottom: '16px',
+                marginBottom: '20px',
+                lineHeight: 1.4,
               }}
             >
-              Pour respecter l'esprit de HOSO,
+              Pour respecter l'esprit de HOSO
               <br />
               nous avons simplifie chaque chose.
             </h2>
-            <p
+            <div
               style={{
-                fontFamily: "'Noto Serif JP', serif",
-                fontSize: '1rem',
-                color: 'var(--color-matcha-mid)',
-                opacity: 0.6,
+                width: '60px',
+                height: '1px',
+                background: 'linear-gradient(to right, transparent, var(--color-matcha-light), transparent)',
+                margin: '0 auto',
               }}
-            >
-              純粋さの選択
-            </p>
+            />
           </div>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-              gap: '40px',
-            }}
-          >
-            {/* Pilier 1 */}
-            <div
-              style={{
-                padding: '48px 36px',
-                backgroundColor: 'white',
-                borderRadius: '16px',
-                border: '1px solid var(--color-cream-dark)',
-                textAlign: 'center',
-              }}
-            >
-              <div
-                style={{
-                  width: '64px',
-                  height: '64px',
-                  borderRadius: '50%',
-                  backgroundColor: 'var(--color-matcha-deep)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  margin: '0 auto 28px',
-                }}
-              >
-                <svg
-                  width="28"
-                  height="28"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="1.5"
-                >
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-              </div>
-              <h3
-                style={{
-                  fontSize: '13px',
-                  fontWeight: 500,
-                  letterSpacing: '0.15em',
-                  textTransform: 'uppercase' as const,
-                  color: 'var(--color-charcoal)',
-                  marginBottom: '20px',
-                }}
-              >
-                Simplifier l'origine
-              </h3>
-              <p
-                style={{
-                  fontSize: '14px',
-                  fontWeight: 300,
-                  lineHeight: 1.9,
-                  color: 'var(--color-stone)',
-                }}
-              >
-                Nous avons concentre notre recherche sur un seul lieu : Uji, le
-                coeur sacre du the japonais.
-              </p>
-            </div>
-
-            {/* Pilier 2 */}
-            <div
-              style={{
-                padding: '48px 36px',
-                backgroundColor: 'var(--color-matcha-deep)',
-                borderRadius: '16px',
-                textAlign: 'center',
-              }}
-            >
-              <div
-                style={{
-                  width: '64px',
-                  height: '64px',
-                  borderRadius: '50%',
-                  backgroundColor: 'rgba(255,255,255,0.1)',
-                  border: '1px solid rgba(255,255,255,0.2)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  margin: '0 auto 28px',
-                }}
-              >
-                <svg
-                  width="28"
-                  height="28"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="1.5"
-                >
-                  <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                  <path d="M2 17l10 5 10-5" />
-                  <path d="M2 12l10 5 10-5" />
-                </svg>
-              </div>
-              <h3
-                style={{
-                  fontSize: '13px',
-                  fontWeight: 500,
-                  letterSpacing: '0.15em',
-                  textTransform: 'uppercase' as const,
-                  color: 'white',
-                  marginBottom: '20px',
-                }}
-              >
-                Simplifier la gamme
-              </h3>
-              <p
-                style={{
-                  fontSize: '14px',
-                  fontWeight: 300,
-                  lineHeight: 1.9,
-                  color: 'rgba(255,255,255,0.7)',
-                }}
-              >
-                Nous avons volontairement renonce aux melanges, aux aromes et
-                aux recettes artificielles. Chez HOSO MATCHA, vous ne trouverez
-                qu'une seule chose : du matcha pur.
-              </p>
-            </div>
-
-            {/* Pilier 3 */}
-            <div
-              style={{
-                padding: '48px 36px',
-                backgroundColor: 'white',
-                borderRadius: '16px',
-                border: '1px solid var(--color-cream-dark)',
-                textAlign: 'center',
-              }}
-            >
-              <div
-                style={{
-                  width: '64px',
-                  height: '64px',
-                  borderRadius: '50%',
-                  backgroundColor: 'var(--color-matcha-deep)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  margin: '0 auto 28px',
-                }}
-              >
-                <svg
-                  width="28"
-                  height="28"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="1.5"
-                >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                  <polyline points="22 4 12 14.01 9 11.01" />
-                </svg>
-              </div>
-              <h3
-                style={{
-                  fontSize: '13px',
-                  fontWeight: 500,
-                  letterSpacing: '0.15em',
-                  textTransform: 'uppercase' as const,
-                  color: 'var(--color-charcoal)',
-                  marginBottom: '20px',
-                }}
-              >
-                Simplifier le chemin
-              </h3>
-              <p
-                style={{
-                  fontSize: '14px',
-                  fontWeight: 300,
-                  lineHeight: 1.9,
-                  color: 'var(--color-stone)',
-                }}
-              >
-                De la plantation ombragee d'Uji jusqu'a votre bol, chaque etape
-                est rigoureusement controlee afin de preserver toute
-                l'authenticite du matcha.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 5 - L'essentiel */}
-      <section style={{padding: '100px 24px'}}>
-        <div
-          style={{
-            maxWidth: '750px',
-            margin: '0 auto',
-            textAlign: 'center',
-          }}
-        >
-          <p
-            style={{
-              fontSize: '10px',
-              fontWeight: 500,
-              letterSpacing: '0.25em',
-              textTransform: 'uppercase' as const,
-              color: 'var(--color-matcha-mid)',
-              marginBottom: '32px',
-            }}
-          >
-            L'essentiel
-          </p>
-          <p
-            style={{
-              fontFamily: "'Noto Serif JP', serif",
-              fontSize: '1.5rem',
-              color: 'var(--color-matcha-mid)',
-              opacity: 0.5,
-              marginBottom: '40px',
-            }}
-          >
-            本質
-          </p>
-          <p
-            style={{
-              fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)',
-              fontWeight: 400,
-              lineHeight: 1.8,
-              color: 'var(--color-charcoal)',
-              marginBottom: '40px',
-            }}
-          >
-            Lorsque tout le superflu disparait,
-            <br />
-            il ne reste que l'essentiel.
-          </p>
 
           <div
             style={{
               display: 'flex',
-              flexDirection: 'column',
-              gap: '16px',
-              marginBottom: '48px',
+              flexDirection: 'column' as const,
+              gap: '60px',
+              maxWidth: '600px',
+              margin: '0 auto',
             }}
           >
             {[
-              'Une couleur verte profonde et vibrante.',
-              'Une texture fine et veloutee.',
-              'Une fraicheur umami intense.',
-            ].map((line, i) => (
-              <p
+              {
+                kanji: '地',
+                title: "Simplifier l'origine",
+                desc: 'Nous avons concentre notre recherche sur un seul lieu : Uji, le coeur sacre du the japonais.',
+              },
+              {
+                kanji: '純',
+                title: 'Simplifier la gamme',
+                desc: "Nous avons volontairement renonce aux melanges, aux aromes et aux recettes artificielles. Chez HOSO MATCHA, vous ne trouverez qu'une seule chose : du matcha pur.",
+              },
+              {
+                kanji: '道',
+                title: 'Simplifier le chemin',
+                desc: "De la plantation ombragee d'Uji jusqu'a votre bol, chaque etape est rigoureusement controlee afin de preserver toute l'authenticite du matcha.",
+              },
+            ].map((pilier, i) => (
+              <div
                 key={i}
                 style={{
-                  fontSize: '15px',
-                  fontWeight: 300,
-                  lineHeight: 1.8,
-                  color: 'var(--color-stone)',
+                  textAlign: 'center',
                 }}
               >
-                {line}
-              </p>
+                <p
+                  style={{
+                    fontFamily: "'Noto Serif JP', serif",
+                    fontSize: '2.5rem',
+                    color: 'var(--color-matcha-mid)',
+                    marginBottom: '20px',
+                    lineHeight: 1,
+                    opacity: 0.35,
+                  }}
+                >
+                  {pilier.kanji}
+                </p>
+                <h3
+                  style={{
+                    fontSize: '12px',
+                    fontWeight: 500,
+                    letterSpacing: '0.25em',
+                    textTransform: 'uppercase' as const,
+                    color: 'var(--color-charcoal)',
+                    marginBottom: '16px',
+                  }}
+                >
+                  {pilier.title}
+                </h3>
+                <p
+                  style={{
+                    fontSize: '14px',
+                    fontWeight: 300,
+                    lineHeight: 1.9,
+                    color: 'var(--color-stone)',
+                    maxWidth: '280px',
+                    margin: '0 auto',
+                  }}
+                >
+                  {pilier.desc}
+                </p>
+              </div>
             ))}
           </div>
-
-          <div
-            style={{
-              width: '40px',
-              height: '1px',
-              backgroundColor: 'var(--color-matcha-mid)',
-              margin: '0 auto 40px',
-              opacity: 0.3,
-            }}
-          />
-
-          <p
-            style={{
-              fontSize: '16px',
-              fontWeight: 300,
-              lineHeight: 1.8,
-              color: 'var(--color-stone)',
-              fontStyle: 'italic',
-            }}
-          >
-            Et surtout, un moment suspendu dans le temps.
-          </p>
         </div>
       </section>
 
@@ -790,13 +414,46 @@ export default function NotreHistoire() {
         style={{
           padding: '100px 24px',
           backgroundColor: 'var(--color-cream-warm)',
+          position: 'relative',
+          overflow: 'hidden',
         }}
       >
+        <div
+          className="promesse-bg-move"
+          style={{
+            position: 'absolute',
+            inset: '-10%',
+            backgroundImage: 'url(/images/matcha-bg-promesse.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'rgba(26, 47, 35, 0.5)',
+          }}
+        />
+        <style dangerouslySetInnerHTML={{__html: `
+          @keyframes promessePan {
+            0% { transform: scale(1.05) translate(0, 0); }
+            25% { transform: scale(1.1) translate(-1%, -1%); }
+            50% { transform: scale(1.05) translate(1%, 0%); }
+            75% { transform: scale(1.1) translate(0%, 1%); }
+            100% { transform: scale(1.05) translate(0, 0); }
+          }
+          .promesse-bg-move {
+            animation: promessePan 20s ease-in-out infinite;
+          }
+        `}} />
         <div
           style={{
             maxWidth: '750px',
             margin: '0 auto',
             textAlign: 'center',
+            position: 'relative',
+            zIndex: 1,
           }}
         >
           <p
@@ -805,7 +462,7 @@ export default function NotreHistoire() {
               fontWeight: 500,
               letterSpacing: '0.25em',
               textTransform: 'uppercase' as const,
-              color: 'var(--color-matcha-mid)',
+              color: 'rgba(255,255,255,0.6)',
               marginBottom: '32px',
             }}
           >
@@ -816,7 +473,7 @@ export default function NotreHistoire() {
               fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)',
               fontWeight: 400,
               lineHeight: 1.8,
-              color: 'var(--color-charcoal)',
+              color: 'white',
               marginBottom: '24px',
             }}
           >
@@ -827,7 +484,7 @@ export default function NotreHistoire() {
               fontSize: 'clamp(1.25rem, 3vw, 1.75rem)',
               fontWeight: 500,
               lineHeight: 1.6,
-              color: 'var(--color-matcha-mid)',
+              color: 'rgba(255,255,255,0.85)',
               marginBottom: '32px',
             }}
           >
@@ -837,104 +494,14 @@ export default function NotreHistoire() {
             style={{
               width: '40px',
               height: '1px',
-              backgroundColor: 'var(--color-matcha-mid)',
+              backgroundColor: 'rgba(255,255,255,0.3)',
               margin: '0 auto 32px',
               opacity: 0.3,
             }}
           />
-          <p
-            style={{
-              fontSize: '15px',
-              fontWeight: 300,
-              lineHeight: 2,
-              color: 'var(--color-stone)',
-            }}
-          >
-            Du matcha pur, extreme et exclusif, issu d'Uji au Japon, pense
-            pour ceux qui recherchent l'essentiel.
-          </p>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section
-        style={{
-          padding: '80px 24px',
-          backgroundColor: 'var(--color-matcha-deep)',
-          textAlign: 'center',
-        }}
-      >
-        <div style={{maxWidth: '600px', margin: '0 auto'}}>
-          <p
-            style={{
-              fontSize: '10px',
-              fontWeight: 500,
-              letterSpacing: '0.25em',
-              textTransform: 'uppercase' as const,
-              color: 'var(--color-matcha-light)',
-              marginBottom: '20px',
-            }}
-          >
-            Pret a decouvrir ?
-          </p>
-          <h2
-            style={{
-              fontFamily: "'Poppins', sans-serif",
-              fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-              fontWeight: 400,
-              color: 'white',
-              marginBottom: '36px',
-            }}
-          >
-            Goutez la purete
-          </h2>
-          <div
-            style={{
-              display: 'flex',
-              gap: '16px',
-              justifyContent: 'center',
-              flexWrap: 'wrap',
-            }}
-          >
-            <Link
-              to="/collections/all"
-              style={{
-                display: 'inline-block',
-                padding: '14px 32px',
-                backgroundColor: 'var(--color-matcha-mid)',
-                color: 'white',
-                borderRadius: '6px',
-                fontSize: '12px',
-                fontWeight: 500,
-                letterSpacing: '0.15em',
-                textTransform: 'uppercase' as const,
-                textDecoration: 'none',
-                transition: 'all 0.3s ease',
-              }}
-            >
-              Nos matchas
-            </Link>
-            <Link
-              to="/"
-              style={{
-                display: 'inline-block',
-                padding: '14px 32px',
-                border: '1px solid rgba(255,255,255,0.3)',
-                color: 'white',
-                borderRadius: '6px',
-                fontSize: '12px',
-                fontWeight: 500,
-                letterSpacing: '0.15em',
-                textTransform: 'uppercase' as const,
-                textDecoration: 'none',
-                transition: 'all 0.3s ease',
-              }}
-            >
-              Retour a l'accueil
-            </Link>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

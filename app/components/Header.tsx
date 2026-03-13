@@ -50,6 +50,13 @@ export function Header() {
     }
   }
 
+  // Pages without dark hero backgrounds need solid header immediately
+  const isLightPage = location.pathname.includes('/products/') ||
+    location.pathname.includes('/collections/') ||
+    location.pathname.includes('/cart') ||
+    location.pathname.includes('/account') ||
+    location.pathname.includes('/search');
+
   const handleScroll = () => {
     setIsScrolled(window.scrollY > 30);
   };
@@ -93,17 +100,17 @@ export function Header() {
           : 'py-5'
       }`}
       style={{
-        background: isScrolled
+        background: (isScrolled || isLightPage)
           ? 'rgba(250, 248, 243, 0.95)'
           : 'transparent',
-        backdropFilter: isScrolled ? 'blur(20px)' : 'none',
-        WebkitBackdropFilter: isScrolled ? 'blur(20px)' : 'none',
+        backdropFilter: (isScrolled || isLightPage) ? 'blur(20px)' : 'none',
+        WebkitBackdropFilter: (isScrolled || isLightPage) ? 'blur(20px)' : 'none',
       }}
     >
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center">
-          <Logo isScrolled={isScrolled} />
+          <Logo isScrolled={isScrolled || isLightPage} />
         </div>
 
         {/* Desktop Navigation */}
@@ -120,7 +127,7 @@ export function Header() {
                   }
                 }}
                 className={`relative group transition-all duration-300 ${
-                  isScrolled ? 'text-[#1a1a18]' : 'text-white'
+                  (isScrolled || isLightPage) ? 'text-[#1a1a18]' : 'text-white'
                 }`}
                 style={{
                   fontSize: '11px',
@@ -133,7 +140,7 @@ export function Header() {
                 <span
                   className="absolute -bottom-1 left-0 w-0 h-px transition-all duration-300 group-hover:w-full"
                   style={{
-                    backgroundColor: isScrolled ? '#3d6b4f' : 'white',
+                    backgroundColor: (isScrolled || isLightPage) ? '#3d6b4f' : 'white',
                   }}
                 ></span>
               </Link>
@@ -147,7 +154,7 @@ export function Header() {
             aria-label="Panier"
           >
             <ShoppingBag
-              className={`h-5 w-5 ${isScrolled ? 'text-[#1a1a18]' : 'text-white'}`}
+              className={`h-5 w-5 ${(isScrolled || isLightPage) ? 'text-[#1a1a18]' : 'text-white'}`}
             />
             {cartCount > 0 && (
               <span
@@ -168,7 +175,7 @@ export function Header() {
             aria-label="Panier"
           >
             <ShoppingBag
-              className={`h-5 w-5 ${isScrolled ? 'text-[#1a1a18]' : 'text-white'}`}
+              className={`h-5 w-5 ${(isScrolled || isLightPage) ? 'text-[#1a1a18]' : 'text-white'}`}
             />
             {cartCount > 0 && (
               <span
@@ -181,7 +188,7 @@ export function Header() {
           </button>
 
           <button
-            className={`p-1.5 transition-all duration-300 ${isScrolled ? 'text-[#1a1a18]' : 'text-white'}`}
+            className={`p-1.5 transition-all duration-300 ${(isScrolled || isLightPage) ? 'text-[#1a1a18]' : 'text-white'}`}
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Menu"
           >

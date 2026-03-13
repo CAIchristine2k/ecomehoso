@@ -26,10 +26,32 @@ interface HomeProductShowcaseProps {
 export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
   if (!products || products.length === 0) return null;
 
+  // Filter out unwanted product and reorder
+  const filtered = products.filter(
+    (p) =>
+      !p.featuredImage?.url?.includes('0933e6e21ca5'),
+  );
+  // Move kit-decouvert-prelude-et-foret to 3rd position (index 2)
+  const kitIdx = filtered.findIndex(
+    (p) => p.handle === 'kit-decouvert-prelude-et-foret' || p.featuredImage?.url?.includes('KITDOUBLEVOAYGE.png'),
+  );
+  const reordered = [...filtered];
+  if (kitIdx !== -1 && kitIdx !== 2) {
+    const [kit] = reordered.splice(kitIdx, 1);
+    reordered.splice(2, 0, kit);
+  }
+
+  // Move fouet to 4th position (index 3)
+  const fouetIdx = reordered.findIndex((p) => p.handle === 'fouet');
+  if (fouetIdx !== -1 && fouetIdx !== 3) {
+    const [fouet] = reordered.splice(fouetIdx, 1);
+    reordered.splice(3, 0, fouet);
+  }
+
   // Distribute products across 3 shelves
-  const shelf1 = products.slice(0, 3);
-  const shelf2 = products.slice(3, 7);
-  const shelf3 = products.slice(7, 10);
+  const shelf1 = reordered.slice(0, 3);
+  const shelf2 = reordered.slice(3, 6);
+  const shelf3 = reordered.slice(6, 9);
 
   const shelves = [shelf1, shelf2, shelf3].filter((s) => s.length > 0);
 
@@ -58,10 +80,12 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
           </span>
           <h2
             style={{
+              fontFamily: "'Playfair Display', 'Georgia', serif",
               fontSize: 'clamp(1.75rem, 4vw, 2.75rem)',
-              fontWeight: 300,
+              fontWeight: 600,
               color: 'var(--color-charcoal)',
-              letterSpacing: '-0.01em',
+              letterSpacing: '0.02em',
+              fontStyle: 'italic',
               lineHeight: 1.2,
             }}
           >
@@ -128,15 +152,14 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
                       className="absolute left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none"
                       style={{
                         bottom: '-48px',
-                        width: 'max-content',
-                        maxWidth: '180px',
+                        width: '180px',
                         zIndex: 10,
                       }}
                     >
                       <div
                         className="px-3 py-2 rounded-md text-center"
                         style={{
-                          backgroundColor: 'var(--color-charcoal)',
+                          backgroundColor: 'white',
                           boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
                         }}
                       >
@@ -145,16 +168,20 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
                           fontWeight: 500,
                           letterSpacing: '0.08em',
                           textTransform: 'uppercase' as const,
-                          color: 'white',
+                          color: 'var(--color-charcoal)',
                           lineHeight: 1.3,
-                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          display: '-webkit-box',
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: 'vertical' as const,
                         }}>
                           {product.title}
                         </p>
                         {product.priceRange && (
                           <p className="mt-0.5 price-no-hover" style={{
                             fontSize: '10px',
-                            color: 'var(--color-matcha-light)',
+                            color: 'var(--color-matcha-mid)',
                             fontWeight: 500,
                           }}>
                             <Money data={product.priceRange.minVariantPrice} />
@@ -168,20 +195,20 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
 
               {/* Shelf - thick matcha-tinted line with realistic shadow */}
               <div style={{position: 'relative', zIndex: 5}}>
+                {/* Shelf surface */}
                 <div
                   style={{
-                    height: '3px',
-                    background: 'linear-gradient(to bottom, rgba(90,120,90,0.25) 0%, rgba(90,120,90,0.15) 100%)',
+                    height: '2px',
+                    background: 'linear-gradient(to right, transparent 0%, rgba(26,47,35,0.08) 20%, rgba(26,47,35,0.12) 50%, rgba(26,47,35,0.08) 80%, transparent 100%)',
                     width: '100%',
-                    borderRadius: '1px',
                   }}
                 />
-                {/* Shelf shadow - diffused below */}
+                {/* Soft shadow below */}
                 <div
                   style={{
-                    height: '12px',
-                    background: 'linear-gradient(to bottom, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.02) 40%, transparent 100%)',
-                    width: '96%',
+                    height: '20px',
+                    background: 'radial-gradient(ellipse at center, rgba(26,47,35,0.07) 0%, transparent 70%)',
+                    width: '80%',
                     margin: '0 auto',
                   }}
                 />

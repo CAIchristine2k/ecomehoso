@@ -34,19 +34,24 @@ export function Hero() {
 
       {/* Hero Content - Centered, minimal */}
       <div className="relative z-20 text-center px-4">
-        <h1
-          className="text-white pb-6 hero-title-glow hero-title-breathe"
+        <div
+          className="pb-6 hero-title-breathe mx-auto overflow-hidden"
           style={{
-            fontFamily: "'Brusher', 'Poppins', sans-serif",
-            fontSize: 'clamp(4rem, 12vw, 10rem)',
-            fontWeight: 400,
-            letterSpacing: '0.4em',
-            lineHeight: 1,
-            textIndent: '0.4em',
+            height: 'clamp(180px, 35vw, 450px)',
+            width: 'clamp(300px, 60vw, 700px)',
           }}
         >
-          {config.heroTitle}
-        </h1>
+          <img
+            src="/images/hoso-logo-brush.png"
+            alt={config.heroTitle}
+            className="w-full h-full"
+            style={{
+              filter: 'brightness(0) invert(1)',
+              objectFit: 'cover',
+              transform: 'scale(0.9)',
+            }}
+          />
+        </div>
 
         {/* Japanese subtitle */}
         <p

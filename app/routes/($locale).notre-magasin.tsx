@@ -289,6 +289,125 @@ export default function NotreMagasinPage() {
         </div>
       </section>
 
+      {/* Notre Carte */}
+      <section style={{padding: '100px 24px', backgroundColor: 'var(--color-cream)'}}>
+        <div style={{maxWidth: '1100px', margin: '0 auto'}}>
+          <div style={{textAlign: 'center', marginBottom: '64px'}}>
+            <span
+              style={{
+                fontSize: '10px',
+                fontWeight: 500,
+                letterSpacing: '0.25em',
+                textTransform: 'uppercase' as const,
+                color: 'var(--color-matcha-mid)',
+                display: 'block',
+                marginBottom: '16px',
+              }}
+            >
+              A deguster sur place
+            </span>
+            <h2
+              style={{
+                fontFamily: "'Poppins', sans-serif",
+                fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
+                fontWeight: 400,
+                color: 'var(--color-charcoal)',
+                marginBottom: '8px',
+              }}
+            >
+              Notre Carte
+            </h2>
+            <p
+              style={{
+                fontFamily: "'Noto Serif JP', serif",
+                fontSize: '1rem',
+                color: 'var(--color-matcha-mid)',
+                opacity: 0.6,
+              }}
+            >
+              メニュー
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-16 max-w-[500px] mx-auto">
+            {/* Matcha Love */}
+            <div>
+              <h3
+                style={{
+                  fontSize: '11px',
+                  fontWeight: 600,
+                  letterSpacing: '0.3em',
+                  textTransform: 'uppercase' as const,
+                  color: 'var(--color-matcha-mid)',
+                  marginBottom: '24px',
+                  paddingBottom: '12px',
+                  borderBottom: '1px solid var(--color-matcha-light)',
+                }}
+              >
+                Matcha Love
+              </h3>
+              <ul style={{listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px'}}>
+                {[
+                  ['Matcha Latte', '6,00'],
+                  ['Matcha a la rose', '6,50'],
+                  ['Strawberry Matcha Latte', '7,50'],
+                  ['Pop Yuzu Matcha', '7,00'],
+                  ['Oreo Matcha Latte', '7,00'],
+                  ['Coco Matcha Cloud', '7,00'],
+                  ['Passion Matcha Latte', '7,50'],
+                  ['Sesame Matcha Latte', '7,50'],
+                  ['Pistacha Matcha Latte', '7,50'],
+                ].map(([name, price]) => (
+                  <li key={name} style={{display: 'flex', justifyContent: 'space-between', alignItems: 'baseline'}}>
+                    <span style={{fontSize: '15px', color: 'var(--color-charcoal)', fontWeight: 400}}>{name}</span>
+                    <span style={{flex: 1, borderBottom: '1px dotted var(--color-matcha-light)', margin: '0 12px', opacity: 0.4}} />
+                    <span style={{fontSize: '15px', color: 'var(--color-matcha-mid)', fontWeight: 500}}>{price} €</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Signature Hoso */}
+            <div>
+              <h3
+                style={{
+                  fontSize: '11px',
+                  fontWeight: 600,
+                  letterSpacing: '0.3em',
+                  textTransform: 'uppercase' as const,
+                  color: 'var(--color-matcha-mid)',
+                  marginBottom: '24px',
+                  paddingBottom: '12px',
+                  borderBottom: '1px solid var(--color-matcha-light)',
+                }}
+              >
+                Signature Hoso
+              </h3>
+              <ul style={{listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '16px'}}>
+                {[
+                  {name: 'Pistachio Latte Secret', price: '7,00', desc: 'Espresso, Pistache, Lait, creme maison'},
+                  {name: 'Vienna Sesame Latte', price: '7,00', desc: 'Espresso, Sesame noir, Lait, creme maison'},
+                  {name: 'Mango Tango Matcha Latte', price: '7,50', desc: 'Mangue, Lait, Matcha, creme maison'},
+                  {name: 'Matchamisu Latte', price: '7,90', desc: 'Matcha, Mascarpone, Lait, creme maison'},
+                  {name: 'Basque Tiramisu Latte', price: '7,00', desc: 'Espresso, Mascarpone, creme maison'},
+                  {name: 'Basque Matcha Latte', price: '7,00', desc: 'Matcha, Mascarpone, Lait, creme maison'},
+                ].map((item) => (
+                  <li key={item.name}>
+                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'baseline'}}>
+                      <span style={{fontSize: '15px', color: 'var(--color-charcoal)', fontWeight: 400}}>{item.name}</span>
+                      <span style={{flex: 1, borderBottom: '1px dotted var(--color-matcha-light)', margin: '0 12px', opacity: 0.4}} />
+                      <span style={{fontSize: '15px', color: 'var(--color-matcha-mid)', fontWeight: 500}}>{item.price} €</span>
+                    </div>
+                    <p style={{fontSize: '12px', color: 'var(--color-stone)', marginTop: '4px', fontStyle: 'italic'}}>{item.desc}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* Infos pratiques */}
       <section style={{padding: '100px 24px', backgroundColor: 'var(--color-cream)'}}>
         <div style={{maxWidth: '1100px', margin: '0 auto'}}>

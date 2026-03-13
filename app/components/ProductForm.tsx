@@ -228,14 +228,7 @@ export function ProductForm({
         }}
       >
         <p>
-          Livraison GRATUITE a partir de 49€ d'achat.{' '}
-          <span className="underline cursor-pointer" style={{color: 'var(--color-stone)'}}>
-            Comparer les methodes de livraison
-          </span>
-        </p>
-        <p style={{fontSize: '12px', color: 'var(--color-stone)', marginTop: '4px'}}>
-          Livraison: 75004, France.{' '}
-          <span className="underline cursor-pointer">Modifier</span>
+          Livraison GRATUITE a partir de 49€ d'achat.
         </p>
       </div>
 
@@ -248,15 +241,16 @@ export function ProductForm({
           onClick={handleAddToCart}
           className="w-full flex items-center justify-center transition-all duration-300"
           style={{
-            backgroundColor: isAvailable ? 'var(--color-matcha-mid)' : 'var(--color-cream-dark)',
-            color: isAvailable ? 'white' : 'var(--color-stone)',
-            padding: '18px 32px',
-            borderRadius: '8px',
-            fontSize: '13px',
-            fontWeight: 600,
+            backgroundColor: isAvailable ? '#f5c6c2' : 'var(--color-cream-dark)',
+            color: isAvailable ? 'var(--color-charcoal)' : 'var(--color-stone)',
+            padding: '20px 32px',
+            borderRadius: '12px',
+            fontSize: '14px',
+            fontWeight: 700,
             letterSpacing: '0.18em',
             textTransform: 'uppercase' as const,
             cursor: isAvailable ? 'pointer' : 'not-allowed',
+            boxShadow: isAvailable ? '0 4px 16px rgba(245,198,194,0.4)' : 'none',
           }}
         >
           {isAdding ? (

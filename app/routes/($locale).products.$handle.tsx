@@ -407,20 +407,27 @@ export default function Product() {
               )}
             </div>
 
-            {/* Benefits Grid */}
-            <div className="grid grid-cols-2 gap-x-8 gap-y-3 mb-8">
-              {benefits.map((benefit) => (
-                <div key={benefit} className="flex items-center gap-3">
-                  <div
-                    className="w-2.5 h-2.5 rounded-full flex-shrink-0"
-                    style={{backgroundColor: 'var(--color-matcha-light)'}}
-                  />
-                  <span style={{fontSize: '13px', fontWeight: 500, color: 'var(--color-charcoal)'}}>
-                    {benefit}
-                  </span>
-                </div>
-              ))}
-            </div>
+            {/* Benefits Grid - Only for matcha products (not accessories) */}
+            {!product.productType?.toLowerCase().includes('accessoire') &&
+              !product.tags?.some((t: string) => t.toLowerCase().includes('accessoire')) &&
+              (product.title.toLowerCase().includes('matcha') ||
+              product.handle.toLowerCase().includes('matcha') ||
+              product.handle.toLowerCase().includes('prelude') ||
+              product.handle.toLowerCase().includes('foret')) && (
+              <div className="grid grid-cols-2 gap-x-8 gap-y-3 mb-8">
+                {benefits.map((benefit) => (
+                  <div key={benefit} className="flex items-center gap-3">
+                    <div
+                      className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+                      style={{backgroundColor: '#f5c6c2'}}
+                    />
+                    <span style={{fontSize: '13px', fontWeight: 500, color: 'var(--color-charcoal)'}}>
+                      {benefit}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
 
             {/* Product Form (Variant Selector + Add to Cart) */}
             <Suspense fallback={<div>Chargement...</div>}>
@@ -435,11 +442,6 @@ export default function Product() {
                 )}
               />
             </Suspense>
-
-            {/* Installment payment info */}
-            <div className="mt-5 mb-6" style={{fontSize: '13px', color: 'var(--color-stone)'}}>
-              Payez en 3 fois {currentVariant?.price?.amount ? (Number(currentVariant.price.amount) / 3).toFixed(2) : '---'}€. Sans frais.
-            </div>
 
             {/* Accordion Sections */}
             <div style={{borderTop: '1px solid var(--color-cream-dark)'}}>
@@ -518,6 +520,73 @@ export default function Product() {
                 </div>
               )}
             </div>
+
+            {/* Cross-sell: Complétez votre achat */}
+            {recommendedProducts.length > 0 && (
+              <div className="mt-8">
+                <h3
+                  style={{
+                    fontSize: '12px',
+                    fontWeight: 600,
+                    letterSpacing: '0.15em',
+                    textTransform: 'uppercase' as const,
+                    color: 'var(--color-charcoal)',
+                    marginBottom: '12px',
+                  }}
+                >
+                  Completez votre achat
+                </h3>
+                <div className="flex flex-col gap-3">
+                  {recommendedProducts.slice(0, 2).map((crossProduct: any) => (
+                    <div
+                      key={crossProduct.id}
+                      className="flex items-center gap-4 p-4 rounded-xl"
+                      style={{
+                        border: '1px solid var(--color-cream-dark)',
+                        backgroundColor: 'var(--color-cream)',
+                      }}
+                    >
+                      {crossProduct.featuredImage && (
+                        <Link to={`/products/${crossProduct.handle}`} className="flex-shrink-0">
+                          <Image
+                            data={crossProduct.featuredImage}
+                            className="w-16 h-16 object-contain rounded-lg"
+                            sizes="64px"
+                          />
+                        </Link>
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <p style={{fontSize: '14px', fontWeight: 600, color: 'var(--color-charcoal)', lineHeight: 1.3}}>
+                          {crossProduct.title}
+                        </p>
+                        <p style={{fontSize: '14px', color: 'var(--color-stone)', marginTop: '2px'}}>
+                          {crossProduct.priceRange?.minVariantPrice && (
+                            <Money data={crossProduct.priceRange.minVariantPrice} />
+                          )}
+                        </p>
+                      </div>
+                      <Link
+                        to={`/products/${crossProduct.handle}`}
+                        className="flex-shrink-0 transition-all duration-300 hover:scale-105"
+                        style={{
+                          padding: '8px 20px',
+                          border: '1.5px solid var(--color-charcoal)',
+                          borderRadius: '6px',
+                          fontSize: '11px',
+                          fontWeight: 600,
+                          letterSpacing: '0.1em',
+                          textTransform: 'uppercase' as const,
+                          color: 'var(--color-charcoal)',
+                          textDecoration: 'none',
+                        }}
+                      >
+                        Voir
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -539,19 +608,20 @@ export default function Product() {
                 <Link
                   key={relatedProduct.id}
                   to={`/products/${relatedProduct.handle}`}
-                  className="group"
+                  className="group flex flex-col"
                 >
                   <div
-                    className="rounded-lg overflow-hidden mb-3 relative"
+                    className="rounded-lg overflow-hidden mb-3 relative flex-shrink-0"
                     style={{
                       border: '1px solid var(--color-cream-dark)',
                       backgroundColor: 'var(--color-cream-warm)',
+                      aspectRatio: '1 / 1',
                     }}
                   >
                     {relatedProduct.featuredImage && (
                       <Image
                         data={relatedProduct.featuredImage}
-                        className="w-full h-auto object-cover aspect-square group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                         sizes="(min-width: 768px) 25vw, 50vw"
                       />
                     )}

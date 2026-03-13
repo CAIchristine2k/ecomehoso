@@ -87,7 +87,7 @@ export function ProductItem({
             <Image
               data={featuredImage}
               alt={title}
-              className="w-full h-full object-cover object-center transform group-hover:scale-[1.08] transition-transform duration-700"
+              className="w-full h-full object-contain object-center transform group-hover:scale-[1.08] transition-transform duration-700 p-4"
               sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
               loading={loading}
             />
@@ -140,7 +140,7 @@ export function ProductItem({
           </div>
         </div>
 
-        <div className="p-5">
+        <div className="p-4">
           <h3
             className="mb-2 transition-colors duration-300 group-hover:text-[#3d6b4f]"
             style={{
