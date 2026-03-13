@@ -98,14 +98,14 @@ function CartCheckoutActions({
     // Fallback to our custom checkout
     return (
       <div className="mt-8">
-        <Link
-          to="/checkout"
+        <a
+          href={checkoutUrl}
           onClick={close}
           className="block w-full text-white text-center py-4 px-6 rounded-lg font-medium transition-all duration-300 hover:-translate-y-0.5"
-        style={{backgroundColor: 'var(--color-matcha-mid)', fontSize: '12px', letterSpacing: '0.15em', textTransform: 'uppercase' as const}}
+          style={{backgroundColor: 'var(--color-matcha-mid)', fontSize: '12px', letterSpacing: '0.15em', textTransform: 'uppercase' as const, textDecoration: 'none'}}
         >
           Passer commande {'\u2192'}
-        </Link>
+        </a>
         <div className="mt-4 flex items-center justify-center">
           <p className="text-xs text-center" style={{color: 'var(--color-mist)'}}>
             Paiement securise
@@ -129,30 +129,21 @@ function CartCheckoutActions({
       customDomainUrl.pathname = checkoutPath;
       customDomainUrl.search = checkoutParams;
       finalCheckoutUrl = customDomainUrl.toString();
-      console.log(
-        '✅ CartCheckoutActions - Using custom domain checkout URL:',
-        finalCheckoutUrl,
-      );
     } catch (error) {
-      console.error(
-        '❌ CartCheckoutActions - Error creating custom domain URL:',
-        error,
-      );
-      // Fallback to the original checkout URL
       finalCheckoutUrl = checkoutUrl;
     }
   }
 
   return (
     <div className="mt-8">
-      <Link
-        to="/checkout"
+      <a
+        href={finalCheckoutUrl}
         onClick={close}
         className="block w-full text-white text-center py-4 px-6 rounded-lg font-medium transition-all duration-300 hover:-translate-y-0.5"
-        style={{backgroundColor: 'var(--color-matcha-mid)', fontSize: '12px', letterSpacing: '0.15em', textTransform: 'uppercase' as const}}
+        style={{backgroundColor: 'var(--color-matcha-mid)', fontSize: '12px', letterSpacing: '0.15em', textTransform: 'uppercase' as const, textDecoration: 'none'}}
       >
         Passer commande &rarr;
-      </Link>
+      </a>
       <div className="mt-4 flex items-center justify-center">
         <p className="text-xs text-center" style={{color: 'var(--color-mist)'}}>
           Paiement securise

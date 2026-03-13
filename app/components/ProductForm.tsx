@@ -241,8 +241,8 @@ export function ProductForm({
           onClick={handleAddToCart}
           className="w-full flex items-center justify-center transition-all duration-300"
           style={{
-            backgroundColor: isAvailable ? '#f5c6c2' : 'var(--color-cream-dark)',
-            color: isAvailable ? 'var(--color-charcoal)' : 'var(--color-stone)',
+            backgroundColor: isAvailable ? 'var(--color-charcoal)' : 'var(--color-cream-dark)',
+            color: isAvailable ? '#ffffff' : 'var(--color-stone)',
             padding: '20px 32px',
             borderRadius: '12px',
             fontSize: '14px',
@@ -250,7 +250,8 @@ export function ProductForm({
             letterSpacing: '0.18em',
             textTransform: 'uppercase' as const,
             cursor: isAvailable ? 'pointer' : 'not-allowed',
-            boxShadow: isAvailable ? '0 4px 16px rgba(245,198,194,0.4)' : 'none',
+            boxShadow: isAvailable ? '0 6px 20px rgba(26,26,24,0.3)' : 'none',
+            border: 'none',
           }}
         >
           {isAdding ? (

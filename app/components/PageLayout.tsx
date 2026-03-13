@@ -42,7 +42,7 @@ export function PageLayout({
     <div className="flex flex-col min-h-screen" style={{backgroundColor: 'var(--color-cream)', color: 'var(--color-charcoal)'}}>
       <Header />
 
-      <main className="flex-grow">{children}</main>
+      <main className="flex-grow flex-shrink-0">{children}</main>
 
       <Footer />
 

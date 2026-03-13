@@ -25,15 +25,14 @@ export function ProductShowcase({
   return (
     <section
       id="shop"
-      className="relative overflow-hidden"
+      className="relative overflow-hidden py-0 md:py-[var(--section-spacing)]"
       style={{
-        padding: 'var(--section-spacing) 0',
         backgroundColor: 'var(--color-cream)',
       }}
     >
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 relative z-10">
+      <div className="max-w-[1400px] mx-auto px-3 md:px-10 relative z-10">
         {/* Section Header */}
-        <div className="mb-16 text-center">
+        <div className="mb-8 md:mb-16 text-center">
           <span
             className="inline-block mb-4"
             style={{
@@ -74,14 +73,14 @@ export function ProductShowcase({
         </div>
 
         {/* Product Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
           {products.slice(0, 6).map((product) => (
             <ProductCard key={product.id} product={product} loading={loading} />
           ))}
         </div>
 
         {/* View All Link */}
-        <div className="mt-16 text-center">
+        <div className="mt-8 md:mt-16 text-center">
           <Link
             to="/collections/all"
             prefetch="intent"

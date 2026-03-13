@@ -57,18 +57,17 @@ export function Footer() {
 
   return (
     <footer
+      className="px-6 md:px-10 pt-12 md:pt-16 pb-8 md:pb-10 flex-shrink-0 mt-auto"
       style={{
         backgroundColor: '#1a2f23',
         color: 'white',
-        padding: '64px 40px 40px',
       }}
     >
       <div className="max-w-[1400px] mx-auto">
         {/* Main Footer Grid */}
         <div
-          className="grid gap-16 pb-12"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-16 pb-10 md:pb-12"
           style={{
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
             borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
           }}
         >

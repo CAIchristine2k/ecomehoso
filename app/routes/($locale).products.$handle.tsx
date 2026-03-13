@@ -1,6 +1,6 @@
 import {redirect, type LoaderFunctionArgs} from 'react-router';
 import {useLoaderData, type MetaFunction, Link} from 'react-router';
-import {useState, useCallback, useEffect, useMemo} from 'react';
+import {useState, useCallback, useEffect, useMemo, useRef} from 'react';
 import {
   getSelectedProductOptions,
   Analytics,
@@ -210,30 +210,46 @@ export default function Product() {
   }, [currentVariant, getVariantImages, featuredImage]);
 
   const displayImages = useMemo(() => {
-    if (!currentVariant) {
-      return [{
-        id: 'placeholder-image',
-        url: 'https://placehold.co/800x800?text=No+Image+Available',
-        altText: 'No image available',
-        width: 800,
-        height: 800,
-      }];
+    const placeholder = [{
+      id: 'placeholder-image',
+      url: 'https://placehold.co/800x800?text=No+Image+Available',
+      altText: 'No image available',
+      width: 800,
+      height: 800,
+    }];
+
+    // Use ALL product images as the base
+    const allProductImages = product.images?.nodes || [];
+
+    // If we have product images, use them (deduplicated by URL)
+    if (allProductImages.length > 0) {
+      const seenUrls = new Set<string>();
+      const unique = allProductImages.filter((img: any) => {
+        if (!img.url || seenUrls.has(img.url)) return false;
+        seenUrls.add(img.url);
+        return true;
+      });
+
+      // Put current variant image first if it exists
+      if (currentVariant?.image?.url) {
+        const variantUrl = currentVariant.image.url;
+        const variantIdx = unique.findIndex((img: any) => img.url === variantUrl);
+        if (variantIdx > 0) {
+          const [variantImg] = unique.splice(variantIdx, 1);
+          unique.unshift(variantImg);
+        } else if (variantIdx === -1) {
+          unique.unshift(currentVariant.image);
+        }
+      }
+
+      return unique.length > 0 ? unique : placeholder;
     }
-    const variantImages = [
-      ...(currentVariant.image?.url ? [currentVariant.image] : []),
-      ...customVariantImages,
-    ];
-    if (variantImages.length === 0) {
-      return [{
-        id: 'placeholder-image',
-        url: 'https://placehold.co/800x800?text=No+Image+Available',
-        altText: 'No image available',
-        width: 800,
-        height: 800,
-      }];
-    }
-    return variantImages;
-  }, [currentVariant, customVariantImages]);
+
+    // Fallback to variant image or featured image
+    if (currentVariant?.image?.url) return [currentVariant.image];
+    if (product.featuredImage?.url) return [product.featuredImage];
+    return placeholder;
+  }, [currentVariant, product.images?.nodes, product.featuredImage]);
 
   useEffect(() => {
     if (
@@ -252,6 +268,43 @@ export default function Product() {
     ? descriptionText.substring(0, 200) + '...'
     : descriptionText;
 
+  // Image carousel state
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+
+  const handleSwipe = () => {
+    const diff = touchStartX.current - touchEndX.current;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        // Swipe left -> next (loop to first)
+        const newIndex = activeImageIndex === displayImages.length - 1 ? 0 : activeImageIndex + 1;
+        setActiveImageIndex(newIndex);
+        setActiveImage(displayImages[newIndex]);
+      } else if (diff < 0) {
+        // Swipe right -> prev (loop to last)
+        const newIndex = activeImageIndex === 0 ? displayImages.length - 1 : activeImageIndex - 1;
+        setActiveImageIndex(newIndex);
+        setActiveImage(displayImages[newIndex]);
+      }
+    }
+  };
+
+  const goToImage = (index: number) => {
+    setActiveImageIndex(index);
+    setActiveImage(displayImages[index]);
+  };
+
+  // Sync activeImageIndex when activeImage changes (e.g. from thumbnail click)
+  useEffect(() => {
+    if (activeImage) {
+      const idx = displayImages.findIndex((img: any) => img.id === activeImage.id);
+      if (idx >= 0 && idx !== activeImageIndex) {
+        setActiveImageIndex(idx);
+      }
+    }
+  }, [activeImage, displayImages]);
+
   // Benefits list
   const benefits = [
     'Donne de l\'energie',
@@ -266,21 +319,47 @@ export default function Product() {
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
 
   return (
-    <div style={{backgroundColor: 'var(--color-cream)', minHeight: '100vh'}}>
+    <div style={{backgroundColor: 'var(--color-cream)'}}>
       <div className="max-w-[1400px] mx-auto" style={{paddingTop: 'calc(var(--header-height-desktop) + 1rem)'}}>
+
+        {/* Mobile: Breadcrumb + Title above image */}
+        <div className="lg:hidden px-6 pt-4">
+          <nav className="mb-4" aria-label="Breadcrumb">
+            <ol className="flex items-center gap-2 flex-wrap" style={{fontSize: '12px', color: 'var(--color-stone)'}}>
+              <li><Link to="/" className="hover:underline">Accueil</Link></li>
+              <li>/</li>
+              <li><Link to="/collections/all" className="hover:underline">Boutique</Link></li>
+              <li>/</li>
+              <li style={{color: 'var(--color-charcoal)'}}>{product.title}</li>
+            </ol>
+          </nav>
+          <h1
+            className="mb-4"
+            style={{
+              fontSize: 'clamp(1.5rem, 3vw, 2.25rem)',
+              fontWeight: 700,
+              color: 'var(--color-charcoal)',
+              textTransform: 'uppercase' as const,
+              letterSpacing: '0.02em',
+              lineHeight: 1.1,
+            }}
+          >
+            {product.title}
+          </h1>
+        </div>
 
         {/* Product Grid - Image left, Info right */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
 
-          {/* LEFT: Image Gallery with vertical thumbnails */}
-          <div className="relative flex">
-            {/* Vertical Thumbnails */}
+          {/* LEFT: Image Gallery */}
+          <div className="relative lg:flex lg:flex-row">
+            {/* Desktop: Vertical Thumbnails */}
             {displayImages.length > 1 && (
-              <div className="hidden md:flex flex-col gap-3 pr-4 py-4 pl-4">
+              <div className="hidden lg:flex flex-col gap-3 pr-4 py-4 pl-4">
                 {displayImages.map((image: any) => (
                   <button
                     key={image.id}
-                    onClick={() => setActiveImage(image)}
+                    onClick={() => goToImage(displayImages.indexOf(image))}
                     className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 transition-all duration-200"
                     style={{
                       border: activeImage?.id === image.id
@@ -299,13 +378,15 @@ export default function Product() {
               </div>
             )}
 
-            {/* Main Image */}
+            {/* Main Image with swipe support */}
             <div
-              className="flex-1 flex items-center justify-center p-8 lg:p-12"
+              className="lg:flex-1 flex items-center justify-center p-4 md:p-8 lg:p-12 relative"
               style={{
                 backgroundColor: 'var(--color-cream-warm)',
-                minHeight: '500px',
               }}
+              onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
+              onTouchMove={(e) => { touchEndX.current = e.touches[0].clientX; }}
+              onTouchEnd={handleSwipe}
             >
               {activeImage ? (
                 <div className="relative w-full max-w-[500px] aspect-square">
@@ -334,51 +415,62 @@ export default function Product() {
                   <span style={{color: 'var(--color-stone)'}}>Pas d'image</span>
                 </div>
               )}
-            </div>
 
-            {/* Mobile thumbnails - horizontal */}
-            {displayImages.length > 1 && (
-              <div className="flex md:hidden gap-2 px-4 py-3 overflow-x-auto absolute bottom-0 left-0 right-0"
-                style={{backgroundColor: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(10px)'}}
-              >
-                {displayImages.map((image: any) => (
+              {/* Arrows */}
+              {displayImages.length > 1 && (
+                <>
                   <button
-                    key={image.id}
-                    onClick={() => setActiveImage(image)}
-                    className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 transition-all duration-200"
+                    onClick={() => goToImage(activeImageIndex === 0 ? displayImages.length - 1 : activeImageIndex - 1)}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full transition-opacity duration-200"
                     style={{
-                      border: activeImage?.id === image.id
-                        ? '2px solid var(--color-charcoal)'
-                        : '2px solid var(--color-cream-dark)',
+                      backgroundColor: 'rgba(255,255,255,0.7)',
+                      color: 'var(--color-charcoal)',
+                      opacity: 0.7,
+                      backdropFilter: 'blur(4px)',
                     }}
+                    aria-label="Image precedente"
                   >
-                    <Image
-                      data={image}
-                      className="w-full h-full object-cover"
-                      sizes="48px"
-                    />
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
+                    </svg>
                   </button>
-                ))}
-              </div>
-            )}
+                  <button
+                    onClick={() => goToImage(activeImageIndex === displayImages.length - 1 ? 0 : activeImageIndex + 1)}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full transition-opacity duration-200"
+                    style={{
+                      backgroundColor: 'rgba(255,255,255,0.7)',
+                      color: 'var(--color-charcoal)',
+                      opacity: 0.7,
+                      backdropFilter: 'blur(4px)',
+                    }}
+                    aria-label="Image suivante"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </>
+              )}
+
+            </div>
           </div>
 
           {/* RIGHT: Product Info */}
-          <div className="px-6 lg:px-12 py-8 lg:py-10 overflow-y-auto" style={{maxHeight: 'calc(100vh - var(--header-height-desktop))'}}>
-            {/* Breadcrumb */}
-            <nav className="mb-6" aria-label="Breadcrumb">
+          <div className="px-6 lg:px-12 py-6 lg:py-10">
+            {/* Breadcrumb - Desktop only */}
+            <nav className="hidden lg:block mb-6" aria-label="Breadcrumb">
               <ol className="flex items-center gap-2 flex-wrap" style={{fontSize: '12px', color: 'var(--color-stone)'}}>
                 <li><Link to="/" className="hover:underline">Accueil</Link></li>
                 <li>/</li>
-                <li><Link to="/collections/all" className="hover:underline">Home page</Link></li>
+                <li><Link to="/collections/all" className="hover:underline">Boutique</Link></li>
                 <li>/</li>
                 <li style={{color: 'var(--color-charcoal)'}}>{product.title}</li>
               </ol>
             </nav>
 
-            {/* Title */}
+            {/* Title - Desktop only */}
             <h1
-              className="mb-5"
+              className="hidden lg:block mb-5"
               style={{
                 fontSize: 'clamp(1.5rem, 3vw, 2.25rem)',
                 fontWeight: 700,
@@ -521,74 +613,75 @@ export default function Product() {
               )}
             </div>
 
-            {/* Cross-sell: Complétez votre achat */}
-            {recommendedProducts.length > 0 && (
-              <div className="mt-8">
-                <h3
-                  style={{
-                    fontSize: '12px',
-                    fontWeight: 600,
-                    letterSpacing: '0.15em',
-                    textTransform: 'uppercase' as const,
-                    color: 'var(--color-charcoal)',
-                    marginBottom: '12px',
-                  }}
-                >
-                  Completez votre achat
-                </h3>
-                <div className="flex flex-col gap-3">
-                  {recommendedProducts.slice(0, 2).map((crossProduct: any) => (
-                    <div
-                      key={crossProduct.id}
-                      className="flex items-center gap-4 p-4 rounded-xl"
-                      style={{
-                        border: '1px solid var(--color-cream-dark)',
-                        backgroundColor: 'var(--color-cream)',
-                      }}
-                    >
-                      {crossProduct.featuredImage && (
-                        <Link to={`/products/${crossProduct.handle}`} className="flex-shrink-0">
-                          <Image
-                            data={crossProduct.featuredImage}
-                            className="w-16 h-16 object-contain rounded-lg"
-                            sizes="64px"
-                          />
-                        </Link>
-                      )}
-                      <div className="flex-1 min-w-0">
-                        <p style={{fontSize: '14px', fontWeight: 600, color: 'var(--color-charcoal)', lineHeight: 1.3}}>
-                          {crossProduct.title}
-                        </p>
-                        <p style={{fontSize: '14px', color: 'var(--color-stone)', marginTop: '2px'}}>
-                          {crossProduct.priceRange?.minVariantPrice && (
-                            <Money data={crossProduct.priceRange.minVariantPrice} />
-                          )}
-                        </p>
-                      </div>
-                      <Link
-                        to={`/products/${crossProduct.handle}`}
-                        className="flex-shrink-0 transition-all duration-300 hover:scale-105"
-                        style={{
-                          padding: '8px 20px',
-                          border: '1.5px solid var(--color-charcoal)',
-                          borderRadius: '6px',
-                          fontSize: '11px',
-                          fontWeight: 600,
-                          letterSpacing: '0.1em',
-                          textTransform: 'uppercase' as const,
-                          color: 'var(--color-charcoal)',
-                          textDecoration: 'none',
-                        }}
-                      >
-                        Voir
-                      </Link>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
         </div>
+
+        {/* Cross-sell: below product grid on all screens */}
+        {recommendedProducts.length > 0 && (
+          <div className="px-6 lg:px-10 py-8">
+            <h3
+              style={{
+                fontSize: '12px',
+                fontWeight: 600,
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase' as const,
+                color: 'var(--color-charcoal)',
+                marginBottom: '12px',
+              }}
+            >
+              Completez votre achat
+            </h3>
+            <div className="flex flex-col gap-3">
+              {recommendedProducts.slice(0, 2).map((crossProduct: any) => (
+                <div
+                  key={crossProduct.id}
+                  className="flex items-center gap-4 p-4 rounded-xl"
+                  style={{
+                    border: '1px solid var(--color-cream-dark)',
+                    backgroundColor: 'var(--color-cream)',
+                  }}
+                >
+                  {crossProduct.featuredImage && (
+                    <Link to={`/products/${crossProduct.handle}`} className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden" style={{backgroundColor: 'var(--color-cream-warm)'}}>
+                      <Image
+                        data={crossProduct.featuredImage}
+                        className="w-full h-full object-contain"
+                        sizes="64px"
+                      />
+                    </Link>
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <p style={{fontSize: '14px', fontWeight: 600, color: 'var(--color-charcoal)', lineHeight: 1.3}}>
+                      {crossProduct.title}
+                    </p>
+                    <p style={{fontSize: '14px', color: 'var(--color-stone)', marginTop: '2px'}}>
+                      {crossProduct.priceRange?.minVariantPrice && (
+                        <Money data={crossProduct.priceRange.minVariantPrice} />
+                      )}
+                    </p>
+                  </div>
+                  <Link
+                    to={`/products/${crossProduct.handle}`}
+                    className="flex-shrink-0 transition-all duration-300 hover:scale-105"
+                    style={{
+                      padding: '8px 20px',
+                      border: '1.5px solid var(--color-charcoal)',
+                      borderRadius: '6px',
+                      fontSize: '11px',
+                      fontWeight: 600,
+                      letterSpacing: '0.1em',
+                      textTransform: 'uppercase' as const,
+                      color: 'var(--color-charcoal)',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    Voir
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Related Products Section */}
         {recommendedProducts.length > 0 && (

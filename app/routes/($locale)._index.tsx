@@ -251,11 +251,39 @@ export default function Home() {
                 background: 'linear-gradient(135deg, rgba(26,47,35,0.4) 0%, rgba(26,47,35,0.15) 100%)',
               }}
             />
+            {/* Mobile text overlay */}
+            <div
+              className="absolute inset-0 flex items-center md:hidden"
+              style={{
+                padding: 'clamp(48px, 8vw, 100px) clamp(24px, 5vw, 80px)',
+                zIndex: 5,
+              }}
+            >
+              <div style={{maxWidth: '520px'}}>
+                <div className="flex items-center gap-4 mb-6">
+                  <div style={{width: '40px', height: '1px', backgroundColor: 'rgba(255,255,255,0.5)'}} />
+                  <span style={{fontSize: '10px', fontWeight: 500, letterSpacing: '0.25em', textTransform: 'uppercase' as const, color: 'rgba(255,255,255,0.8)'}}>Notre philosophie</span>
+                </div>
+                <p style={{fontFamily: "'Noto Serif JP', serif", fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', marginBottom: '16px', letterSpacing: '0.3em'}}>細 · HOSO</p>
+                <h2 className="mb-6" style={{fontFamily: "'Poppins', sans-serif", fontSize: 'clamp(1.5rem, 5vw, 2rem)', fontWeight: 300, lineHeight: 1.35, color: 'white', letterSpacing: '-0.01em'}}>
+                  Extremement simple,<br />
+                  <span style={{color: 'rgba(255,255,255,0.85)', fontStyle: 'italic'}}>extremement pur.</span>
+                </h2>
+                <Link
+                  to="/notre-histoire"
+                  className="group inline-flex items-center gap-3 transition-all duration-400"
+                  style={{padding: '12px 24px', fontSize: '10px', fontWeight: 500, letterSpacing: '0.2em', textTransform: 'uppercase' as const, color: 'white', backgroundColor: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(4px)', borderRadius: '4px', textDecoration: 'none', border: '1px solid rgba(255,255,255,0.3)'}}
+                >
+                  Decouvrir notre histoire
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="transition-transform duration-300 group-hover:translate-x-1"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                </Link>
+              </div>
+            </div>
           </div>
 
-          {/* Text side */}
+          {/* Text side - desktop only */}
           <div
-            className="flex items-center order-1 md:order-2"
+            className="hidden md:flex items-center order-1 md:order-2"
             style={{
               padding: 'clamp(48px, 8vw, 100px) clamp(24px, 5vw, 80px)',
               backgroundColor: 'rgba(245, 240, 230, 0.85)',
@@ -385,6 +413,19 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Matcha powder banner */}
+      <div style={{width: '100%', backgroundColor: 'var(--color-cream)', textAlign: 'center', paddingTop: '15px'}}>
+        <img
+          src="/images/matcha-powder-brush.png"
+          alt="Poudre de matcha"
+          style={{
+            width: 'clamp(250px, 50vw, 600px)',
+            display: 'block',
+            margin: '0 auto',
+          }}
+        />
+      </div>
 
       {/* Product showcase section */}
       <ProductShowcase

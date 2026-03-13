@@ -4,7 +4,7 @@ export function FooterLogo() {
   const config = useConfig();
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center justify-center">
       <img
         src="/images/logo/hoso-logo-white.png"
         alt={`${config.brandName} Logo`}

@@ -119,9 +119,9 @@ export default function Testimonials() {
           className="testimonials-scroll"
           style={{
             display: 'flex',
+            width: 'fit-content',
             gap: '20px',
-            animation: 'testimonialsScroll 35s linear infinite',
-            whiteSpace: 'nowrap',
+            animation: 'testimonialsScroll 30s linear infinite',
           }}
         >
           {[...Array(3)].map((_, setIdx) => (
@@ -136,7 +136,6 @@ export default function Testimonials() {
                     background: 'white',
                     border: '1px solid var(--color-cream-dark)',
                     borderRadius: '12px',
-                    whiteSpace: 'normal',
                   }}
                 >
                   {/* Stars */}
@@ -205,7 +204,7 @@ export default function Testimonials() {
             __html: `
             @keyframes testimonialsScroll {
               0% { transform: translateX(0); }
-              100% { transform: translateX(-33.333%); }
+              100% { transform: translateX(calc(-100% / 3)); }
             }
             .testimonials-scroll:hover {
               animation-play-state: paused;

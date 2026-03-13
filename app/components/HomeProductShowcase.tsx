@@ -92,7 +92,7 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
             Nos essentiels
           </h2>
           <p style={{fontFamily: "'Noto Serif JP', serif", fontSize: '0.85rem', color: 'var(--color-matcha-mid)', letterSpacing: '0.3em', marginTop: '8px'}}>
-            必需品
+            ひつじゅひん
           </p>
         </div>
 
@@ -102,9 +102,9 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
             <div key={shelfIndex} className="relative">
               {/* Products row - aligned to bottom of shelf */}
               <div
-                className="flex items-end justify-around px-4 md:px-8"
+                className="flex items-end justify-around px-2 md:px-8"
                 style={{
-                  minHeight: shelfIndex === 1 ? '480px' : '340px',
+                  minHeight: shelfIndex === 1 ? 'clamp(300px, 40vw, 480px)' : 'clamp(220px, 28vw, 340px)',
                   paddingBottom: '0',
                 }}
               >
@@ -123,7 +123,7 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
                       className="relative transition-transform duration-500 ease-out group-hover:scale-105 group-hover:-translate-y-3"
                       style={{
                         width: '100%',
-                        height: shelfIndex === 1 ? '420px' : '280px',
+                        height: shelfIndex === 1 ? 'clamp(260px, 35vw, 420px)' : 'clamp(180px, 23vw, 280px)',
                       }}
                     >
                       {product.featuredImage ? (

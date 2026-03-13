@@ -93,6 +93,7 @@ export function Header() {
   };
 
   return (
+    <>
     <header
       className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
         isScrolled
@@ -197,83 +198,85 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      <div
-        className={`md:hidden fixed top-0 right-0 h-full transition-transform duration-700 z-[200] ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
-        style={{
-          width: '340px',
-          maxWidth: '85vw',
-          background: 'rgba(250, 248, 243, 0.98)',
-          backdropFilter: 'blur(20px)',
-        }}
-      >
-        <div className="p-8">
-          <button
-            onClick={() => setIsOpen(false)}
-            className="absolute top-6 right-6 text-[#1a1a18]"
-            aria-label="Fermer"
-          >
-            <X className="h-5 w-5" />
-          </button>
-
-          <nav className="mt-16 flex flex-col">
-            {config.navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                onClick={(e) => {
-                  if (item.href.startsWith('#')) {
-                    e.preventDefault();
-                    handleNavClick(item.href);
-                  } else {
-                    setIsOpen(false);
-                  }
-                }}
-                className="text-[#1a1a18] py-4 border-b border-[#e8e4dc] transition-colors duration-300 hover:text-[#3d6b4f]"
-                style={{
-                  fontSize: '13px',
-                  letterSpacing: '0.15em',
-                  textTransform: 'uppercase' as const,
-                  fontWeight: 400,
-                }}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
-
-          {socialLinks.length > 0 && (
-            <div className="flex gap-6 mt-10">
-              {socialLinks.map((social) => {
-                const IconComponent = social.icon;
-                return (
-                  <a
-                    key={social.name}
-                    href={social.link as string}
-                    className="text-[#7a7a75] hover:text-[#3d6b4f] transition-colors duration-300"
-                    aria-label={social.name}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <IconComponent className="h-4 w-4" />
-                  </a>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Mobile menu overlay */}
-      {isOpen && (
-        <div
-          className="md:hidden fixed inset-0 z-[199]"
-          style={{background: 'rgba(0,0,0,0.4)'}}
-          onClick={() => setIsOpen(false)}
-        />
-      )}
     </header>
+
+    {/* Mobile menu overlay - outside header for proper z-index */}
+    {isOpen && (
+      <div
+        className="md:hidden fixed inset-0 z-[9998]"
+        style={{background: 'rgba(0,0,0,0.4)'}}
+        onClick={() => setIsOpen(false)}
+      />
+    )}
+
+    {/* Mobile Menu - outside header for proper z-index */}
+    <div
+      className={`md:hidden fixed top-0 right-0 h-full transition-transform duration-700 z-[9999] ${
+        isOpen ? 'translate-x-0' : 'translate-x-full'
+      }`}
+      style={{
+        width: '340px',
+        maxWidth: '85vw',
+        background: 'rgba(250, 248, 243, 0.98)',
+        backdropFilter: 'blur(20px)',
+      }}
+    >
+      <div className="p-8">
+        <button
+          onClick={() => setIsOpen(false)}
+          className="absolute top-6 right-6 text-[#1a1a18]"
+          aria-label="Fermer"
+        >
+          <X className="h-5 w-5" />
+        </button>
+
+        <nav className="mt-16 flex flex-col">
+          {config.navigation.map((item) => (
+            <Link
+              key={item.name}
+              to={item.href}
+              onClick={(e) => {
+                if (item.href.startsWith('#')) {
+                  e.preventDefault();
+                  handleNavClick(item.href);
+                } else {
+                  setIsOpen(false);
+                }
+              }}
+              className="text-[#1a1a18] py-4 border-b border-[#e8e4dc] transition-colors duration-300 hover:text-[#3d6b4f]"
+              style={{
+                fontSize: '13px',
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase' as const,
+                fontWeight: 400,
+              }}
+            >
+              {item.name}
+            </Link>
+          ))}
+        </nav>
+
+        {socialLinks.length > 0 && (
+          <div className="flex gap-6 mt-10">
+            {socialLinks.map((social) => {
+              const IconComponent = social.icon;
+              return (
+                <a
+                  key={social.name}
+                  href={social.link as string}
+                  className="text-[#7a7a75] hover:text-[#3d6b4f] transition-colors duration-300"
+                  aria-label={social.name}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <IconComponent className="h-4 w-4" />
+                </a>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+    </>
   );
 }

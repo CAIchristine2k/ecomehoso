@@ -20,36 +20,23 @@ export function CartAside({
     <div
       aria-modal
       aria-hidden={!expanded}
-      className={`fixed inset-0 z-50 transition-all duration-500 ease-out ${
+      className={`fixed inset-0 transition-all duration-500 ease-out ${
         expanded
           ? 'opacity-100 pointer-events-auto'
           : 'opacity-0 pointer-events-none'
       }`}
       role="dialog"
+      style={{zIndex: 9999}}
     >
-      {/* Background overlay */}
+      {/* CART PANEL - FULL SCREEN ABOVE EVERYTHING */}
       <div
-        className={`absolute inset-0 bg-gradient-to-r from-black/60 via-black/50 to-black/70 backdrop-blur-md transition-all duration-500 ${
-          expanded ? 'opacity-100' : 'opacity-0'
-        }`}
-        onClick={close}
-      ></div>
-
-      {/* CART PANEL - FORCED RIGHT SIDE POSITIONING WITH PROPER HEADER CLEARANCE */}
-      <div
-        className={`fixed right-0 
-          bg-background/95 backdrop-blur-xl shadow-2xl 
+        className={`fixed inset-0
+          backdrop-blur-xl shadow-2xl
           transition-all duration-500 ease-out
           flex flex-col ${expanded ? 'translate-x-0' : 'translate-x-full'}`}
         style={{
-          zIndex: 100,
-          top: 'var(--header-height-desktop)',
-          height: 'calc(100vh - var(--header-height-desktop))',
-          width: 'var(--cart-width-desktop)',
-          minWidth: 'var(--cart-min-width)',
-          maxWidth: 'var(--cart-max-width-desktop)',
-          right: '0px',
-          left: 'auto',
+          zIndex: 9999,
+          backgroundColor: 'var(--color-cream)',
         }}
       >
         <main className="flex-1 pt-4 overflow-hidden bg-gradient-to-b from-background/80 to-background text-text min-h-0 relative">

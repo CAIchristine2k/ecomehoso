@@ -34,7 +34,7 @@ export function AddToCartButton({
   lines,
   analytics,
   className,
-  buttonText = 'Add to cart',
+  buttonText = 'Ajouter au panier',
   onClick,
   selectedVariant,
 }: {
@@ -72,7 +72,7 @@ export function AddToCartButton({
   // Determine the button text based on the current state
   let buttonContent = children || buttonText;
   if (addedToCart) {
-    buttonContent = 'Added to cart!';
+    buttonContent = 'Ajoute au panier !';
   }
 
   // Enhance lines with selectedVariant for optimistic cart
@@ -175,10 +175,10 @@ export function AddToCartButton({
             disabled={disabled || isSubmitting}
             className={className || defaultClasses}
             aria-label={
-              typeof buttonContent === 'string' ? buttonContent : 'Add to cart'
+              typeof buttonContent === 'string' ? buttonContent : 'Ajouter au panier'
             }
           >
-            {isSubmitting ? 'Adding...' : buttonContent}
+            {isSubmitting ? 'Ajout en cours...' : buttonContent}
           </button>
         );
       }}

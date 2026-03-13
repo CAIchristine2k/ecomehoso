@@ -116,7 +116,7 @@ export function ProductCard({
           aria-label={`Voir ${title}`}
         >
           {featuredImage ? (
-            <div className="relative w-full h-full flex items-center justify-center" style={{padding: '20px'}}>
+            <div className="relative w-full h-full flex items-center justify-center p-3 md:p-5">
               {imageLoading && (
                 <div className="absolute inset-0 flex items-center justify-center" style={{background: 'transparent'}}>
                   <LoadingSpinner size="lg" color="primary" />
@@ -222,18 +222,18 @@ export function ProductCard({
       </div>
 
       {/* Product Info */}
-      <div className="p-5">
+      <div className="p-3 md:p-5">
         <Link
           to={`/products/${handle}`}
           prefetch="intent"
           className="block"
         >
           <h3
-            className="mb-2 transition-colors duration-300 group-hover:text-[#3d6b4f]"
+            className="mb-1 md:mb-2 transition-colors duration-300 group-hover:text-[#3d6b4f] line-clamp-2"
             style={{
               color: 'var(--color-charcoal)',
               fontWeight: 500,
-              fontSize: '15px',
+              fontSize: 'clamp(12px, 3vw, 15px)',
               lineHeight: 1.4,
             }}
           >
@@ -241,18 +241,32 @@ export function ProductCard({
           </h3>
         </Link>
 
-        {/* Description snippet */}
+        {/* Description snippet - hidden on mobile */}
         {product.description && (
-          <p
-            className="mb-3 line-clamp-2"
-            style={{
-              fontSize: '13px',
-              color: 'var(--color-stone)',
-              lineHeight: 1.6,
-            }}
-          >
-            {product.description}
-          </p>
+          <div className="mb-3 hidden md:block">
+            <p
+              className="line-clamp-3"
+              style={{
+                fontSize: '13px',
+                color: 'var(--color-stone)',
+                lineHeight: 1.6,
+              }}
+            >
+              {product.description}
+            </p>
+            <Link
+              to={`/products/${handle}`}
+              className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 inline-block mt-1"
+              style={{
+                fontSize: '11px',
+                fontWeight: 500,
+                color: 'var(--color-matcha-mid)',
+                letterSpacing: '0.05em',
+              }}
+            >
+              Voir le produit &rarr;
+            </Link>
+          </div>
         )}
 
         {/* Price Section */}
@@ -262,7 +276,7 @@ export function ProductCard({
               className="price-no-hover"
               style={{
                 fontWeight: 600,
-                fontSize: '1rem',
+                fontSize: 'clamp(0.8rem, 3vw, 1rem)',
                 color: 'var(--color-matcha-light)',
               }}
             >
@@ -285,7 +299,7 @@ export function ProductCard({
 
         {/* Mobile Add to Cart */}
         {isAvailable && variantId && (
-          <div className="md:hidden pt-3">
+          <div className="md:hidden pt-2">
             <AddToCartButton
               lines={[
                 {
@@ -296,17 +310,16 @@ export function ProductCard({
               selectedVariant={firstVariant}
               onClick={handleAddToCart}
               disabled={isAddingToCart}
-              className="w-full text-white py-3 px-4 rounded-md transition-all duration-300 font-medium text-[11px] uppercase tracking-[0.1em] bg-[var(--color-matcha-mid)]"
+              className="w-full text-white py-2 px-3 rounded-md transition-all duration-300 font-medium text-[10px] uppercase tracking-[0.1em] bg-[var(--color-matcha-mid)]"
             >
               {isAddingToCart ? (
-                <div className="flex items-center justify-center gap-2">
+                <div className="flex items-center justify-center gap-1">
                   <LoadingSpinner size="sm" color="white" />
-                  Ajout...
                 </div>
               ) : (
-                <div className="flex items-center justify-center gap-2">
-                  <ShoppingCart className="w-4 h-4" />
-                  Ajouter au panier
+                <div className="flex items-center justify-center gap-1.5">
+                  <ShoppingCart className="w-3.5 h-3.5" />
+                  Ajouter
                 </div>
               )}
             </AddToCartButton>

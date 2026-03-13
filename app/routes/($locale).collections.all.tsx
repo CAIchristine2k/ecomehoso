@@ -141,9 +141,8 @@ export default function Collection() {
         <div
           className="rounded-lg p-10 text-center"
           style={{
-            backgroundColor: 'rgba(245, 241, 235, 0.5)',
+            backgroundColor: '#ffffff',
             border: '1px solid rgba(220, 215, 205, 0.4)',
-            backdropFilter: 'blur(8px)',
           }}
         >
           <h3
