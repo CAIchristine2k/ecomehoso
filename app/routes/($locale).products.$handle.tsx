@@ -326,7 +326,7 @@ export default function Product() {
       <div className="max-w-[1400px] mx-auto" style={{paddingTop: 'calc(var(--header-height-desktop) + 1rem)'}}>
 
         {/* Mobile: Breadcrumb + Title above image */}
-        <div className="lg:hidden px-6 pt-4">
+        <div className="lg:hidden px-6" style={{paddingTop: 'calc((var(--header-height-desktop) + 1rem) / 2)'}}>
           <nav className="mb-4" aria-label="Breadcrumb">
             <ol className="flex items-center gap-2 flex-wrap" style={{fontSize: '12px', color: 'var(--color-stone)'}}>
               <li><Link to="/" className="hover:underline">Accueil</Link></li>
@@ -506,13 +506,15 @@ export default function Product() {
               )}
             </div>
 
-            {/* Benefits Grid - Only for matcha products (not accessories) */}
-            {!product.productType?.toLowerCase().includes('accessoire') &&
-              !product.tags?.some((t: string) => t.toLowerCase().includes('accessoire')) &&
-              (product.title.toLowerCase().includes('matcha') ||
-              product.handle.toLowerCase().includes('matcha') ||
-              product.handle.toLowerCase().includes('prelude') ||
-              product.handle.toLowerCase().includes('foret')) && (
+            {/* Benefits Grid - Only for matcha tea products (not accessories) */}
+            {product.title.toLowerCase().includes('matcha') &&
+              !product.title.toLowerCase().includes('bol') &&
+              !product.title.toLowerCase().includes('fouet') &&
+              !product.title.toLowerCase().includes('chasen') &&
+              !product.title.toLowerCase().includes('cuillère') &&
+              !product.title.toLowerCase().includes('support') &&
+              !product.productType?.toLowerCase().includes('accessoire') &&
+              !product.tags?.some((t: string) => t.toLowerCase().includes('accessoire')) && (
               <div className="grid grid-cols-2 gap-x-8 gap-y-3 mb-8">
                 {benefits.map((benefit) => (
                   <div key={benefit} className="flex items-center gap-3">
@@ -623,72 +625,6 @@ export default function Product() {
           </div>
         </div>
 
-        {/* Cross-sell: below product grid on all screens */}
-        {recommendedProducts.length > 0 && (
-          <div className="px-6 lg:px-10 py-8">
-            <h3
-              style={{
-                fontSize: '12px',
-                fontWeight: 600,
-                letterSpacing: '0.15em',
-                textTransform: 'uppercase' as const,
-                color: 'var(--color-charcoal)',
-                marginBottom: '12px',
-              }}
-            >
-              Complétez votre achat
-            </h3>
-            <div className="flex flex-col gap-3">
-              {recommendedProducts.slice(0, 2).map((crossProduct: any) => (
-                <div
-                  key={crossProduct.id}
-                  className="flex items-center gap-4 p-4 rounded-xl"
-                  style={{
-                    border: '1px solid var(--color-cream-dark)',
-                    backgroundColor: 'var(--color-cream)',
-                  }}
-                >
-                  {crossProduct.featuredImage && (
-                    <Link to={`/products/${crossProduct.handle}`} className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden" style={{backgroundColor: 'var(--color-cream-warm)'}}>
-                      <Image
-                        data={crossProduct.featuredImage}
-                        className="w-full h-full object-contain"
-                        sizes="64px"
-                      />
-                    </Link>
-                  )}
-                  <div className="flex-1 min-w-0">
-                    <p style={{fontSize: '14px', fontWeight: 600, color: 'var(--color-charcoal)', lineHeight: 1.3}}>
-                      {crossProduct.title}
-                    </p>
-                    <p style={{fontSize: '14px', color: 'var(--color-stone)', marginTop: '2px'}}>
-                      {crossProduct.priceRange?.minVariantPrice && (
-                        <Money data={crossProduct.priceRange.minVariantPrice} />
-                      )}
-                    </p>
-                  </div>
-                  <Link
-                    to={`/products/${crossProduct.handle}`}
-                    className="flex-shrink-0 transition-all duration-300 hover:scale-105"
-                    style={{
-                      padding: '8px 20px',
-                      border: '1.5px solid var(--color-charcoal)',
-                      borderRadius: '6px',
-                      fontSize: '11px',
-                      fontWeight: 600,
-                      letterSpacing: '0.1em',
-                      textTransform: 'uppercase' as const,
-                      color: 'var(--color-charcoal)',
-                      textDecoration: 'none',
-                    }}
-                  >
-                    Voir
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
 
         {/* Related Products Section */}
         {recommendedProducts.length > 0 && (

@@ -95,7 +95,7 @@ const defaultTheme: ThemeConfig = {
   influencerTitle: 'Matcha Premium depuis Uji, Kyoto',
   influencerImage: '/images/hero-background.jpg',
   socialLinks: {
-    instagram: 'https://instagram.com/hosomatcha',
+    instagram: 'https://www.instagram.com/hosobasqueparis_/',
   },
 };
 

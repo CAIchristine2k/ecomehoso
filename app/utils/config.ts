@@ -275,7 +275,7 @@ export const defaultConfig: LandingPageConfig = {
   navigation: [
     {name: 'Accueil', href: '/'},
     {name: 'Nos Matchas', href: '/collections/matcha'},
-    {name: 'Accessoires', href: '/collections/accessoires'},
+    {name: 'Accessoires', href: '/collections/accesoires'},
     {name: 'Notre Histoire', href: '/notre-histoire'},
     {name: 'Notre Magasin', href: '/notre-magasin'},
   ],
@@ -341,15 +341,15 @@ export const defaultConfig: LandingPageConfig = {
   ],
 
   // Social Media
-  instagramHandle: 'hosomatcha',
+  instagramHandle: 'hosobasqueparis_',
   twitterHandle: undefined,
   youtubeChannel: undefined,
   tiktokHandle: 'hosomatcha',
 
   // Social Links
   socialLinks: {
-    instagram: 'https://instagram.com/hosomatcha',
-    tiktok: 'https://tiktok.com/@hosomatcha',
+    instagram: 'https://www.instagram.com/hosobasqueparis_/',
+    tiktok: 'https://www.tiktok.com/@hosobasque_',
   },
 
   // Contact Information

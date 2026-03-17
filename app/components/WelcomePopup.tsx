@@ -9,8 +9,8 @@ export function WelcomePopup() {
     const dismissed = sessionStorage.getItem('welcome-popup-dismissed');
     if (dismissed) return;
 
-    // Show after 3 seconds
-    const timer = setTimeout(() => setIsVisible(true), 3000);
+    // Show after 10 seconds
+    const timer = setTimeout(() => setIsVisible(true), 10000);
     return () => clearTimeout(timer);
   }, []);
 

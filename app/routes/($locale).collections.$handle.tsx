@@ -19,14 +19,14 @@ export const meta: MetaFunction<typeof loader> = ({data}) => {
   ];
 };
 
-export function loader({params, context}: LoaderFunctionArgs) {
+export async function loader({params, context}: LoaderFunctionArgs) {
   const {handle} = params;
 
   if (!handle) {
     throw new Response('Collection handle is required', {status: 400});
   }
 
-  return context.storefront.query(COLLECTION_QUERY, {
+  return await context.storefront.query(COLLECTION_QUERY, {
     variables: {
       handle: handle,
     },
@@ -56,7 +56,7 @@ export default function Collection() {
   }
 
   return (
-    <div style={{backgroundColor: 'var(--color-cream)', color: 'var(--color-charcoal)', paddingTop: 'calc(var(--header-height-desktop) + 2rem)', paddingBottom: '4rem'}}>
+    <div style={{backgroundColor: 'var(--color-cream)', color: 'var(--color-charcoal)', paddingTop: 'calc(var(--header-height-desktop) + 3rem)', paddingBottom: '4rem'}}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         {/* Collection Hero */}
         <div className="mb-16 text-center">
@@ -190,7 +190,6 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
 
 // NOTE: https://shopify.dev/docs/api/storefront/2022-04/objects/collection
 const COLLECTION_QUERY = `#graphql
-  ${PRODUCT_ITEM_FRAGMENT}
   query CollectionDetails($handle: String!) {
     collection(handle: $handle) {
       id

@@ -80,11 +80,11 @@ export function PageLayout({
           style={{
             display: 'flex',
             whiteSpace: 'nowrap',
-            animation: 'shippingBannerScroll 14s linear infinite',
+            animation: 'shippingBannerScroll 12s linear infinite',
             padding: '10px 0',
           }}
         >
-          {[...Array(6)].map((_, i) => (
+          {[...Array(12)].map((_, i) => (
             <span
               key={i}
               className="inline-flex items-center gap-2 mx-10"
@@ -113,7 +113,7 @@ export function PageLayout({
         <style dangerouslySetInnerHTML={{__html: `
           @keyframes shippingBannerScroll {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-16.666%); }
+            100% { transform: translateX(-50%); }
           }
           .shipping-banner-marquee:hover {
             animation-play-state: paused;

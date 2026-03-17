@@ -216,21 +216,6 @@ export function ProductForm({
         </div>
       )}
 
-      {/* Delivery info */}
-      <div
-        className="mb-6 py-5"
-        style={{
-          fontSize: '13px',
-          color: 'var(--color-charcoal)',
-          lineHeight: 1.8,
-          borderTop: '1px solid var(--color-cream-dark)',
-          borderBottom: '1px solid var(--color-cream-dark)',
-        }}
-      >
-        <p>Livraison GRATUITE à partir de 49€ d'achat.</p>
-        <p>Colissimo : 2-3 jours ouvrables.</p>
-        <p>Mondial Relay : 3-5 jours ouvrables.</p>
-      </div>
 
       {/* Add to Cart Button - Large, prominent */}
       <div>
