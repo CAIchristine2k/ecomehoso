@@ -3,6 +3,7 @@ import {
   Menu,
   X,
   ShoppingBag,
+  User,
   Instagram,
   Twitter,
   Youtube,
@@ -149,10 +150,21 @@ export function Header() {
             ))}
           </div>
 
+          {/* Account Button */}
+          <a
+            href="https://shopify.com/95831523661/account"
+            className="ml-10 transition-all duration-300 hover:scale-105"
+            aria-label="Mon compte"
+          >
+            <User
+              className={`h-5 w-5 ${(isScrolled || isLightPage) ? 'text-[#1a1a18]' : 'text-white'}`}
+            />
+          </a>
+
           {/* Cart Button */}
           <button
             onClick={handleCartClick}
-            className="ml-10 relative transition-all duration-300 hover:scale-105"
+            className="ml-4 relative transition-all duration-300 hover:scale-105"
             aria-label="Panier"
           >
             <ShoppingBag
@@ -170,7 +182,16 @@ export function Header() {
         </nav>
 
         {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center gap-4">
+        <div className="md:hidden flex items-center gap-3">
+          <a
+            href="https://shopify.com/95831523661/account"
+            className="p-2 transition-all duration-300"
+            aria-label="Mon compte"
+          >
+            <User
+              className={`h-5 w-5 ${(isScrolled || isLightPage) ? 'text-[#1a1a18]' : 'text-white'}`}
+            />
+          </a>
           <button
             onClick={handleCartClick}
             className="relative p-2 transition-all duration-300"
