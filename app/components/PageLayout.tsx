@@ -13,6 +13,7 @@ import {CartMain} from '~/components/CartMain';
 import {SearchFormPredictive} from '~/components/SearchFormPredictive';
 import {SearchResultsPredictive} from '~/components/SearchResultsPredictive';
 import {useConfig} from '~/utils/themeContext';
+import {WelcomePopup} from '~/components/WelcomePopup';
 
 export type PageLayoutProps = {
   children?: React.ReactNode;
@@ -40,7 +41,89 @@ export function PageLayout({
 
   return (
     <div className="flex flex-col min-h-screen" style={{backgroundColor: 'var(--color-cream)', color: 'var(--color-charcoal)'}}>
+      {/* Shipping banner */}
+      <div
+        className="shipping-banner-wrapper"
+        style={{
+          borderBottom: '1px solid var(--color-cream-dark)',
+          backgroundColor: 'var(--color-cream-warm)',
+          overflow: 'hidden',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 101,
+        }}
+      >
+        <div style={{
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          bottom: 0,
+          width: '40px',
+          background: 'linear-gradient(to right, var(--color-cream-warm), transparent)',
+          zIndex: 2,
+          pointerEvents: 'none',
+        }} />
+        <div style={{
+          position: 'absolute',
+          right: 0,
+          top: 0,
+          bottom: 0,
+          width: '40px',
+          background: 'linear-gradient(to left, var(--color-cream-warm), transparent)',
+          zIndex: 2,
+          pointerEvents: 'none',
+        }} />
+        <div
+          className="shipping-banner-marquee"
+          style={{
+            display: 'flex',
+            whiteSpace: 'nowrap',
+            animation: 'shippingBannerScroll 14s linear infinite',
+            padding: '10px 0',
+          }}
+        >
+          {[...Array(6)].map((_, i) => (
+            <span
+              key={i}
+              className="inline-flex items-center gap-2 mx-10"
+              style={{flexShrink: 0}}
+            >
+              <span style={{
+                fontSize: '10px',
+                fontWeight: 500,
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase' as const,
+                color: 'var(--color-charcoal)',
+              }}>
+                Livraison gratuite à partir de 49€
+              </span>
+              <span style={{
+                color: 'var(--color-matcha-mid)',
+                opacity: 0.3,
+                margin: '0 6px',
+                fontSize: '7px',
+              }}>
+                ●
+              </span>
+            </span>
+          ))}
+        </div>
+        <style dangerouslySetInnerHTML={{__html: `
+          @keyframes shippingBannerScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-16.666%); }
+          }
+          .shipping-banner-marquee:hover {
+            animation-play-state: paused;
+          }
+        `}} />
+      </div>
+
       <Header />
+
+      <WelcomePopup />
 
       <main className="flex-grow flex-shrink-0">{children}</main>
 

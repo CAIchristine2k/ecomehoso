@@ -1,5 +1,5 @@
 import {useOptimisticCart} from '@shopify/hydrogen';
-import {Link} from 'react-router';
+import {Link, useNavigate} from 'react-router';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
 import {CartLineItem} from '~/components/CartLineItem';
@@ -7,7 +7,7 @@ import {CartSummary} from './CartSummary';
 import {useConfig} from '~/utils/themeContext';
 import {ShoppingBag} from 'lucide-react';
 import {PrepareDesignsForCheckout} from './PrepareDesignsForCheckout';
-import {useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
 
 export type CartLayout = 'page' | 'aside';
 
@@ -206,38 +206,25 @@ function CartEmpty({
   hidden: boolean;
   layout?: CartMainProps['layout'];
 }) {
-  const config = useConfig();
   const {close} = useAside();
 
   if (hidden) return null;
 
   return (
-    <div className="flex flex-col items-center justify-center h-full p-8 text-center">
-      <div className="relative mb-8">
-        <div
-          className="w-20 h-20 rounded-full flex items-center justify-center"
-          style={{backgroundColor: 'var(--color-cream)', border: '1px solid var(--color-cream-dark)'}}
-        >
-          <ShoppingBag className="w-10 h-10" style={{color: 'var(--color-stone)'}} />
-        </div>
-      </div>
-
-      <h3 style={{fontSize: '1.25rem', fontWeight: 400, color: 'var(--color-charcoal)', marginBottom: '12px'}}>
+    <div className="flex flex-col items-center justify-center h-full py-12 px-6 text-center">
+      <ShoppingBag className="w-12 h-12 mb-4" style={{color: 'var(--color-cream-dark)'}} />
+      <p style={{fontSize: '15px', fontWeight: 500, color: 'var(--color-charcoal)', marginBottom: '8px'}}>
         Votre panier est vide
-      </h3>
-      <p style={{color: 'var(--color-stone)', fontSize: '14px', fontWeight: 300, lineHeight: 1.7, marginBottom: '32px', maxWidth: '320px'}}>
-        Decouvrez nos matchas d'exception et commencez votre selection.
       </p>
-
+      <p style={{fontSize: '13px', color: 'var(--color-stone)', marginBottom: '24px'}}>
+        Découvrez nos produits et ajoutez vos favoris.
+      </p>
       <Link
         to="/collections/all"
         onClick={close}
-        prefetch="viewport"
+        className="inline-block transition-all duration-300"
         style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '8px',
-          padding: '14px 28px',
+          padding: '12px 28px',
           backgroundColor: 'var(--color-matcha-mid)',
           color: 'white',
           borderRadius: '6px',
@@ -246,11 +233,9 @@ function CartEmpty({
           letterSpacing: '0.15em',
           textTransform: 'uppercase' as const,
           textDecoration: 'none',
-          transition: 'all 0.3s ease',
         }}
       >
-        <ShoppingBag className="w-4 h-4" />
-        Decouvrir nos produits
+        Voir les produits
       </Link>
     </div>
   );

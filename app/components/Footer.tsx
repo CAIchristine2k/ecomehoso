@@ -51,7 +51,7 @@ export function Footer() {
   ];
 
   const policies = [
-    {name: 'Mentions legales', href: '/policies/privacy-terms'},
+    {name: 'Mentions légales', href: '/policies/privacy-terms'},
     {name: 'Plan du site', href: '/sitemap.xml'},
   ];
 
@@ -72,7 +72,7 @@ export function Footer() {
           }}
         >
           {/* Brand Column */}
-          <div className="max-w-[280px]">
+          <div className="max-w-[280px] text-center sm:text-left mx-auto sm:mx-0">
             <Link to="/">
               <FooterLogo />
             </Link>
@@ -85,11 +85,11 @@ export function Footer() {
                 lineHeight: 1.9,
               }}
             >
-              Matcha d'exception selectionne a Uji, Kyoto. L'art du the vert japonais, de la feuille a la tasse.
+              Matcha d'exception sélectionné à Uji, Kyoto. L'art du thé vert japonais, de la feuille à la tasse.
             </p>
 
             {socialLinks.length > 0 && (
-              <div className="flex gap-4 mt-6">
+              <div className="flex gap-4 mt-6 justify-center sm:justify-start">
                 {socialLinks.map((social, index) => {
                   const IconComponent = social.icon;
                   return (
@@ -111,7 +111,7 @@ export function Footer() {
           </div>
 
           {/* Boutique Column */}
-          <div>
+          <div className="text-center sm:text-left">
             <h4
               style={{
                 fontSize: '10px',
@@ -144,7 +144,7 @@ export function Footer() {
           </div>
 
           {/* Informations Column */}
-          <div>
+          <div className="text-center sm:text-left">
             <h4
               style={{
                 fontSize: '10px',
@@ -177,7 +177,7 @@ export function Footer() {
           </div>
 
           {/* Contact Column */}
-          <div>
+          <div className="text-center sm:text-left">
             <h4
               style={{
                 fontSize: '10px',
@@ -207,7 +207,7 @@ export function Footer() {
         {/* Copyright Section */}
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 gap-4">
           <p style={{fontSize: '11px', opacity: 0.3}}>
-            &copy; {new Date().getFullYear()} {config.brandName}. Tous droits reserves.
+            &copy; {new Date().getFullYear()} {config.brandName}. Tous droits réservés.
           </p>
 
           <div className="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-2">

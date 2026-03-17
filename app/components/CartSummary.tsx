@@ -20,7 +20,7 @@ export function CartSummary({cart, layout, checkoutDomain}: CartSummaryProps) {
       aria-labelledby="cart-summary"
       className={`p-6 ${layout === 'page' ? 'max-w-md ml-auto' : ''}`}
     >
-      <h4 className="text-lg font-bold mb-6" style={{color: 'var(--color-charcoal)'}}>Recapitulatif</h4>
+      <h4 className="text-lg font-bold mb-6" style={{color: 'var(--color-charcoal)'}}>Récapitulatif</h4>
       <dl className="space-y-4">
         <div className="flex justify-between items-center">
           <dt className="font-medium" style={{color: 'var(--color-stone)'}}>Sous-total</dt>
@@ -35,7 +35,7 @@ export function CartSummary({cart, layout, checkoutDomain}: CartSummaryProps) {
 
         {cart.cost?.totalTaxAmount?.amount ? (
           <div className="flex justify-between items-center">
-            <dt className="font-medium" style={{color: 'var(--color-stone)'}}>TVA (estimee)</dt>
+            <dt className="font-medium" style={{color: 'var(--color-stone)'}}>TVA (estimée)</dt>
             <dd className="font-bold" style={{color: 'var(--color-charcoal)'}}>
               <Money data={cart.cost.totalTaxAmount} />
             </dd>
@@ -108,7 +108,7 @@ function CartCheckoutActions({
         </a>
         <div className="mt-4 flex items-center justify-center">
           <p className="text-xs text-center" style={{color: 'var(--color-mist)'}}>
-            Paiement securise
+            Paiement sécurisé
           </p>
         </div>
       </div>
@@ -146,7 +146,7 @@ function CartCheckoutActions({
       </a>
       <div className="mt-4 flex items-center justify-center">
         <p className="text-xs text-center" style={{color: 'var(--color-mist)'}}>
-          Paiement securise
+          Paiement sécurisé
         </p>
       </div>
     </div>

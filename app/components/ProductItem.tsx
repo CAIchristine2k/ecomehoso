@@ -115,7 +115,7 @@ export function ProductItem({
                 className="text-white text-[11px] font-medium px-3 py-1"
                 style={{backgroundColor: 'var(--color-stone)', borderRadius: '20px'}}
               >
-                Epuise
+                Épuisé
               </span>
             )}
           </div>

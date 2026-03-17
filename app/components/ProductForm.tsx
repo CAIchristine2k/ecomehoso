@@ -227,9 +227,9 @@ export function ProductForm({
           borderBottom: '1px solid var(--color-cream-dark)',
         }}
       >
-        <p>
-          Livraison GRATUITE a partir de 49€ d'achat.
-        </p>
+        <p>Livraison GRATUITE à partir de 49€ d'achat.</p>
+        <p>Colissimo : 2-3 jours ouvrables.</p>
+        <p>Mondial Relay : 3-5 jours ouvrables.</p>
       </div>
 
       {/* Add to Cart Button - Large, prominent */}
@@ -241,17 +241,18 @@ export function ProductForm({
           onClick={handleAddToCart}
           className="w-full flex items-center justify-center transition-all duration-300"
           style={{
-            backgroundColor: isAvailable ? 'var(--color-charcoal)' : 'var(--color-cream-dark)',
+            backgroundColor: isAvailable ? 'var(--color-matcha-mid)' : 'var(--color-cream-dark)',
             color: isAvailable ? '#ffffff' : 'var(--color-stone)',
-            padding: '20px 32px',
-            borderRadius: '12px',
-            fontSize: '14px',
-            fontWeight: 700,
-            letterSpacing: '0.18em',
+            padding: '18px 32px',
+            borderRadius: '10px',
+            fontSize: 'clamp(13px, 3.5vw, 15px)',
+            fontWeight: 600,
+            letterSpacing: '0.15em',
             textTransform: 'uppercase' as const,
             cursor: isAvailable ? 'pointer' : 'not-allowed',
-            boxShadow: isAvailable ? '0 6px 20px rgba(26,26,24,0.3)' : 'none',
+            boxShadow: isAvailable ? '0 4px 16px rgba(76,120,72,0.3)' : 'none',
             border: 'none',
+            gap: '8px',
           }}
         >
           {isAdding ? (
@@ -267,14 +268,14 @@ export function ProductForm({
               <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
-              Ajoute au panier !
+              Ajouté au panier !
             </div>
           ) : isAvailable ? (
             <span>
               Ajouter au panier — <Money data={selectedVariant.price} />
             </span>
           ) : (
-            'Epuise'
+            'Épuisé'
           )}
         </AddToCartButton>
       </div>

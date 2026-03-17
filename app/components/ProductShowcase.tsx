@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef, useEffect, useState, useCallback} from 'react';
 import {Link} from 'react-router';
 import {ProductCard} from '~/components/ProductCard';
 import {useConfig} from '~/utils/themeContext';
@@ -18,9 +18,41 @@ export function ProductShowcase({
   loading = 'lazy',
 }: ProductShowcaseProps) {
   const config = useConfig();
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const animationRef = useRef<number>();
+  const scrollPosRef = useRef(0);
 
-  const defaultSubtitle = "Selectionnes avec soin pour vous offrir le meilleur du matcha japonais. Chaque produit incarne notre engagement envers l'excellence et la tradition.";
+  const defaultSubtitle = "Sélectionnés avec soin pour vous offrir le meilleur du matcha japonais. Chaque produit incarne notre engagement envers l'excellence et la tradition.";
   const effectiveSubtitle = subtitle || defaultSubtitle;
+
+  const displayProducts = products.slice(0, 6);
+  // Duplicate products for seamless infinite loop
+  const carouselProducts = [...displayProducts, ...displayProducts, ...displayProducts];
+
+  const animate = useCallback(() => {
+    if (!scrollRef.current || isPaused) {
+      animationRef.current = requestAnimationFrame(animate);
+      return;
+    }
+
+    scrollPosRef.current += 0.5; // medium speed
+
+    const singleSetWidth = scrollRef.current.scrollWidth / 3;
+    if (scrollPosRef.current >= singleSetWidth) {
+      scrollPosRef.current -= singleSetWidth;
+    }
+
+    scrollRef.current.style.transform = `translateX(-${scrollPosRef.current}px)`;
+    animationRef.current = requestAnimationFrame(animate);
+  }, [isPaused]);
+
+  useEffect(() => {
+    animationRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
+    };
+  }, [animate]);
 
   return (
     <section
@@ -30,9 +62,9 @@ export function ProductShowcase({
         backgroundColor: 'var(--color-cream)',
       }}
     >
-      <div className="max-w-[1400px] mx-auto px-3 md:px-10 relative z-10">
+      <div className="relative z-10">
         {/* Section Header */}
-        <div className="mb-8 md:mb-16 text-center">
+        <div className="mb-8 md:mb-16 text-center px-3 md:px-10">
           <span
             className="inline-block mb-4"
             style={{
@@ -72,15 +104,68 @@ export function ProductShowcase({
           </p>
         </div>
 
-        {/* Product Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
-          {products.slice(0, 6).map((product) => (
-            <ProductCard key={product.id} product={product} loading={loading} />
-          ))}
+        {/* Product Carousel */}
+        <div
+          className="relative overflow-hidden"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setTimeout(() => setIsPaused(false), 3000)}
+        >
+          {/* Fade edges */}
+          <div
+            className="hidden md:block"
+            style={{
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              bottom: 0,
+              width: '60px',
+              background: 'linear-gradient(to right, var(--color-cream), transparent)',
+              zIndex: 2,
+              pointerEvents: 'none',
+            }}
+          />
+          <div
+            className="hidden md:block"
+            style={{
+              position: 'absolute',
+              right: 0,
+              top: 0,
+              bottom: 0,
+              width: '60px',
+              background: 'linear-gradient(to left, var(--color-cream), transparent)',
+              zIndex: 2,
+              pointerEvents: 'none',
+            }}
+          />
+
+          <div
+            ref={scrollRef}
+            className="flex"
+            style={{
+              gap: 'clamp(12px, 2vw, 24px)',
+              paddingLeft: '12px',
+              paddingRight: '12px',
+              willChange: 'transform',
+            }}
+          >
+            {carouselProducts.map((product, index) => (
+              <div
+                key={`${product.id}-${index}`}
+                className="flex-shrink-0"
+                style={{
+                  width: 'clamp(260px, 40vw, 380px)',
+                }}
+              >
+                <ProductCard product={product} loading={loading} />
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* View All Link */}
-        <div className="mt-8 md:mt-16 text-center">
+        <div className="mt-8 md:mt-16 mb-8 md:mb-16 text-center">
           <Link
             to="/collections/all"
             prefetch="intent"

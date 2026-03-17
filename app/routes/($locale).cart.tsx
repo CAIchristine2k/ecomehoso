@@ -9,7 +9,6 @@ import {useConfig} from '~/utils/themeContext';
 import {CartForm} from '@shopify/hydrogen';
 import {HeadersFunction, data} from 'react-router';
 import {Link} from 'react-router';
-import {useEffect} from 'react';
 import {redirect} from 'react-router';
 import {PrepareDesignsForCheckout} from '~/components/PrepareDesignsForCheckout';
 import {downloadAndReuploadToCloudinary} from '~/utils/cloudinaryUpload';
@@ -227,6 +226,9 @@ export default function Cart() {
   const loaderData = useLoaderData<typeof loader>();
   const cart = loaderData?.cart;
   const config = useConfig();
+  const navigate = useNavigate();
+
+  // No auto-redirect - let the user see the empty cart state
 
   // Check if any items in the cart have custom designs
   const hasCustomDesigns = cart?.lines?.nodes?.some((line: any) => 
@@ -362,29 +364,6 @@ export default function Cart() {
           layout="page"
         />
 
-        {/* Continue shopping button when cart is empty */}
-        {!cart?.totalQuantity && (
-          <div className="flex justify-center mt-10">
-            <Link
-              to="/collections/all"
-              style={{
-                display: 'inline-block',
-                padding: '14px 32px',
-                backgroundColor: 'var(--color-matcha-mid)',
-                color: 'white',
-                borderRadius: '6px',
-                fontSize: '12px',
-                fontWeight: 500,
-                letterSpacing: '0.15em',
-                textTransform: 'uppercase' as const,
-                textDecoration: 'none',
-                transition: 'all 0.3s ease',
-              }}
-            >
-              Continuer mes achats
-            </Link>
-          </div>
-        )}
         
         {/* Add the prepare designs component to ensure checkout displays custom images */}
         {hasCustomDesigns && cart && <PrepareDesignsForCheckout cart={cart} />}

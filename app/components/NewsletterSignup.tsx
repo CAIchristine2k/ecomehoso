@@ -80,7 +80,7 @@ export default function NewsletterSignup() {
 
             <h2
               style={{
-                fontFamily: "'Poppins', sans-serif",
+                fontFamily: "var(--font-display)",
                 fontSize: 'clamp(1.25rem, 3vw, 1.75rem)',
                 fontWeight: 400,
                 lineHeight: 1.4,
@@ -88,7 +88,7 @@ export default function NewsletterSignup() {
                 marginBottom: '12px',
               }}
             >
-              Ne ratez rien de notre actualite
+              Ne ratez rien de notre actualité
             </h2>
             <p style={{fontFamily: "'Noto Serif JP', serif", fontSize: '0.75rem', color: 'var(--color-matcha-light)', letterSpacing: '0.3em', marginTop: '6px'}}>
               ニュースレター
@@ -103,8 +103,8 @@ export default function NewsletterSignup() {
                 marginBottom: '36px',
               }}
             >
-              Profitez d'avantages exclusifs, soyez informes des prochaines
-              sorties en avant-premiere.
+              Profitez d'avantages exclusifs, soyez informés des prochaines
+              sorties en avant-première.
             </p>
 
             <form
@@ -216,7 +216,7 @@ export default function NewsletterSignup() {
                 lineHeight: 1.8,
               }}
             >
-              Vous recevrez bientot nos dernieres actualites et offres
+              Vous recevrez bientôt nos dernières actualités et offres
               exclusives.
             </p>
           </div>

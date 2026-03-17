@@ -95,17 +95,18 @@ export function Header() {
   return (
     <>
     <header
-      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
+      className={`fixed left-0 right-0 z-[100] transition-all duration-500 ${
         isScrolled
           ? 'py-3'
           : 'py-5'
       }`}
       style={{
+        top: 'var(--shipping-banner-height, 36px)',
         background: (isScrolled || isLightPage)
-          ? 'rgba(250, 248, 243, 0.95)'
+          ? 'rgba(250, 248, 243, 0.7)'
           : 'transparent',
-        backdropFilter: (isScrolled || isLightPage) ? 'blur(20px)' : 'none',
-        WebkitBackdropFilter: (isScrolled || isLightPage) ? 'blur(20px)' : 'none',
+        backdropFilter: (isScrolled || isLightPage) ? 'blur(16px) saturate(1.2)' : 'none',
+        WebkitBackdropFilter: (isScrolled || isLightPage) ? 'blur(16px) saturate(1.2)' : 'none',
       }}
     >
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 flex justify-between items-center">

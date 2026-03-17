@@ -28,12 +28,12 @@ import favicon from '~/assets/favicon.svg';
 
 export const links: LinksFunction = () => {
   return [
-    {rel: 'stylesheet', href: appStyles},
     {rel: 'preconnect', href: 'https://cdn.shopify.com'},
     {rel: 'preconnect', href: 'https://shop.app'},
     {rel: 'preconnect', href: 'https://fonts.googleapis.com'},
     {rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' as const},
-    {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Noto+Serif+JP:wght@400;500&display=swap'},
+    {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&family=Almarai:wght@300;400;700;800&family=Noto+Serif+JP:wght@400;500&display=swap'},
+    {rel: 'stylesheet', href: appStyles},
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
   ];
 };
@@ -236,8 +236,9 @@ export function Layout({children}: {children?: React.ReactNode}) {
                 --color-primary-rgb: 61, 107, 79;
                 --color-secondary-rgb: 245, 240, 230;
 
-                --font-primary: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                --font-primary: 'Filson Pro', 'Almarai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
                 --font-secondary: 'Noto Serif JP', Georgia, serif;
+                --font-display: 'Bricolage Grotesque', 'Filson Pro', 'Almarai', sans-serif;
 
                 --spacing-xs: 0.25rem;
                 --spacing-sm: 0.5rem;

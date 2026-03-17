@@ -1,6 +1,6 @@
 import {type LoaderFunctionArgs} from 'react-router';
 import {useLoaderData, type MetaFunction} from 'react-router';
-import {getPaginationVariables} from '@shopify/hydrogen';
+import {getPaginationVariables, CacheShort} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {ProductItem} from '~/components/ProductItem';
 import {Link} from 'react-router';
@@ -45,6 +45,7 @@ async function loadCriticalData({context, request}: LoaderFunctionArgs) {
   const [{products}] = await Promise.all([
     storefront.query(CATALOG_QUERY, {
       variables: {...paginationVariables},
+      cache: CacheShort(),
     }),
     // Add other queries here, so that they are loaded in parallel
   ]);
@@ -112,7 +113,7 @@ export default function Collection() {
               lineHeight: 1.8,
             }}
           >
-            Decouvrez notre selection de matchas d'exception, accessoires traditionnels et coffrets soigneusement composes.
+            Découvrez notre sélection de matchas d'exception, accessoires traditionnels et coffrets soigneusement composés.
           </p>
         </div>
 
@@ -164,7 +165,7 @@ export default function Collection() {
               lineHeight: 1.8,
             }}
           >
-            Chaque produit est selectionne avec soin pour vous offrir une experience authentique du matcha, fidele aux traditions seculaires d'Uji, Kyoto.
+            Chaque produit est sélectionné avec soin pour vous offrir une expérience authentique du matcha, fidèle aux traditions séculaires d'Uji, Kyoto.
           </p>
           <Link
             to="/"

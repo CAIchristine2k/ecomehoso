@@ -1,5 +1,6 @@
 import {Link} from 'react-router';
 import {Image, Money} from '@shopify/hydrogen';
+import {getProductRating} from '~/utils/productRatings';
 
 interface ShelfProduct {
   id: string;
@@ -48,7 +49,7 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
     reordered.splice(3, 0, fouet);
   }
 
-  // Distribute products across 3 shelves
+  // Distribute products across shelves (3 per shelf on desktop, 2 per shelf on mobile handled via CSS)
   const shelf1 = reordered.slice(0, 3);
   const shelf2 = reordered.slice(3, 6);
   const shelf3 = reordered.slice(6, 9);
@@ -62,7 +63,7 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
         padding: 'clamp(60px, 8vw, 100px) 0 clamp(40px, 6vw, 80px)',
       }}
     >
-      <div className="max-w-[1200px] mx-auto px-6 md:px-10">
+      <div className="max-w-[1200px] mx-auto px-3 md:px-10">
         {/* Section header */}
         <div className="text-center mb-14">
           <span
@@ -80,7 +81,7 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
           </span>
           <h2
             style={{
-              fontFamily: "'Playfair Display', 'Georgia', serif",
+              fontFamily: "var(--font-display)",
               fontSize: 'clamp(1.75rem, 4vw, 2.75rem)',
               fontWeight: 600,
               color: 'var(--color-charcoal)',
@@ -102,9 +103,8 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
             <div key={shelfIndex} className="relative">
               {/* Products row - aligned to bottom of shelf */}
               <div
-                className="flex items-end justify-around px-2 md:px-8"
+                className="shelf-products-grid items-end px-2 md:px-8"
                 style={{
-                  minHeight: shelfIndex === 1 ? 'clamp(300px, 40vw, 480px)' : 'clamp(220px, 28vw, 340px)',
                   paddingBottom: '0',
                 }}
               >
@@ -113,14 +113,10 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
                     key={product.id}
                     to={`/products/${product.handle}`}
                     className="group flex flex-col items-center text-center relative"
-                    style={{
-                      width: `${Math.floor(90 / shelf.length)}%`,
-                      maxWidth: '350px',
-                    }}
                   >
                     {/* Product image */}
                     <div
-                      className="relative transition-transform duration-500 ease-out group-hover:scale-105 group-hover:-translate-y-3"
+                      className="relative transition-transform duration-500 ease-out group-hover:scale-105 group-hover:-translate-y-3 shelf-product-image"
                       style={{
                         width: '100%',
                         height: shelfIndex === 1 ? 'clamp(260px, 35vw, 420px)' : 'clamp(180px, 23vw, 280px)',
@@ -147,12 +143,44 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
                       )}
                     </div>
 
-                    {/* Product name - appears on hover */}
+                    {/* Product info - mobile: static below image, desktop: hover tooltip */}
+                    {/* Mobile version - always visible, in flow */}
+                    <div className="shelf-product-info-mobile md:hidden w-full mt-2 text-center">
+                      <p style={{
+                        fontSize: '10px',
+                        fontWeight: 500,
+                        letterSpacing: '0.03em',
+                        textTransform: 'uppercase' as const,
+                        color: 'var(--color-charcoal)',
+                        lineHeight: 1.3,
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        display: '-webkit-box',
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: 'vertical' as const,
+                        wordBreak: 'break-word' as const,
+                      }}>
+                        {product.title}
+                      </p>
+                      <ShelfRating handle={product.handle} />
+                      {product.priceRange && (
+                        <p className="mt-0.5 price-no-hover" style={{
+                          fontSize: '11px',
+                          color: 'var(--color-matcha-mid)',
+                          fontWeight: 500,
+                        }}>
+                          <Money data={product.priceRange.minVariantPrice} />
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Desktop version - hover tooltip */}
                     <div
-                      className="absolute left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none"
+                      className="hidden md:block absolute left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none"
                       style={{
                         bottom: '-48px',
-                        width: '180px',
+                        width: 'max(100%, 160px)',
+                        maxWidth: '220px',
                         zIndex: 10,
                       }}
                     >
@@ -166,7 +194,7 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
                         <p style={{
                           fontSize: '10px',
                           fontWeight: 500,
-                          letterSpacing: '0.08em',
+                          letterSpacing: '0.05em',
                           textTransform: 'uppercase' as const,
                           color: 'var(--color-charcoal)',
                           lineHeight: 1.3,
@@ -178,6 +206,7 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
                         }}>
                           {product.title}
                         </p>
+                        <ShelfRating handle={product.handle} />
                         {product.priceRange && (
                           <p className="mt-0.5 price-no-hover" style={{
                             fontSize: '10px',
@@ -253,6 +282,85 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
           </Link>
         </div>
       </div>
+
+      <style dangerouslySetInnerHTML={{__html: `
+        .shelf-products-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px 16px;
+          justify-items: center;
+        }
+        @media (min-width: 768px) {
+          .shelf-products-grid {
+            display: flex;
+            justify-content: space-around;
+            gap: 0;
+          }
+          .shelf-products-grid > a {
+            width: 30%;
+            max-width: 350px;
+          }
+        }
+        @media (max-width: 767px) {
+          .shelf-products-grid {
+            display: flex !important;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            gap: 12px;
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+            margin-bottom: 16px;
+          }
+          .shelf-products-grid::-webkit-scrollbar {
+            display: none;
+          }
+          .shelf-products-grid > a {
+            flex: 0 0 calc(50% - 6px);
+            min-width: 0;
+            scroll-snap-align: start;
+          }
+          .shelf-products-grid .shelf-product-image {
+            height: clamp(130px, 34vw, 200px) !important;
+          }
+        }
+      `}} />
     </section>
+  );
+}
+
+function ShelfRating({handle}: {handle: string}) {
+  const {rating, reviewCount} = getProductRating(handle);
+  const fullStars = Math.floor(rating);
+  const hasHalf = rating % 1 >= 0.5;
+
+  return (
+    <div className="flex items-center justify-center gap-1 mt-1">
+      <div className="flex gap-px">
+        {[...Array(5)].map((_, i) => (
+          <svg
+            key={i}
+            width="10"
+            height="10"
+            viewBox="0 0 24 24"
+            fill={i < fullStars ? 'var(--color-matcha-mid)' : (i === fullStars && hasHalf ? 'url(#halfShelf)' : 'none')}
+            stroke="var(--color-matcha-mid)"
+            strokeWidth="1.5"
+          >
+            {i === fullStars && hasHalf && (
+              <defs>
+                <linearGradient id="halfShelf">
+                  <stop offset="50%" stopColor="var(--color-matcha-mid)" />
+                  <stop offset="50%" stopColor="transparent" />
+                </linearGradient>
+              </defs>
+            )}
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+        ))}
+      </div>
+      <span style={{fontSize: '9px', color: 'var(--color-stone)'}}>({reviewCount})</span>
+    </div>
   );
 }

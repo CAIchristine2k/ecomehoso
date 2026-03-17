@@ -29,8 +29,9 @@
   --cart-items-max-height: calc(100vh - 160px);
   --cart-items-min-height: 320px;
   --cart-summary-min-height: 100px;
-  --header-height-mobile: 60px;
-  --header-height-desktop: 80px;
+  --shipping-banner-height: 36px;
+  --header-height-mobile: calc(60px + var(--shipping-banner-height));
+  --header-height-desktop: calc(80px + var(--shipping-banner-height));
   --section-spacing: 6.5rem;
   --card-spacing: 1.5rem;
 
@@ -106,10 +107,10 @@
   --color-primary-rgb: 61, 107, 79;
   --color-background-rgb: 245, 240, 230;
 
-  /* Typography - Poppins + Japanese serif */
-  --font-primary: 'Poppins', system-ui, sans-serif;
-  --font-secondary: 'Poppins', system-ui, sans-serif;
-  --font-display: 'Poppins', system-ui, sans-serif;
+  /* Typography - Bricolage Grotesque + Almarai (inspired by kura-ge.com) */
+  --font-primary: 'Filson Pro', 'Almarai', system-ui, sans-serif;
+  --font-secondary: 'Filson Pro', 'Almarai', system-ui, sans-serif;
+  --font-display: 'Bricolage Grotesque', 'Filson Pro', 'Almarai', system-ui, sans-serif;
 
   /* Spacing scale */
   --spacing-xs: 0.25rem;

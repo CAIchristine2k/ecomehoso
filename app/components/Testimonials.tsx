@@ -1,31 +1,31 @@
-import React from 'react';
+import React, {useRef, useCallback} from 'react';
 import {Star} from 'lucide-react';
 
 const reviews = [
   {
     name: 'Sophie M.',
     initials: 'SM',
-    text: 'La difference avec les autres matchas est flagrante des la premiere gorgee. Une douceur umami incroyable.',
+    text: 'La différence avec les autres matchas est flagrante dès la première gorgée. Une douceur umami incroyable.',
   },
   {
     name: 'Thomas L.',
     initials: 'TL',
-    text: 'Enfin un matcha ceremonial digne de ce nom en France. La couleur, la texture, tout est parfait.',
+    text: 'Enfin un matcha cérémonial digne de ce nom en France. La couleur, la texture, tout est parfait.',
   },
   {
     name: 'Camille R.',
     initials: 'CR',
-    text: 'Je commande depuis 6 mois et la qualite est toujours au rendez-vous. Mon rituel matinal prefere.',
+    text: 'Je commande depuis 6 mois et la qualité est toujours au rendez-vous. Mon rituel matinal préféré.',
   },
   {
     name: 'Antoine D.',
     initials: 'AD',
-    text: 'Offert a ma mere pour Noel, elle a adore. L\'emballage est tres soigne, ideal pour un cadeau.',
+    text: 'Offert à ma mère pour Noël, elle a adoré. L\'emballage est très soigné, idéal pour un cadeau.',
   },
   {
     name: 'Julie P.',
     initials: 'JP',
-    text: 'Le meilleur matcha que j\'ai goute en dehors du Japon. On sent vraiment la qualite Uji.',
+    text: 'Le meilleur matcha que j\'ai goûté en dehors du Japon. On sent vraiment la qualité Uji.',
   },
   {
     name: 'Marc B.',
@@ -35,16 +35,26 @@ const reviews = [
   {
     name: 'Emma V.',
     initials: 'EV',
-    text: 'Livraison rapide, packaging elegant et matcha exceptionnel. Tout est impeccable chez HOSO.',
+    text: 'Livraison rapide, packaging élégant et matcha exceptionnel. Tout est impeccable chez HOSO.',
   },
   {
     name: 'Lucas G.',
     initials: 'LG',
-    text: 'J\'ai compare avec 5 marques premium, HOSO est clairement au-dessus. Vert intense, gout pur.',
+    text: 'J\'ai comparé avec 5 marques premium, HOSO est clairement au-dessus. Vert intense, goût pur.',
   },
 ];
 
+const CARD_WIDTH = 320; // 300px card + 20px gap
+
 export default function Testimonials() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scroll = useCallback((direction: 'left' | 'right') => {
+    if (!scrollRef.current) return;
+    const scrollAmount = direction === 'right' ? CARD_WIDTH : -CARD_WIDTH;
+    scrollRef.current.scrollBy({left: scrollAmount, behavior: 'smooth'});
+  }, []);
+
   return (
     <section
       id="testimonials"
@@ -67,7 +77,7 @@ export default function Testimonials() {
               color: 'var(--color-matcha-mid)',
             }}
           >
-            Temoignages
+            Témoignages
           </span>
           <h2
             style={{
@@ -85,129 +95,168 @@ export default function Testimonials() {
         </div>
       </div>
 
-      {/* Scrolling reviews */}
-      <div style={{position: 'relative'}}>
-        {/* Fade edges */}
-        <div
-          style={{
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            bottom: 0,
-            width: '80px',
-            background:
-              'linear-gradient(to right, var(--color-cream-warm), transparent)',
-            zIndex: 2,
-            pointerEvents: 'none',
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            right: 0,
-            top: 0,
-            bottom: 0,
-            width: '80px',
-            background:
-              'linear-gradient(to left, var(--color-cream-warm), transparent)',
-            zIndex: 2,
-            pointerEvents: 'none',
-          }}
-        />
-
-        <div
-          className="testimonials-scroll"
-          style={{
-            display: 'flex',
-            width: 'fit-content',
-            gap: '20px',
-            animation: 'testimonialsScroll 30s linear infinite',
-          }}
+      {/* Reviews with arrows */}
+      <div style={{position: 'relative'}} className="max-w-[1400px] mx-auto px-6 md:px-10">
+        {/* Arrow Left */}
+        <button
+          onClick={() => scroll('left')}
+          aria-label="Avis précédents"
+          className="testimonial-arrow testimonial-arrow-left"
         >
-          {[...Array(3)].map((_, setIdx) => (
-            <React.Fragment key={setIdx}>
-              {reviews.map((review, i) => (
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        {/* Arrow Right */}
+        <button
+          onClick={() => scroll('right')}
+          aria-label="Avis suivants"
+          className="testimonial-arrow testimonial-arrow-right"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+
+        {/* Scrollable container */}
+        <div
+          ref={scrollRef}
+          className="testimonials-container"
+        >
+          {reviews.map((review, i) => (
+            <div
+              key={i}
+              style={{
+                flexShrink: 0,
+                width: '300px',
+                padding: '24px',
+                background: 'white',
+                border: '1px solid var(--color-cream-dark)',
+                borderRadius: '12px',
+              }}
+            >
+              {/* Stars */}
+              <div className="flex gap-0.5 mb-3">
+                {[...Array(5)].map((_, s) => (
+                  <Star
+                    key={s}
+                    className="h-3 w-3"
+                    style={{
+                      color: 'var(--color-matcha-mid)',
+                      fill: 'var(--color-matcha-mid)',
+                    }}
+                  />
+                ))}
+              </div>
+
+              {/* Review text */}
+              <p
+                style={{
+                  fontSize: '13px',
+                  fontWeight: 300,
+                  lineHeight: 1.7,
+                  color: 'var(--color-charcoal-light)',
+                  fontStyle: 'italic',
+                  marginBottom: '16px',
+                }}
+              >
+                &ldquo;{review.text}&rdquo;
+              </p>
+
+              {/* Author */}
+              <div className="flex items-center gap-3">
                 <div
-                  key={`${setIdx}-${i}`}
+                  className="flex items-center justify-center rounded-full"
                   style={{
+                    width: '32px',
+                    height: '32px',
+                    backgroundColor: 'var(--color-cream)',
+                    color: 'var(--color-matcha-deep)',
+                    fontSize: '11px',
+                    fontWeight: 500,
                     flexShrink: 0,
-                    width: '300px',
-                    padding: '24px',
-                    background: 'white',
-                    border: '1px solid var(--color-cream-dark)',
-                    borderRadius: '12px',
                   }}
                 >
-                  {/* Stars */}
-                  <div className="flex gap-0.5 mb-3">
-                    {[...Array(5)].map((_, s) => (
-                      <Star
-                        key={s}
-                        className="h-3 w-3"
-                        style={{
-                          color: 'var(--color-matcha-mid)',
-                          fill: 'var(--color-matcha-mid)',
-                        }}
-                      />
-                    ))}
-                  </div>
-
-                  {/* Review text */}
-                  <p
-                    style={{
-                      fontSize: '13px',
-                      fontWeight: 300,
-                      lineHeight: 1.7,
-                      color: 'var(--color-charcoal-light)',
-                      fontStyle: 'italic',
-                      marginBottom: '16px',
-                    }}
-                  >
-                    "{review.text}"
-                  </p>
-
-                  {/* Author */}
-                  <div className="flex items-center gap-3">
-                    <div
-                      className="flex items-center justify-center rounded-full"
-                      style={{
-                        width: '32px',
-                        height: '32px',
-                        backgroundColor: 'var(--color-cream)',
-                        color: 'var(--color-matcha-deep)',
-                        fontSize: '11px',
-                        fontWeight: 500,
-                        flexShrink: 0,
-                      }}
-                    >
-                      {review.initials}
-                    </div>
-                    <span
-                      style={{
-                        fontSize: '12px',
-                        fontWeight: 500,
-                        color: 'var(--color-charcoal)',
-                        letterSpacing: '0.03em',
-                      }}
-                    >
-                      {review.name}
-                    </span>
-                  </div>
+                  {review.initials}
                 </div>
-              ))}
-            </React.Fragment>
+                <span
+                  style={{
+                    fontSize: '12px',
+                    fontWeight: 500,
+                    color: 'var(--color-charcoal)',
+                    letterSpacing: '0.03em',
+                  }}
+                >
+                  {review.name}
+                </span>
+              </div>
+            </div>
           ))}
         </div>
 
         <style
           dangerouslySetInnerHTML={{
             __html: `
-            @keyframes testimonialsScroll {
-              0% { transform: translateX(0); }
-              100% { transform: translateX(calc(-100% / 3)); }
+            .testimonials-container {
+              display: flex;
+              gap: 20px;
+              overflow-x: auto;
+              scroll-snap-type: x mandatory;
+              -webkit-overflow-scrolling: touch;
+              scrollbar-width: none;
+              padding: 4px 0;
             }
-            .testimonials-scroll:hover {
-              animation-play-state: paused;
+            .testimonials-container::-webkit-scrollbar {
+              display: none;
+            }
+            .testimonials-container > div {
+              scroll-snap-align: start;
+            }
+            .testimonial-arrow {
+              position: absolute;
+              top: 50%;
+              transform: translateY(-50%);
+              z-index: 3;
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              border: 1px solid var(--color-cream-dark);
+              background: rgba(255, 255, 255, 0.9);
+              backdrop-filter: blur(8px);
+              -webkit-backdrop-filter: blur(8px);
+              color: var(--color-charcoal);
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              transition: all 0.3s ease;
+              box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            }
+            .testimonial-arrow:hover {
+              background: var(--color-matcha-mid);
+              border-color: var(--color-matcha-mid);
+              color: white;
+              transform: translateY(-50%) scale(1.08);
+              box-shadow: 0 4px 16px rgba(61, 107, 79, 0.25);
+            }
+            .testimonial-arrow-left {
+              left: 0px;
+            }
+            .testimonial-arrow-right {
+              right: 0px;
+            }
+            @media (max-width: 640px) {
+              .testimonial-arrow {
+                width: 34px;
+                height: 34px;
+              }
+              .testimonial-arrow-left {
+                left: 4px;
+              }
+              .testimonial-arrow-right {
+                right: 4px;
+              }
             }
           `,
           }}

@@ -11,10 +11,12 @@ import {
   Image,
   Money,
   parseGid,
+  CacheShort,
 } from '@shopify/hydrogen';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {getConfig} from '~/utils/config';
 import {useConfig} from '~/utils/themeContext';
+import {getProductRating} from '~/utils/productRatings';
 import {ProductForm} from '~/components/ProductForm';
 import {Suspense} from 'react';
 
@@ -60,6 +62,7 @@ async function loadCriticalData({
 
   const data = await storefront.query(PRODUCT_QUERY, {
     variables: {handle},
+    cache: CacheShort(),
   });
 
   if (!data.product?.id) {
@@ -307,10 +310,10 @@ export default function Product() {
 
   // Benefits list
   const benefits = [
-    'Donne de l\'energie',
+    'Donne de l\'énergie',
     'Favorise la concentration',
     'Boost peau & cheveux',
-    'Renforce l\'immunite',
+    'Renforce l\'immunité',
     'Antioxydant',
     'Effet apaisant',
   ];
@@ -334,7 +337,7 @@ export default function Product() {
             </ol>
           </nav>
           <h1
-            className="mb-4"
+            className="mb-2"
             style={{
               fontSize: 'clamp(1.5rem, 3vw, 2.25rem)',
               fontWeight: 700,
@@ -346,6 +349,7 @@ export default function Product() {
           >
             {product.title}
           </h1>
+          <ProductPageRating handle={product.handle} />
         </div>
 
         {/* Product Grid - Image left, Info right */}
@@ -405,7 +409,7 @@ export default function Product() {
                           fontWeight: 600,
                         }}
                       >
-                        Epuise
+                        Épuisé
                       </div>
                     </div>
                   )}
@@ -428,7 +432,7 @@ export default function Product() {
                       opacity: 0.7,
                       backdropFilter: 'blur(4px)',
                     }}
-                    aria-label="Image precedente"
+                    aria-label="Image précédente"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
@@ -470,7 +474,7 @@ export default function Product() {
 
             {/* Title - Desktop only */}
             <h1
-              className="hidden lg:block mb-5"
+              className="hidden lg:block mb-3"
               style={{
                 fontSize: 'clamp(1.5rem, 3vw, 2.25rem)',
                 fontWeight: 700,
@@ -482,6 +486,9 @@ export default function Product() {
             >
               {product.title}
             </h1>
+
+            {/* Rating */}
+            <ProductPageRating handle={product.handle} />
 
             {/* Description with "Voir plus" */}
             <div className="mb-6" style={{fontSize: '14px', color: 'var(--color-stone)', lineHeight: 1.8}}>
@@ -556,9 +563,9 @@ export default function Product() {
               </button>
               {openAccordion === 'livraison' && (
                 <div className="py-4" style={{fontSize: '13px', color: 'var(--color-stone)', lineHeight: 1.8}}>
-                  <p>Livraison GRATUITE a partir de 49€ d'achat.</p>
-                  <p>Colissimo : 2-4 jours ouvrables.</p>
-                  <p>Chronopost : livraison express en 24h.</p>
+                  <p>Livraison GRATUITE à partir de 49€ d'achat.</p>
+                  <p>Colissimo : 2-3 jours ouvrables.</p>
+                  <p>Mondial Relay : 3-5 jours ouvrables.</p>
                 </div>
               )}
 
@@ -569,7 +576,7 @@ export default function Product() {
                 style={{borderBottom: '1px solid var(--color-cream-dark)'}}
               >
                 <span style={{fontSize: '12px', fontWeight: 500, letterSpacing: '0.15em', textTransform: 'uppercase' as const, color: 'var(--color-charcoal)'}}>
-                  Ingredients
+                  Ingrédients
                 </span>
                 <svg
                   className={`w-4 h-4 transition-transform duration-300 ${openAccordion === 'ingredients' ? 'rotate-180' : ''}`}
@@ -581,7 +588,7 @@ export default function Product() {
               </button>
               {openAccordion === 'ingredients' && (
                 <div className="py-4" style={{fontSize: '13px', color: 'var(--color-stone)', lineHeight: 1.8}}>
-                  <p>100% the vert matcha (Camellia sinensis) d'origine Uji, Kyoto, Japon.</p>
+                  <p>100% thé vert matcha (Camellia sinensis) d'origine Uji, Kyoto, Japon.</p>
                   <p>Sans additifs, sans conservateurs, sans colorants.</p>
                 </div>
               )}
@@ -593,7 +600,7 @@ export default function Product() {
                 style={{borderBottom: '1px solid var(--color-cream-dark)'}}
               >
                 <span style={{fontSize: '12px', fontWeight: 500, letterSpacing: '0.15em', textTransform: 'uppercase' as const, color: 'var(--color-charcoal)'}}>
-                  Preparation
+                  Préparation
                 </span>
                 <svg
                   className={`w-4 h-4 transition-transform duration-300 ${openAccordion === 'preparation' ? 'rotate-180' : ''}`}
@@ -605,10 +612,10 @@ export default function Product() {
               </button>
               {openAccordion === 'preparation' && (
                 <div className="py-4" style={{fontSize: '13px', color: 'var(--color-stone)', lineHeight: 1.8}}>
-                  <p>1. Tamiser 1 a 2g de matcha dans un bol.</p>
+                  <p>1. Tamiser 1 à 2g de matcha dans un bol.</p>
                   <p>2. Verser 70ml d'eau chaude (70-80°C).</p>
-                  <p>3. Fouetter energiquement avec un chasen en formant un "M".</p>
-                  <p>4. Deguster immediatement.</p>
+                  <p>3. Fouetter énergiquement avec un chasen en formant un "M".</p>
+                  <p>4. Déguster immédiatement.</p>
                 </div>
               )}
             </div>
@@ -629,7 +636,7 @@ export default function Product() {
                 marginBottom: '12px',
               }}
             >
-              Completez votre achat
+              Complétez votre achat
             </h3>
             <div className="flex flex-col gap-3">
               {recommendedProducts.slice(0, 2).map((crossProduct: any) => (
@@ -727,7 +734,7 @@ export default function Product() {
                             borderRadius: '20px',
                           }}
                         >
-                          Epuise
+                          Épuisé
                         </div>
                       )}
                   </div>
@@ -776,6 +783,46 @@ export default function Product() {
           ],
         }}
       />
+    </div>
+  );
+}
+
+function ProductPageRating({handle}: {handle: string}) {
+  const {rating, reviewCount} = getProductRating(handle);
+  const fullStars = Math.floor(rating);
+  const hasHalf = rating % 1 >= 0.5;
+
+  return (
+    <div className="flex items-center gap-2 mb-4">
+      <div className="flex gap-0.5">
+        {[...Array(5)].map((_, i) => (
+          <svg
+            key={i}
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill={i < fullStars ? 'var(--color-matcha-mid)' : (i === fullStars && hasHalf ? 'url(#halfPDP)' : 'none')}
+            stroke="var(--color-matcha-mid)"
+            strokeWidth="1.5"
+          >
+            {i === fullStars && hasHalf && (
+              <defs>
+                <linearGradient id="halfPDP">
+                  <stop offset="50%" stopColor="var(--color-matcha-mid)" />
+                  <stop offset="50%" stopColor="transparent" />
+                </linearGradient>
+              </defs>
+            )}
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+        ))}
+      </div>
+      <span style={{fontSize: '13px', color: 'var(--color-stone)', fontWeight: 400}}>
+        {rating}/5
+      </span>
+      <span style={{fontSize: '13px', color: 'var(--color-mist)'}}>
+        ({reviewCount} avis)
+      </span>
     </div>
   );
 }

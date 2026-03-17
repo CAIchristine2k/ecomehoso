@@ -9,7 +9,7 @@ export const meta: MetaFunction = () => {
     {
       name: 'description',
       content:
-        "HOSO MATCHA - La quete du matcha parfait. Decouvrez notre philosophie et notre engagement pour un matcha pur, depuis Uji, Kyoto.",
+        "HOSO MATCHA - La quête du matcha parfait. Découvrez notre philosophie et notre engagement pour un matcha pur, depuis Uji, Kyoto.",
     },
   ];
 };
@@ -86,7 +86,7 @@ export default function NotreHistoire() {
           />
           <p
             style={{
-              fontFamily: "'Poppins', sans-serif",
+              fontFamily: "var(--font-display)",
               fontSize: 'clamp(0.95rem, 2vw, 1.25rem)',
               fontWeight: 300,
               color: 'white',
@@ -136,7 +136,7 @@ export default function NotreHistoire() {
               opacity: 0.6,
             }}
           >
-            Decouvrir
+            Découvrir
           </span>
           <svg
             width="1"
@@ -161,7 +161,7 @@ export default function NotreHistoire() {
         <div style={{maxWidth: '700px', margin: '0 auto'}}>
           <p
             style={{
-              fontFamily: "'Poppins', sans-serif",
+              fontFamily: "var(--font-display)",
               fontSize: 'clamp(1.25rem, 3vw, 1.75rem)',
               fontWeight: 300,
               lineHeight: 1.8,
@@ -223,7 +223,7 @@ export default function NotreHistoire() {
               </p>
               <h2
                 style={{
-                  fontFamily: "'Playfair Display', 'Georgia', serif",
+                  fontFamily: "var(--font-display)",
                   fontSize: 'clamp(1.5rem, 3vw, 2rem)',
                   fontWeight: 500,
                   color: 'white',
@@ -313,7 +313,7 @@ export default function NotreHistoire() {
             </p>
             <h2
               style={{
-                fontFamily: "'Poppins', sans-serif",
+                fontFamily: "var(--font-display)",
                 fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
                 fontWeight: 300,
                 color: 'var(--color-charcoal)',
@@ -487,6 +487,7 @@ export default function NotreHistoire() {
               lineHeight: 1.6,
               color: 'rgba(255,255,255,0.85)',
               marginBottom: '32px',
+              paddingBottom: 0,
             }}
           >
             Mais nous voulons la faire parfaitement.

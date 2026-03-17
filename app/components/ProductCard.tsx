@@ -7,6 +7,7 @@ import {WishlistButton} from '~/components/WishlistButton';
 import {LoadingSpinner} from '~/components/LoadingSpinner';
 import type {ProductItemFragment} from 'storefrontapi.generated';
 import {useConfig} from '~/utils/themeContext';
+import {getProductRating} from '~/utils/productRatings';
 
 interface VariantNode {
   id: string;
@@ -90,7 +91,7 @@ export function ProductCard({
 
   return (
     <div
-      className="group relative overflow-hidden transition-all duration-400"
+      className="group relative overflow-hidden transition-all duration-400 flex flex-col h-full"
       style={{
         background: 'white',
         border: '1px solid var(--color-cream-dark)',
@@ -176,7 +177,7 @@ export function ProductCard({
                 borderRadius: '20px',
               }}
             >
-              Epuise
+              Épuisé
             </span>
           )}
         </div>
@@ -222,7 +223,7 @@ export function ProductCard({
       </div>
 
       {/* Product Info */}
-      <div className="p-3 md:p-5">
+      <div className="p-3 md:p-5 flex flex-col flex-1">
         <Link
           to={`/products/${handle}`}
           prefetch="intent"
@@ -269,8 +270,12 @@ export function ProductCard({
           </div>
         )}
 
+        {/* Rating + Price pushed to bottom */}
+        <div className="mt-auto">
+        <ProductRatingStars handle={handle} />
+
         {/* Price Section */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 mt-1">
           {price && (
             <span
               className="price-no-hover"
@@ -325,7 +330,45 @@ export function ProductCard({
             </AddToCartButton>
           </div>
         )}
+        </div>
       </div>
+    </div>
+  );
+}
+
+function ProductRatingStars({handle}: {handle: string}) {
+  const {rating, reviewCount} = getProductRating(handle);
+  const fullStars = Math.floor(rating);
+  const hasHalf = rating % 1 >= 0.5;
+
+  return (
+    <div className="flex items-center gap-1.5">
+      <div className="flex gap-0.5">
+        {[...Array(5)].map((_, i) => (
+          <svg
+            key={i}
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill={i < fullStars ? 'var(--color-matcha-mid)' : (i === fullStars && hasHalf ? 'url(#halfStar)' : 'none')}
+            stroke="var(--color-matcha-mid)"
+            strokeWidth="1.5"
+          >
+            {i === fullStars && hasHalf && (
+              <defs>
+                <linearGradient id="halfStar">
+                  <stop offset="50%" stopColor="var(--color-matcha-mid)" />
+                  <stop offset="50%" stopColor="transparent" />
+                </linearGradient>
+              </defs>
+            )}
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+        ))}
+      </div>
+      <span style={{fontSize: '11px', color: 'var(--color-stone)', fontWeight: 400}}>
+        {rating} ({reviewCount})
+      </span>
     </div>
   );
 }

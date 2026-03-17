@@ -3,7 +3,7 @@ import {
   type LoaderFunctionArgs,
   type MetaFunction,
 } from 'react-router';
-import {getPaginationVariables, Analytics} from '@shopify/hydrogen';
+import {getPaginationVariables, Analytics, CacheShort} from '@shopify/hydrogen';
 import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router';
 
@@ -29,11 +29,11 @@ export const meta: MetaFunction = () => {
     {title: `${config.brandName} | Matcha Premium depuis Uji, Kyoto`},
     {
       name: 'description',
-      content: "Hoso Matcha - Matcha d'exception selectionne a Uji, Kyoto. Decouvrez nos matchas ceremonials et culinaires, accessoires traditionnels et coffrets.",
+      content: "Hoso Matcha - Matcha d'exception sélectionné à Uji, Kyoto. Découvrez nos matchas cérémoniaux et culinaires, accessoires traditionnels et coffrets.",
     },
     {
       name: 'keywords',
-      content: 'matcha, matcha ceremonial, matcha culinaire, the vert japonais, Uji, Kyoto, matcha premium, chasen, chawan',
+      content: 'matcha, matcha cérémonial, matcha culinaire, thé vert japonais, Uji, Kyoto, matcha premium, chasen, chawan',
     },
     {property: 'og:title', content: `${config.brandName} | Matcha Premium`},
     {property: 'og:description', content: config.heroSubtitle},
@@ -47,13 +47,16 @@ export async function loader({request, context}: LoaderFunctionArgs) {
   const searchParams = new URL(request.url).searchParams;
   const variables = getPaginationVariables(request, {pageBy: 10});
 
-  // Get all products with more variants
+  // Get all products with more variants (CacheShort = refresh every request, stale-while-revalidate)
   const {products} = await context.storefront.query(PRODUCTS_QUERY, {
     variables,
+    cache: CacheShort(),
   });
 
   // Get collections
-  const {collections} = await context.storefront.query(COLLECTIONS_QUERY);
+  const {collections} = await context.storefront.query(COLLECTIONS_QUERY, {
+    cache: CacheShort(),
+  });
 
   // Get featured collection
   const featuredCollection = collections?.nodes.find(
@@ -152,7 +155,7 @@ export default function Home() {
         <div className="reassurance-marquee" style={{
           display: 'flex',
           whiteSpace: 'nowrap',
-          animation: 'marqueeScroll 25s linear infinite',
+          animation: 'marqueeScroll 12s linear infinite',
           padding: '20px 0',
         }}>
           {[...Array(3)].map((_, setIndex) => (
@@ -160,10 +163,10 @@ export default function Home() {
               {[
                 {title: 'Origine Uji', desc: 'Kyoto, Japon'},
                 {title: 'Artisanal', desc: 'Mouture sur meule de pierre'},
-                {title: 'Grade Ceremonial', desc: 'Qualite premium'},
-                {title: 'Livraison offerte', desc: 'Des 50 EUR d\'achat'},
-                {title: 'Culture ombragee', desc: 'Tradition seculaire'},
-                {title: 'Direct du Japon', desc: 'Sans intermediaire'},
+                {title: 'Grade Cérémonial', desc: 'Qualité premium'},
+                {title: 'Livraison offerte', desc: 'Dès 50 EUR d\'achat'},
+                {title: 'Culture ombragée', desc: 'Tradition séculaire'},
+                {title: 'Direct du Japon', desc: 'Sans intermédiaire'},
               ].map((item, i) => (
                 <span
                   key={`${setIndex}-${i}`}
@@ -265,16 +268,16 @@ export default function Home() {
                   <span style={{fontSize: '10px', fontWeight: 500, letterSpacing: '0.25em', textTransform: 'uppercase' as const, color: 'rgba(255,255,255,0.8)'}}>Notre philosophie</span>
                 </div>
                 <p style={{fontFamily: "'Noto Serif JP', serif", fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', marginBottom: '16px', letterSpacing: '0.3em'}}>細 · HOSO</p>
-                <h2 className="mb-6" style={{fontFamily: "'Poppins', sans-serif", fontSize: 'clamp(1.5rem, 5vw, 2rem)', fontWeight: 300, lineHeight: 1.35, color: 'white', letterSpacing: '-0.01em'}}>
-                  Extremement simple,<br />
-                  <span style={{color: 'rgba(255,255,255,0.85)', fontStyle: 'italic'}}>extremement pur.</span>
+                <h2 className="mb-6" style={{fontFamily: "var(--font-display)", fontSize: 'clamp(1.5rem, 5vw, 2rem)', fontWeight: 300, lineHeight: 1.35, color: 'white', letterSpacing: '-0.01em'}}>
+                  Extrêmement simple,<br />
+                  <span style={{color: 'rgba(255,255,255,0.85)', fontStyle: 'italic'}}>extrêmement pur.</span>
                 </h2>
                 <Link
                   to="/notre-histoire"
                   className="group inline-flex items-center gap-3 transition-all duration-400"
                   style={{padding: '12px 24px', fontSize: '10px', fontWeight: 500, letterSpacing: '0.2em', textTransform: 'uppercase' as const, color: 'white', backgroundColor: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(4px)', borderRadius: '4px', textDecoration: 'none', border: '1px solid rgba(255,255,255,0.3)'}}
                 >
-                  Decouvrir notre histoire
+                  Découvrir notre histoire
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="transition-transform duration-300 group-hover:translate-x-1"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
                 </Link>
               </div>
@@ -325,7 +328,7 @@ export default function Home() {
               <h2
                 className="mb-8"
                 style={{
-                  fontFamily: "'Poppins', sans-serif",
+                  fontFamily: "var(--font-display)",
                   fontSize: 'clamp(1.75rem, 4vw, 2.75rem)',
                   fontWeight: 300,
                   lineHeight: 1.35,
@@ -333,13 +336,13 @@ export default function Home() {
                   letterSpacing: '-0.01em',
                 }}
               >
-                Extremement simple,
+                Extrêmement simple,
                 <br />
                 <span style={{
                   color: 'var(--color-matcha-mid)',
                   fontStyle: 'italic',
                 }}>
-                  extremement pur.
+                  extrêmement pur.
                 </span>
               </h2>
               <p style={{fontFamily: "'Noto Serif JP', serif", fontSize: '0.85rem', color: 'var(--color-matcha-mid)', letterSpacing: '0.3em', marginBottom: '24px'}}>
@@ -362,7 +365,7 @@ export default function Home() {
                     lineHeight: 1.9,
                   }}
                 >
-                  Dans un monde qui va toujours plus vite, nous avons fait le choix radical de la simplicite. Un seul lieu : Uji, le coeur sacre du the au Japon.
+                  Dans un monde qui va toujours plus vite, nous avons fait le choix radical de la simplicité. Un seul lieu : Uji, le cœur sacré du thé au Japon.
                 </p>
               </div>
 
@@ -377,7 +380,7 @@ export default function Home() {
                   fontStyle: 'italic',
                 }}
               >
-                "Lorsque tout le superflu disparait, il ne reste que l'essentiel."
+                "Lorsque tout le superflu disparaît, il ne reste que l'essentiel."
               </p>
 
               {/* CTA button style */}
@@ -396,7 +399,7 @@ export default function Home() {
                   textDecoration: 'none',
                 }}
               >
-                Decouvrir notre histoire
+                Découvrir notre histoire
                 <svg
                   width="16"
                   height="16"
@@ -462,7 +465,7 @@ export default function Home() {
               color: 'var(--color-matcha-mid)',
             }}
           >
-            Communaute
+            Communauté
           </span>
           <h2
             className="mb-4"
@@ -473,7 +476,7 @@ export default function Home() {
               color: 'var(--color-charcoal)',
             }}
           >
-            Suivez-nous sur nos reseaux
+            Suivez-nous sur nos réseaux
           </h2>
           <p style={{fontFamily: "'Noto Serif JP', serif", fontSize: '0.85rem', color: 'var(--color-matcha-mid)', letterSpacing: '0.3em', marginTop: '8px'}}>
             フォローしてください
@@ -487,7 +490,7 @@ export default function Home() {
               lineHeight: 1.8,
             }}
           >
-            Rejoignez notre communaute et partagez vos moments matcha avec #hosomatcha
+            Rejoignez notre communauté et partagez vos moments matcha avec #hosomatcha
           </p>
 
           <div className="flex items-center justify-center gap-6 mb-12">

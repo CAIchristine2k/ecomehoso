@@ -34,6 +34,7 @@ export function AddToCartButton({
   lines,
   analytics,
   className,
+  style,
   buttonText = 'Ajouter au panier',
   onClick,
   selectedVariant,
@@ -43,6 +44,7 @@ export function AddToCartButton({
   lines: CartLineInput[];
   analytics?: unknown;
   className?: string;
+  style?: React.CSSProperties;
   buttonText?: string;
   onClick?: () => void;
   selectedVariant?: SelectedVariant;
@@ -174,6 +176,7 @@ export function AddToCartButton({
             type="submit"
             disabled={disabled || isSubmitting}
             className={className || defaultClasses}
+            style={style}
             aria-label={
               typeof buttonContent === 'string' ? buttonContent : 'Ajouter au panier'
             }

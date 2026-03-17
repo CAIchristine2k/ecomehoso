@@ -1,6 +1,6 @@
 import {redirect, type LoaderFunctionArgs} from 'react-router';
 import {useLoaderData, type MetaFunction, Link} from 'react-router';
-import {getPaginationVariables, Analytics} from '@shopify/hydrogen';
+import {getPaginationVariables, Analytics, CacheShort} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {ProductItem} from '~/components/ProductItem';
@@ -30,6 +30,7 @@ export function loader({params, context}: LoaderFunctionArgs) {
     variables: {
       handle: handle,
     },
+    cache: CacheShort(),
   });
 }
 
@@ -55,7 +56,7 @@ export default function Collection() {
   }
 
   return (
-    <div className="py-24" style={{backgroundColor: 'var(--color-cream)', color: 'var(--color-charcoal)'}}>
+    <div style={{backgroundColor: 'var(--color-cream)', color: 'var(--color-charcoal)', paddingTop: 'calc(var(--header-height-desktop) + 2rem)', paddingBottom: '4rem'}}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         {/* Collection Hero */}
         <div className="mb-16 text-center">
@@ -141,7 +142,7 @@ export default function Collection() {
               color: 'var(--color-charcoal)',
             }}
           >
-            Qualite & Tradition
+            Qualité & Tradition
           </h3>
           <p
             className="max-w-2xl mx-auto"
@@ -152,7 +153,7 @@ export default function Collection() {
               lineHeight: 1.8,
             }}
           >
-            Chaque produit de cette collection est selectionne avec soin pour vous offrir le meilleur du matcha japonais, fidele aux traditions seculaires d'Uji.
+            Chaque produit de cette collection est sélectionné avec soin pour vous offrir le meilleur du matcha japonais, fidèle aux traditions séculaires d'Uji.
           </p>
         </div>
       </div>

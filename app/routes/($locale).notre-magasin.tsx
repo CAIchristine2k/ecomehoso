@@ -8,7 +8,7 @@ export const meta: MetaFunction = () => {
     {
       name: 'description',
       content:
-        'Visitez notre boutique HOSO au coeur du Marais, Paris 4eme. Matcha premium, degustation et accessoires.',
+        'Visitez notre boutique HOSO au cœur du Marais, Paris 4ème. Matcha premium, dégustation et accessoires.',
     },
   ];
 };
@@ -17,17 +17,17 @@ const storeImages = [
   {
     src: '/images/magasin/devanture-1.jpg',
     alt: 'Devanture HOSO',
-    caption: 'Notre facade',
+    caption: 'Notre façade',
   },
   {
     src: '/images/magasin/interieur-gobelets.jpg',
-    alt: 'Interieur boutique',
-    caption: "L'espace degustation",
+    alt: 'Intérieur boutique',
+    caption: "L'espace dégustation",
   },
   {
     src: '/images/magasin/service-sesame.jpg',
     alt: 'Service',
-    caption: 'Preparation artisanale',
+    caption: 'Préparation artisanale',
   },
   {
     src: '/images/magasin/ambiance.jpg',
@@ -41,8 +41,8 @@ const storeImages = [
   },
   {
     src: '/images/magasin/interieur-drapeaux.jpg',
-    alt: 'Interieur',
-    caption: 'Decoration japonaise',
+    alt: 'Intérieur',
+    caption: 'Décoration japonaise',
   },
 ];
 
@@ -124,7 +124,7 @@ export default function NotreMagasinPage() {
           </span>
           <h1
             style={{
-              fontFamily: "'Poppins', sans-serif",
+              fontFamily: "var(--font-display)",
               fontSize: 'clamp(16px, 3vw, 24px)',
               fontWeight: 300,
               letterSpacing: '0.05em',
@@ -213,7 +213,7 @@ export default function NotreMagasinPage() {
               textTransform: 'uppercase' as const,
             }}
           >
-            Decouvrir
+            Découvrir
           </span>
           <svg
             viewBox="0 0 24 24"
@@ -258,8 +258,8 @@ export default function NotreMagasinPage() {
 
           {/* Regular items */}
           {[
-            {src: '/images/magasin/interieur-gobelets.jpg', caption: "L'espace degustation"},
-            {src: '/images/magasin/service-sesame.jpg', caption: 'Preparation artisanale'},
+            {src: '/images/magasin/interieur-gobelets.jpg', caption: "L'espace dégustation"},
+            {src: '/images/magasin/service-sesame.jpg', caption: 'Préparation artisanale'},
             {src: '/images/magasin/plaque-hoso.jpg', caption: 'Notre enseigne'},
             {src: '/images/magasin/ambiance.jpg', caption: 'Ambiance zen'},
           ].map((item, i) => (
@@ -304,11 +304,11 @@ export default function NotreMagasinPage() {
                 marginBottom: '16px',
               }}
             >
-              A deguster sur place
+              À déguster sur place
             </span>
             <h2
               style={{
-                fontFamily: "'Poppins', sans-serif",
+                fontFamily: "var(--font-display)",
                 fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
                 fontWeight: 400,
                 color: 'var(--color-charcoal)',
@@ -427,7 +427,7 @@ export default function NotreMagasinPage() {
             </span>
             <h2
               style={{
-                fontFamily: "'Poppins', sans-serif",
+                fontFamily: "var(--font-display)",
                 fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
                 fontWeight: 400,
                 color: 'var(--color-charcoal)',
@@ -472,7 +472,7 @@ export default function NotreMagasinPage() {
                 <h3 style={{fontSize: '11px', fontWeight: 500, letterSpacing: '0.2em', textTransform: 'uppercase' as const, color: 'var(--color-matcha-mid)', marginBottom: '8px'}}>
                   Adresse
                 </h3>
-                <p style={{fontFamily: "'Poppins', sans-serif", fontSize: '22px', fontWeight: 400, color: 'var(--color-charcoal)', marginBottom: '2px'}}>
+                <p style={{fontFamily: "var(--font-display)", fontSize: '22px', fontWeight: 400, color: 'var(--color-charcoal)', marginBottom: '2px'}}>
                   44 Rue Saint-Antoine
                 </p>
                 <p style={{fontSize: '16px', color: 'var(--color-stone)', marginBottom: '12px'}}>
@@ -507,7 +507,7 @@ export default function NotreMagasinPage() {
                 <h3 style={{fontSize: '11px', fontWeight: 500, letterSpacing: '0.2em', textTransform: 'uppercase' as const, color: 'var(--color-matcha-mid)', marginBottom: '8px'}}>
                   Horaires
                 </h3>
-                <p style={{fontFamily: "'Poppins', sans-serif", fontSize: '22px', fontWeight: 400, color: 'var(--color-charcoal)', marginBottom: '2px'}}>
+                <p style={{fontFamily: "var(--font-display)", fontSize: '22px', fontWeight: 400, color: 'var(--color-charcoal)', marginBottom: '2px'}}>
                   Mar — Dim
                 </p>
                 <p style={{fontSize: '16px', color: 'var(--color-stone)', marginBottom: '12px'}}>
@@ -542,7 +542,7 @@ export default function NotreMagasinPage() {
                 <h3 style={{fontSize: '11px', fontWeight: 500, letterSpacing: '0.2em', textTransform: 'uppercase' as const, color: 'var(--color-matcha-mid)', marginBottom: '8px'}}>
                   Contact
                 </h3>
-                <p style={{fontFamily: "'Poppins', sans-serif", fontSize: '22px', fontWeight: 400, color: 'var(--color-charcoal)', marginBottom: '2px'}}>
+                <p style={{fontFamily: "var(--font-display)", fontSize: '22px', fontWeight: 400, color: 'var(--color-charcoal)', marginBottom: '2px'}}>
                   contact@hoso.fr
                 </p>
                 <p style={{fontSize: '16px', color: 'var(--color-stone)', marginBottom: '12px'}}>
@@ -579,7 +579,7 @@ export default function NotreMagasinPage() {
             </span>
             <h2
               style={{
-                fontFamily: "'Poppins', sans-serif",
+                fontFamily: "var(--font-display)",
                 fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
                 fontWeight: 400,
                 color: 'var(--color-charcoal)',
@@ -597,8 +597,8 @@ export default function NotreMagasinPage() {
                 maxWidth: '400px',
               }}
             >
-              Niche dans le quartier historique du Marais, notre boutique vous
-              accueille dans un cadre alliant tradition japonaise et elegance
+              Niché dans le quartier historique du Marais, notre boutique vous
+              accueille dans un cadre alliant tradition japonaise et élégance
               parisienne.
             </p>
             <a
@@ -671,14 +671,14 @@ export default function NotreMagasinPage() {
           </p>
           <h2
             style={{
-              fontFamily: "'Poppins', sans-serif",
+              fontFamily: "var(--font-display)",
               fontSize: 'clamp(1.5rem, 3vw, 2rem)',
               fontWeight: 400,
               color: 'white',
               marginBottom: '36px',
             }}
           >
-            Venez decouvrir notre univers
+            Venez découvrir notre univers
           </h2>
           <div
             style={{

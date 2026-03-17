@@ -68,7 +68,7 @@ export function Hero() {
         <p
           className="text-white/70 max-w-lg mx-auto mb-12"
           style={{
-            fontFamily: "'Poppins', sans-serif",
+            fontFamily: "var(--font-display)",
             fontSize: '15px',
             fontWeight: 300,
             lineHeight: 1.9,
@@ -124,7 +124,7 @@ export function Hero() {
             key={i}
             className="text-white/60 hidden sm:inline"
             style={{
-              fontFamily: "'Poppins', sans-serif",
+              fontFamily: "var(--font-display)",
               fontSize: '10px',
               letterSpacing: '0.3em',
               textTransform: 'uppercase' as const,
@@ -141,7 +141,7 @@ export function Hero() {
             key={`mobile-${i}`}
             className="text-white/60 sm:hidden"
             style={{
-              fontFamily: "'Poppins', sans-serif",
+              fontFamily: "var(--font-display)",
               fontSize: '9px',
               letterSpacing: '0.2em',
               textTransform: 'uppercase' as const,
