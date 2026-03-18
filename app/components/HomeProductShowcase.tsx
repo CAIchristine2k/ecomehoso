@@ -78,12 +78,13 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
     reordered.splice(bolKaolinIdx, 1);
   }
 
-  // Distribute products across shelves (3 per shelf on desktop, 2 per shelf on mobile handled via CSS)
+  // Distribute products across shelves (3 per shelf on desktop)
+  // Ensure each shelf has 3 products (skip shelves with less than 2)
   const shelf1 = reordered.slice(0, 3);
   const shelf2 = reordered.slice(3, 6);
   const shelf3 = reordered.slice(6, 9);
 
-  const shelves = [shelf1, shelf2, shelf3].filter((s) => s.length > 0);
+  const shelves = [shelf1, shelf2, shelf3].filter((s) => s.length >= 2);
 
   return (
     <section
@@ -128,7 +129,6 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
 
         {/* Swipe hint - mobile only */}
         <div className="md:hidden flex items-center justify-end gap-1.5 mb-3 pr-3 swipe-hint-container">
-          <span style={{fontSize: '10px', color: 'var(--color-stone)', letterSpacing: '0.05em'}}>Swiper</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-matcha-mid)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="swipe-hint-arrow">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>

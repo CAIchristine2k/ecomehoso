@@ -45,7 +45,7 @@ export const meta: MetaFunction = () => {
 // Define loader function to fetch all products
 export async function loader({request, context}: LoaderFunctionArgs) {
   const searchParams = new URL(request.url).searchParams;
-  const variables = getPaginationVariables(request, {pageBy: 10});
+  const variables = getPaginationVariables(request, {pageBy: 20});
 
   // Get all products with more variants (CacheShort = refresh every request, stale-while-revalidate)
   const {products} = await context.storefront.query(PRODUCTS_QUERY, {

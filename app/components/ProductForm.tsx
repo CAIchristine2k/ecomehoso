@@ -93,6 +93,25 @@ export function ProductForm({
 
   const options = product.options.filter((option) => option.values.length > 1);
 
+  // Map variant color names to actual colors
+  const colorMap: Record<string, string> = {
+    'vert forêt': '#1a4a2e',
+    'vert foret': '#1a4a2e',
+    'blanc nuage': '#f5f0e6',
+    'vert clair prélude': '#7ab88a',
+    'vert clair prelude': '#7ab88a',
+    'vert': '#2d6b3f',
+    'blanc': '#f5f0e6',
+    'noir': '#1a1a18',
+    'beige': '#d4c5a9',
+    'crème': '#faf8f3',
+    'creme': '#faf8f3',
+  };
+
+  const getVariantColor = (value: string) => {
+    return colorMap[value.toLowerCase()] || null;
+  };
+
   const updateSelectedVariant = (name: string, value: string) => {
     const newSelectedOptions = {...selectedOptions, [name]: value};
     setSelectedOptions(newSelectedOptions);
@@ -161,14 +180,18 @@ export function ProductForm({
         <div className="mb-8">
           {options.map((option) => (
             <div key={option.name}>
-              <div
-                className="flex"
-                style={{
-                  border: '1px solid var(--color-cream-dark)',
-                  borderRadius: '0',
-                }}
-              >
-                {option.values.map((value, index) => {
+              <p style={{
+                fontSize: '11px',
+                fontWeight: 500,
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase' as const,
+                color: 'var(--color-stone)',
+                marginBottom: '10px',
+              }}>
+                {option.name}
+              </p>
+              <div className="flex gap-2 overflow-x-auto" style={{scrollbarWidth: 'none'}}>
+                {option.values.map((value) => {
                   const isSelected = selectedOptions[option.name] === value;
                   const variantNodes = product.variants?.nodes || [];
                   const optionVariant = variantNodes.find((variant) =>
@@ -183,29 +206,28 @@ export function ProductForm({
                       key={value}
                       onClick={() => updateSelectedVariant(option.name, value)}
                       disabled={!isAvailableOption}
-                      className="flex-1 flex items-center justify-center gap-2 py-4 transition-all duration-200"
+                      className="transition-all duration-200 flex-shrink-0 flex items-center gap-2"
                       style={{
-                        fontSize: '13px',
+                        fontSize: '12px',
                         fontWeight: isSelected ? 600 : 400,
-                        letterSpacing: '0.05em',
-                        textTransform: 'uppercase' as const,
+                        letterSpacing: '0.03em',
                         color: isAvailableOption
-                          ? 'var(--color-charcoal)'
+                          ? (getVariantColor(value) && getVariantColor(value) !== '#f5f0e6' && getVariantColor(value) !== '#faf8f3' && getVariantColor(value) !== '#d4c5a9')
+                            ? 'white'
+                            : 'var(--color-charcoal)'
                           : 'var(--color-stone)',
                         backgroundColor: isSelected
-                          ? 'var(--color-cream-warm)'
-                          : 'transparent',
-                        borderRight: index < option.values.length - 1
-                          ? '1px solid var(--color-cream-dark)'
-                          : 'none',
-                        opacity: isAvailableOption ? 1 : 0.5,
+                          ? (getVariantColor(value) || 'var(--color-matcha-mid)')
+                          : (getVariantColor(value) || 'var(--color-cream-warm)'),
+                        border: isSelected
+                          ? '2px solid var(--color-charcoal)'
+                          : '1.5px solid var(--color-cream-dark)',
+                        borderRadius: '8px',
+                        padding: '10px 20px',
+                        opacity: isAvailableOption ? 1 : 0.4,
                         cursor: isAvailableOption ? 'pointer' : 'not-allowed',
                       }}
                     >
-                      {/* Small icon */}
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <rect x="3" y="3" width="18" height="18" rx="2" />
-                      </svg>
                       {value}
                     </button>
                   );
@@ -216,6 +238,48 @@ export function ProductForm({
         </div>
       )}
 
+
+      {/* Price display with compare at price */}
+      <div className="mb-6 flex items-center gap-3">
+        <span
+          className="price-no-hover"
+          style={{
+            fontSize: 'clamp(1.25rem, 4vw, 1.75rem)',
+            fontWeight: 700,
+            color: 'var(--color-charcoal)',
+          }}
+        >
+          <Money data={selectedVariant.price} />
+        </span>
+        {selectedVariant.compareAtPrice &&
+          parseFloat(selectedVariant.compareAtPrice.amount) > parseFloat(selectedVariant.price.amount) && (
+          <span
+            className="line-through price-no-hover"
+            style={{
+              fontSize: 'clamp(0.9rem, 3vw, 1.1rem)',
+              color: 'var(--color-mist)',
+              fontWeight: 400,
+            }}
+          >
+            <Money data={selectedVariant.compareAtPrice} />
+          </span>
+        )}
+        {selectedVariant.compareAtPrice &&
+          parseFloat(selectedVariant.compareAtPrice.amount) > parseFloat(selectedVariant.price.amount) && (
+          <span
+            style={{
+              fontSize: '12px',
+              fontWeight: 600,
+              color: '#c97a5c',
+              backgroundColor: 'rgba(201, 122, 92, 0.1)',
+              padding: '3px 8px',
+              borderRadius: '4px',
+            }}
+          >
+            -{Math.round((1 - parseFloat(selectedVariant.price.amount) / parseFloat(selectedVariant.compareAtPrice.amount)) * 100)}%
+          </span>
+        )}
+      </div>
 
       {/* Add to Cart Button - Large, prominent */}
       <div>
@@ -256,8 +320,15 @@ export function ProductForm({
               Ajouté au panier !
             </div>
           ) : isAvailable ? (
-            <span>
-              Ajouter au panier — <Money data={selectedVariant.price} />
+            <span className="flex items-center gap-2">
+              Ajouter au panier —{' '}
+              <Money data={selectedVariant.price} />
+              {selectedVariant.compareAtPrice &&
+                parseFloat(selectedVariant.compareAtPrice.amount) > parseFloat(selectedVariant.price.amount) && (
+                <span className="line-through opacity-60" style={{fontSize: '0.85em'}}>
+                  <Money data={selectedVariant.compareAtPrice} />
+                </span>
+              )}
             </span>
           ) : (
             'Épuisé'

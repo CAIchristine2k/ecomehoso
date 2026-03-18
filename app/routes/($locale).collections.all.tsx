@@ -195,6 +195,7 @@ const COLLECTION_ITEM_FRAGMENT = `#graphql
     id
     handle
     title
+    description
     featuredImage {
       id
       altText
@@ -208,6 +209,23 @@ const COLLECTION_ITEM_FRAGMENT = `#graphql
       }
       maxVariantPrice {
         ...MoneyCollectionItem
+      }
+    }
+    variants(first: 1) {
+      nodes {
+        id
+        title
+        availableForSale
+        price {
+          ...MoneyCollectionItem
+        }
+        compareAtPrice {
+          ...MoneyCollectionItem
+        }
+        selectedOptions {
+          name
+          value
+        }
       }
     }
   }
