@@ -67,6 +67,17 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
     reordered.splice(cuillereIdx, 1);
   }
 
+  // Replace bol kaolin (gres-artisanal-wabi-sabi-copie) with Kit Voyage Forêt
+  const bolKaolinIdx = reordered.findIndex((p) => p.handle === 'gres-artisanal-wabi-sabi-copie');
+  const kitVoyageForetIdx = reordered.findIndex((p) => p.handle === 'matcha-prelude-15-sachets-individuels-2-g-copie');
+  if (kitVoyageForetIdx !== -1 && bolKaolinIdx !== -1) {
+    const [kitVoyageForet] = reordered.splice(kitVoyageForetIdx, 1);
+    const updatedBolIdx = reordered.findIndex((p) => p.handle === 'gres-artisanal-wabi-sabi-copie');
+    reordered[updatedBolIdx] = kitVoyageForet;
+  } else if (bolKaolinIdx !== -1) {
+    reordered.splice(bolKaolinIdx, 1);
+  }
+
   // Distribute products across shelves (3 per shelf on desktop, 2 per shelf on mobile handled via CSS)
   const shelf1 = reordered.slice(0, 3);
   const shelf2 = reordered.slice(3, 6);
@@ -113,6 +124,14 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
           <p style={{fontFamily: "'Noto Serif JP', serif", fontSize: '0.85rem', color: 'var(--color-matcha-mid)', letterSpacing: '0.3em', marginTop: '8px'}}>
             ひつじゅひん
           </p>
+        </div>
+
+        {/* Swipe hint - mobile only */}
+        <div className="md:hidden flex items-center justify-end gap-1.5 mb-3 pr-3 swipe-hint-container">
+          <span style={{fontSize: '10px', color: 'var(--color-stone)', letterSpacing: '0.05em'}}>Swiper</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-matcha-mid)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="swipe-hint-arrow">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
         </div>
 
         {/* Shelves */}
@@ -342,6 +361,13 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
           .shelf-products-grid .shelf-product-image {
             height: clamp(130px, 34vw, 200px) !important;
           }
+        }
+        @keyframes swipeHint {
+          0%, 100% { transform: translateX(0); opacity: 0.6; }
+          50% { transform: translateX(6px); opacity: 1; }
+        }
+        .swipe-hint-arrow {
+          animation: swipeHint 1.5s ease-in-out infinite;
         }
       `}} />
     </section>

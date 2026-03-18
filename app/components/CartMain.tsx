@@ -7,7 +7,7 @@ import {CartSummary} from './CartSummary';
 import {useConfig} from '~/utils/themeContext';
 import {ShoppingBag} from 'lucide-react';
 import {PrepareDesignsForCheckout} from './PrepareDesignsForCheckout';
-import {useEffect, useMemo} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 
 export type CartLayout = 'page' | 'aside';
 
@@ -207,6 +207,27 @@ function CartEmpty({
   layout?: CartMainProps['layout'];
 }) {
   const {close} = useAside();
+  const navigate = useNavigate();
+  const [wasHidden, setWasHidden] = useState(true);
+
+  useEffect(() => {
+    // Track if cart had items before (wasHidden = true means cart was not empty)
+    if (hidden) {
+      setWasHidden(true);
+    }
+  }, [hidden]);
+
+  useEffect(() => {
+    // If cart becomes empty after having items, close aside and go back
+    if (!hidden && wasHidden) {
+      setWasHidden(false);
+      close();
+      // Small delay to let the aside close animation finish
+      setTimeout(() => {
+        navigate(-1);
+      }, 300);
+    }
+  }, [hidden, wasHidden, close, navigate]);
 
   if (hidden) return null;
 

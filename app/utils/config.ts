@@ -275,6 +275,7 @@ export const defaultConfig: LandingPageConfig = {
   navigation: [
     {name: 'Accueil', href: '/'},
     {name: 'Nos Matchas', href: '/collections/matcha'},
+    {name: 'Nos Kits', href: '/collections/kit'},
     {name: 'Accessoires', href: '/collections/accesoires'},
     {name: 'Notre Histoire', href: '/notre-histoire'},
     {name: 'Notre Magasin', href: '/notre-magasin'},

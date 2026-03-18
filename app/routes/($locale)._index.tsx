@@ -155,7 +155,7 @@ export default function Home() {
         <div className="reassurance-marquee" style={{
           display: 'flex',
           whiteSpace: 'nowrap',
-          animation: 'marqueeScroll 24s linear infinite',
+          animation: 'marqueeScroll 12s linear infinite',
           padding: '20px 0',
         }}>
           {[...Array(3)].map((_, setIndex) => (
@@ -215,15 +215,13 @@ export default function Home() {
       </section>
 
       {/* Full width product image */}
-      <div style={{width: '100%', backgroundColor: 'var(--color-matcha-deep)'}}>
+      <div style={{width: '100%', backgroundColor: 'var(--color-matcha-deep)', overflow: 'hidden'}}>
         <img
-          src="/images/hoso-matcha-glass.jpg"
-          alt="HOSO Matcha - Sachets individuels"
+          src="/images/hoso-matcha-glass-4k.jpg"
+          alt="HOSO Matcha"
+          className="w-full block object-cover"
           style={{
-            width: '100%',
-            height: 'auto',
-            display: 'block',
-            objectFit: 'cover',
+            height: 'clamp(250px, 40vw, 500px)',
           }}
         />
       </div>
