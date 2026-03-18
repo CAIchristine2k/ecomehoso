@@ -214,6 +214,20 @@ export default function Home() {
         `}} />
       </section>
 
+      {/* Full width product image */}
+      <div style={{width: '100%', backgroundColor: 'var(--color-matcha-deep)'}}>
+        <img
+          src="/images/hoso-matcha-glass.jpg"
+          alt="HOSO Matcha - Sachets individuels"
+          style={{
+            width: '100%',
+            height: 'auto',
+            display: 'block',
+            objectFit: 'cover',
+          }}
+        />
+      </div>
+
       {/* Luxury Shelf Showcase */}
       <HomeProductShowcase
         products={products.filter(

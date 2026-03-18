@@ -49,6 +49,24 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
     reordered.splice(3, 0, fouet);
   }
 
+  // Move kit-voyage to 5th position (index 4), replacing cuillère
+  const kitVoyageIdx = reordered.findIndex((p) => p.handle === 'kit-voyage');
+  if (kitVoyageIdx !== -1 && kitVoyageIdx !== 4) {
+    const [kitVoyage] = reordered.splice(kitVoyageIdx, 1);
+    reordered.splice(4, 0, kitVoyage);
+  }
+
+  // Replace cuillère (matcha-01-prelude-copie) with Kit Matcha Forêt
+  const cuillereIdx = reordered.findIndex((p) => p.handle === 'matcha-01-prelude-copie');
+  const kitForetIdx = reordered.findIndex((p) => p.handle === 'kit-matcha-foret-hoso-matcha-hoso-chasen-cuillere-support');
+  if (kitForetIdx !== -1 && cuillereIdx !== -1) {
+    const [kitForet] = reordered.splice(kitForetIdx, 1);
+    const updatedCuillereIdx = reordered.findIndex((p) => p.handle === 'matcha-01-prelude-copie');
+    reordered[updatedCuillereIdx] = kitForet;
+  } else if (cuillereIdx !== -1) {
+    reordered.splice(cuillereIdx, 1);
+  }
+
   // Distribute products across shelves (3 per shelf on desktop, 2 per shelf on mobile handled via CSS)
   const shelf1 = reordered.slice(0, 3);
   const shelf2 = reordered.slice(3, 6);

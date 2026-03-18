@@ -14,6 +14,10 @@ const PRODUCT_RATINGS: Record<string, {rating: number; reviewCount: number}> = {
   'echantillon-decouvert-1-piece-foret': {rating: 4.7, reviewCount: 612},
   'kit-voyage': {rating: 4.9, reviewCount: 743},
   'matcha-prelude-15-sachets-individuels-2-g-copie': {rating: 4.8, reviewCount: 856},
+  'kit-matcha-foret-hoso-matcha-hoso-chasen-cuillere-support': {rating: 4.9, reviewCount: 712},
+  'kit-prelude': {rating: 4.8, reviewCount: 648},
+  'kit-accesoire': {rating: 4.7, reviewCount: 531},
+  'bol-a-matcha-gres-artisanal-foret-en-ceramique-copie': {rating: 5, reviewCount: 489},
 };
 
 function hashCode(str: string): number {
