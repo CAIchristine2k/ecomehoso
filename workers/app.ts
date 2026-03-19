@@ -20,9 +20,26 @@ const requestHandler = createRequestHandler(
   import.meta.env.MODE,
 );
 
+// Static asset file extensions that should be served directly
+const STATIC_EXTENSIONS = /\.(jpg|jpeg|png|gif|webp|avif|heic|svg|ico|mp4|mov|webm|mp3|wav|ogg|pdf|woff|woff2|ttf|eot|otf|css|js|json|xml|txt|map)$/i;
+
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext) {
     try {
+      const url = new URL(request.url);
+
+      // Serve static assets directly via ASSETS binding if available
+      if (STATIC_EXTENSIONS.test(url.pathname) && (env as any).ASSETS) {
+        try {
+          const assetResponse = await (env as any).ASSETS.fetch(request);
+          if (assetResponse && assetResponse.status !== 404) {
+            return assetResponse;
+          }
+        } catch (e) {
+          // Fall through to app handler
+        }
+      }
+
       // Create a timeout for the entire request
       const timeout = 10000; // 10 second timeout
 

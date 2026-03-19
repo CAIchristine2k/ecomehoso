@@ -582,14 +582,11 @@ export default function NotreMagasinPage() {
                   Horaires
                 </h3>
                 <p style={{fontFamily: "var(--font-display)", fontSize: '22px', fontWeight: 400, color: 'var(--color-charcoal)', marginBottom: '2px'}}>
-                  Mar — Dim
+                  Ouvert 7j/7
                 </p>
                 <p style={{fontSize: '16px', color: 'var(--color-stone)', marginBottom: '12px'}}>
-                  10h00 — 19h00
+                  11h00 — 19h30
                 </p>
-                <span style={{fontSize: '13px', color: 'var(--color-matcha-mid)', fontWeight: 500}}>
-                  Ferme le lundi
-                </span>
               </div>
             </div>
 

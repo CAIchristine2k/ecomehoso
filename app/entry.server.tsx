@@ -65,11 +65,15 @@ export default async function handleRequest(
       'http://localhost:*',
       'https://res.cloudinary.com',
       'https://*.klingai.com',
+      'https://*.workers.dev',
+      'https://*.pages.dev',
     ],
     mediaSrc: [
       "'self'",
       'https://cdn.shopify.com',
       'https://*.myshopify.com',
+      'https://*.workers.dev',
+      'https://*.pages.dev',
     ],
     frameSrc: [
       "'self'",

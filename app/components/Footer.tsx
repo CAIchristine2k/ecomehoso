@@ -47,7 +47,7 @@ export function Footer() {
 
   const infoLinks = [
     {name: 'Notre Histoire', href: '/notre-histoire'},
-    {name: 'Contact', href: 'mailto:contact@hosomatcha.com'},
+    {name: 'Contact', href: 'mailto:hosomatchagroup@gmail.com'},
   ];
 
   const policies = [

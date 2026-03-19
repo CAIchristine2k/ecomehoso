@@ -355,11 +355,11 @@ export const defaultConfig: LandingPageConfig = {
   },
 
   // Contact Information
-  contactEmail: 'contact@hosomatcha.com',
+  contactEmail: 'hosomatchagroup@gmail.com',
   contactInfo: {
     address: 'Paris, France',
     phone: undefined,
-    email: 'contact@hosomatcha.com',
+    email: 'hosomatchagroup@gmail.com',
   },
   newsletterEnabled: true,
 

@@ -456,6 +456,132 @@ export default function Home() {
       {/* Testimonials section */}
       <Testimonials />
 
+      {/* Histoire de la marque */}
+      <section
+        style={{
+          padding: 'var(--section-spacing) 0',
+          backgroundColor: 'var(--color-cream-warm)',
+        }}
+      >
+        <div className="max-w-[900px] mx-auto px-6 md:px-10">
+          {/* Label */}
+          <div className="text-center mb-10">
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <div style={{width: '40px', height: '1px', backgroundColor: 'var(--color-matcha-mid)', opacity: 0.4}} />
+              <span
+                style={{
+                  fontSize: '10px',
+                  fontWeight: 500,
+                  letterSpacing: '0.25em',
+                  textTransform: 'uppercase' as const,
+                  color: 'var(--color-matcha-mid)',
+                }}
+              >
+                Notre histoire
+              </span>
+              <div style={{width: '40px', height: '1px', backgroundColor: 'var(--color-matcha-mid)', opacity: 0.4}} />
+            </div>
+            <p style={{fontFamily: "'Noto Serif JP', serif", fontSize: '0.85rem', color: 'var(--color-matcha-mid)', letterSpacing: '0.3em', marginBottom: '16px'}}>
+              物語
+            </p>
+            <h2
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
+                fontWeight: 300,
+                lineHeight: 1.3,
+                color: 'var(--color-charcoal)',
+                letterSpacing: '-0.01em',
+              }}
+            >
+              Hoso Matcha – Histoire de la marque
+            </h2>
+          </div>
+
+          {/* Story content */}
+          <div
+            style={{
+              borderLeft: '2px solid var(--color-matcha-mid)',
+              paddingLeft: 'clamp(20px, 4vw, 40px)',
+            }}
+          >
+            <p
+              className="mb-6"
+              style={{
+                color: 'var(--color-charcoal-light)',
+                fontSize: '15px',
+                fontWeight: 300,
+                lineHeight: 2,
+              }}
+            >
+              Dans le Paris romantique, il y a beaucoup de matcha.
+              <br />
+              Mais il n'est pas facile de trouver un bon matcha, sain, propre et parfumé.
+            </p>
+
+            <p
+              className="mb-6"
+              style={{
+                color: 'var(--color-charcoal-light)',
+                fontSize: '15px',
+                fontWeight: 300,
+                lineHeight: 2,
+              }}
+            >
+              Je possède un bar à Paris, spécialisé dans les gâteaux basque au matcha et les boissons au matcha.
+              J'ai cherché pendant longtemps, goûté toutes sortes de matcha, sans jamais trouver celui qui me correspondait.
+            </p>
+
+            <p
+              className="mb-6"
+              style={{
+                color: 'var(--color-charcoal-light)',
+                fontSize: '15px',
+                fontWeight: 300,
+                lineHeight: 2,
+              }}
+            >
+              J'ai entendu dire que le matcha d'Uji à Tokyo, au Japon, est très réputé.
+              J'ai donc fait le voyage jusqu'à Uji, à la recherche de cette couleur verte et de ce parfum que j'avais en cœur.
+            </p>
+
+            <p
+              className="mb-6"
+              style={{
+                color: 'var(--color-charcoal-light)',
+                fontSize: '15px',
+                fontWeight: 300,
+                lineHeight: 2,
+              }}
+            >
+              Je l'ai ramené à Paris.
+              <br />
+              Dans mon établissement, j'ai créé ma propre marque : <strong style={{fontWeight: 500, color: 'var(--color-charcoal)'}}>Hoso Matcha</strong>.
+            </p>
+          </div>
+
+          {/* Closing quote */}
+          <div className="text-center mt-10">
+            <p
+              style={{
+                fontStyle: 'italic',
+                color: 'var(--color-matcha-mid)',
+                fontSize: 'clamp(1rem, 2.5vw, 1.25rem)',
+                fontWeight: 300,
+                lineHeight: 1.6,
+              }}
+            >
+              "Une touche de thé vert de Tokyo,
+              <br />
+              envoyée jusqu'au Paris romantique."
+            </p>
+            <p style={{fontFamily: "'Noto Serif JP', serif", fontSize: '0.8rem', color: 'var(--color-matcha-mid)', opacity: 0.4, marginTop: '16px', letterSpacing: '0.3em'}}>
+              東京の緑茶をパリへ
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Newsletter signup section */}
       <NewsletterSignup />
 
