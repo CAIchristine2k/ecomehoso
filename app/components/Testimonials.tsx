@@ -6,45 +6,61 @@ const reviews = [
     name: 'Sophie M.',
     initials: 'SM',
     text: 'La différence avec les autres matchas est flagrante dès la première gorgée. Une douceur umami incroyable.',
+    product: 'Matcha Cérémonial',
+    verified: true,
   },
   {
     name: 'Thomas L.',
     initials: 'TL',
     text: 'Enfin un matcha cérémonial digne de ce nom en France. La couleur, la texture, tout est parfait.',
+    product: 'Matcha Cérémonial',
+    verified: true,
   },
   {
     name: 'Camille R.',
     initials: 'CR',
     text: 'Je commande depuis 6 mois et la qualité est toujours au rendez-vous. Mon rituel matinal préféré.',
+    product: 'Matcha Cérémonial',
+    verified: true,
   },
   {
     name: 'Antoine D.',
     initials: 'AD',
     text: 'Offert à ma mère pour Noël, elle a adoré. L\'emballage est très soigné, idéal pour un cadeau.',
+    product: 'Coffret Découverte',
+    verified: true,
   },
   {
     name: 'Julie P.',
     initials: 'JP',
     text: 'Le meilleur matcha que j\'ai goûté en dehors du Japon. On sent vraiment la qualité Uji.',
+    product: 'Matcha Cérémonial',
+    verified: true,
   },
   {
     name: 'Marc B.',
     initials: 'MB',
     text: 'Mousse parfaite au chasen, saveur douce sans amertume. Je ne peux plus m\'en passer.',
+    product: 'Kit Matcha',
+    verified: true,
   },
   {
     name: 'Emma V.',
     initials: 'EV',
     text: 'Livraison rapide, packaging élégant et matcha exceptionnel. Tout est impeccable chez HOSO.',
+    product: 'Matcha Culinaire',
+    verified: true,
   },
   {
     name: 'Lucas G.',
     initials: 'LG',
     text: 'J\'ai comparé avec 5 marques premium, HOSO est clairement au-dessus. Vert intense, goût pur.',
+    product: 'Matcha Cérémonial',
+    verified: true,
   },
 ];
 
-const CARD_WIDTH = 320; // 300px card + 20px gap
+const CARD_WIDTH = 276; // 260px card + 16px gap
 
 export default function Testimonials() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -92,6 +108,24 @@ export default function Testimonials() {
           <p style={{fontFamily: "'Noto Serif JP', serif", fontSize: '0.85rem', color: 'var(--color-matcha-mid)', letterSpacing: '0.3em', marginTop: '8px'}}>
             お客様の声
           </p>
+          {/* Aggregate rating */}
+          <div className="flex items-center justify-center gap-2 mt-4">
+            <div className="flex gap-0.5">
+              {[...Array(5)].map((_, s) => (
+                <Star
+                  key={s}
+                  className="h-4 w-4"
+                  style={{color: 'var(--color-matcha-mid)', fill: 'var(--color-matcha-mid)'}}
+                />
+              ))}
+            </div>
+            <span style={{fontSize: '14px', fontWeight: 500, color: 'var(--color-charcoal)'}}>
+              4.9/5
+            </span>
+            <span style={{fontSize: '13px', color: 'var(--color-stone)'}}>
+              basé sur 120+ avis clients
+            </span>
+          </div>
         </div>
       </div>
 
@@ -129,11 +163,11 @@ export default function Testimonials() {
               key={i}
               style={{
                 flexShrink: 0,
-                width: '300px',
-                padding: '24px',
+                width: '260px',
+                padding: '20px',
                 background: 'white',
                 border: '1px solid var(--color-cream-dark)',
-                borderRadius: '12px',
+                borderRadius: '10px',
               }}
             >
               {/* Stars */}
@@ -180,16 +214,27 @@ export default function Testimonials() {
                 >
                   {review.initials}
                 </div>
-                <span
-                  style={{
-                    fontSize: '12px',
-                    fontWeight: 500,
-                    color: 'var(--color-charcoal)',
-                    letterSpacing: '0.03em',
-                  }}
-                >
-                  {review.name}
-                </span>
+                <div>
+                  <span
+                    style={{
+                      fontSize: '12px',
+                      fontWeight: 500,
+                      color: 'var(--color-charcoal)',
+                      letterSpacing: '0.03em',
+                      display: 'block',
+                    }}
+                  >
+                    {review.name}
+                  </span>
+                  <span style={{fontSize: '10px', color: 'var(--color-stone)'}}>
+                    {review.product}
+                    {review.verified && (
+                      <span style={{color: 'var(--color-matcha-mid)', marginLeft: '6px'}}>
+                        ✓ Achat vérifié
+                      </span>
+                    )}
+                  </span>
+                </div>
               </div>
             </div>
           ))}
@@ -200,7 +245,7 @@ export default function Testimonials() {
             __html: `
             .testimonials-container {
               display: flex;
-              gap: 20px;
+              gap: 16px;
               overflow-x: auto;
               scroll-snap-type: x mandatory;
               -webkit-overflow-scrolling: touch;

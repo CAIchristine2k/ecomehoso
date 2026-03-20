@@ -18,6 +18,7 @@ import {PageLayout} from '~/components/PageLayout';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import {useEffect} from 'react';
 import {initializeTheme} from '~/lib/themeConfig';
+import {useScrollReveal} from '~/hooks/useScrollReveal';
 import config from '~/utils/config';
 import {ThemeProvider} from '~/utils/themeContext';
 import {CartProvider} from '~/providers/CartProvider';
@@ -41,19 +42,26 @@ export const links: LinksFunction = () => {
 // Define meta tags statically to ensure consistency between server and client rendering
 export const meta: MetaFunction = () => {
   return [
-    {title: `${config.brandName} - ${config.influencerTitle} | Official Store`},
+    {title: `${config.brandName} | Matcha Premium d'Exception depuis Uji, Kyoto`},
     {
       name: 'description',
-      content: `${config.influencerBio.substring(0, 160)}...`,
+      content: "HOSO MATCHA - Matcha d'exception sélectionné à Uji, Kyoto. Matcha cérémonial, matcha culinaire, accessoires traditionnels japonais et coffrets. Livraison en France.",
     },
     {
       name: 'keywords',
-      content: `${config.influencerName}, ${config.brandName}, ${config.industry || 'sports'} equipment, merchandise, champion gear`,
+      content: 'matcha, matcha premium, matcha cérémonial, matcha culinaire, thé vert japonais, Uji, Kyoto, matcha bio, chasen, chawan, thé matcha, poudre de matcha, matcha latte, matcha Paris, HOSO MATCHA, accessoires matcha, coffret matcha',
     },
-    {property: 'og:title', content: `${config.brandName} - Official Store`},
-    {property: 'og:description', content: config.heroSubtitle},
+    {property: 'og:title', content: `${config.brandName} | Matcha Premium depuis Uji, Kyoto`},
+    {property: 'og:description', content: "Matcha d'exception sélectionné à Uji, Kyoto. Découvrez nos matchas cérémoniaux et culinaires, accessoires traditionnels et coffrets."},
     {property: 'og:image', content: config.brandLogo},
     {property: 'og:type', content: 'website'},
+    {property: 'og:locale', content: 'fr_FR'},
+    {property: 'og:site_name', content: 'HOSO MATCHA'},
+    {name: 'twitter:card', content: 'summary_large_image'},
+    {name: 'twitter:title', content: `${config.brandName} | Matcha Premium depuis Uji, Kyoto`},
+    {name: 'twitter:description', content: "Matcha d'exception sélectionné à Uji, Kyoto. Matchas cérémoniaux, culinaires et accessoires traditionnels."},
+    {name: 'twitter:image', content: config.brandLogo},
+    {name: 'robots', content: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'},
   ];
 };
 
@@ -184,6 +192,9 @@ export function Layout({children}: {children?: React.ReactNode}) {
     // useNonce requires Hydrogen context which may not be available during initial client render
   }
   const data = useLoaderData<typeof loader>();
+
+  // Initialize scroll reveal animations
+  useScrollReveal();
 
   // Initialize theme on client side
   useEffect(() => {

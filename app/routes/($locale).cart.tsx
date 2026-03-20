@@ -15,7 +15,10 @@ import {downloadAndReuploadToCloudinary} from '~/utils/cloudinaryUpload';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
 
 export const meta: MetaFunction = () => {
-  return [{title: 'Votre Panier | HOSO MATCHA'}];
+  return [
+    {title: 'Votre Panier | HOSO MATCHA'},
+    {name: 'robots', content: 'noindex, nofollow'},
+  ];
 };
 
 export const headers: HeadersFunction = ({actionHeaders}) => actionHeaders;

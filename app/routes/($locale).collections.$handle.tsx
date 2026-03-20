@@ -12,10 +12,23 @@ import {ProductCard} from '~/components/ProductCard';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   const config = getConfig();
+  const collection = data?.collection;
+  const title = collection?.seo?.title || collection?.title || '';
+  const description = collection?.seo?.description || collection?.description || `Collection ${title} - Découvrez notre sélection de ${title.toLowerCase()} HOSO MATCHA. Matcha premium depuis Uji, Kyoto.`;
+
   return [
-    {
-      title: `${config.brandName} | ${data?.collection?.title || ''} Collection`,
-    },
+    {title: `${title} | ${config.brandName} - Collection Matcha Premium`},
+    {name: 'description', content: description.substring(0, 160)},
+    {name: 'keywords', content: `${title}, collection matcha, ${config.brandName}, matcha premium, thé vert japonais, Uji, Kyoto`},
+    {rel: 'canonical', href: `/collections/${collection?.handle}`},
+    {property: 'og:title', content: `${title} | ${config.brandName}`},
+    {property: 'og:description', content: description.substring(0, 160)},
+    {property: 'og:type', content: 'website'},
+    {property: 'og:locale', content: 'fr_FR'},
+    {property: 'og:site_name', content: 'HOSO MATCHA'},
+    {name: 'twitter:card', content: 'summary_large_image'},
+    {name: 'twitter:title', content: `${title} | ${config.brandName}`},
+    {name: 'twitter:description', content: description.substring(0, 160)},
   ];
 };
 
@@ -59,7 +72,7 @@ export default function Collection() {
     <div style={{backgroundColor: 'var(--color-cream)', color: 'var(--color-charcoal)', paddingTop: 'calc(var(--header-height-desktop) + 3rem)', paddingBottom: '4rem'}}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         {/* Collection Hero */}
-        <div className="mb-16 text-center">
+        <div data-reveal="up" className="mb-16 text-center">
           <span
             className="inline-block mb-4"
             style={{
@@ -120,14 +133,17 @@ export default function Collection() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {collection.products.nodes.map((product: any) => (
-              <ProductCard key={product.id} product={product} />
+            {collection.products.nodes.map((product: any, index: number) => (
+              <div key={product.id} data-reveal="up" data-reveal-delay={String(Math.min(index + 1, 6))}>
+                <ProductCard product={product} />
+              </div>
             ))}
           </div>
         )}
 
         {/* Collection Banner */}
         <div
+          data-reveal="scale-up"
           className="mt-16 rounded-lg p-10 text-center"
           style={{
             backgroundColor: 'var(--color-cream-warm)',
@@ -196,6 +212,10 @@ const COLLECTION_QUERY = `#graphql
       title
       description
       handle
+      seo {
+        title
+        description
+      }
       products(first: 24) {
         nodes {
           id

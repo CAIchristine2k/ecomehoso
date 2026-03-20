@@ -67,14 +67,13 @@ export function AddToCartButton({
 
   // Handle successful form submission
   const handleSuccess = () => {
-    console.log('AddToCartButton form submitted successfully');
     onClick?.();
   };
 
   // Determine the button text based on the current state
   let buttonContent = children || buttonText;
   if (addedToCart) {
-    buttonContent = 'Ajoute au panier !';
+    buttonContent = 'Ajouté au panier ✓';
   }
 
   // Enhance lines with selectedVariant for optimistic cart
@@ -100,30 +99,6 @@ export function AddToCartButton({
     return baseInput;
   });
 
-  // Debug any custom attributes being added and selectedVariant
-  useEffect(() => {
-    if (lines.some((line) => line.attributes && line.attributes.length > 0)) {
-      console.log(
-        '🔍 AddToCartButton - Custom attributes detected:',
-        lines.map((line) => ({
-          merchandiseId: line.merchandiseId,
-          quantity: line.quantity,
-          attributeCount: line.attributes?.length || 0,
-          attributes: line.attributes || [],
-        })),
-      );
-    }
-    
-    if (selectedVariant) {
-      console.log('✅ AddToCartButton - selectedVariant provided:', {
-        id: selectedVariant.id,
-        title: selectedVariant.title,
-        availableForSale: selectedVariant.availableForSale,
-      });
-    } else {
-      console.warn('⚠️ AddToCartButton - No selectedVariant provided for optimistic cart');
-    }
-  }, [lines, selectedVariant]);
 
   return (
     <CartForm
@@ -140,29 +115,9 @@ export function AddToCartButton({
           fetcher.data &&
           !fetcher.data.errors?.length;
 
-        // Debug logging
-        useEffect(() => {
-          console.log(
-            'AddToCartButton fetcher state:',
-            fetcher.state,
-            'data:',
-            fetcher.data,
-          );
-
-          // Log form data being submitted
-          if (fetcher.formData) {
-            const formDataEntries = Array.from(fetcher.formData.entries());
-            console.log(
-              'AddToCartButton form data being submitted:',
-              Object.fromEntries(formDataEntries),
-            );
-          }
-        }, [fetcher.state, fetcher.data, fetcher.formData]);
-
         // Handle successful cart addition
         useEffect(() => {
           if (isSuccess && fetcher.data?.cart) {
-            console.log('Cart updated successfully:', fetcher.data.cart);
             setAddedToCart(true);
             handleSuccess();
             setTimeout(() => {

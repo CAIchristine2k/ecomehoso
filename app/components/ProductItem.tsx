@@ -16,6 +16,14 @@ interface ProductWithTags extends ProductItemFragment {
     nodes: Array<{
       id: string;
       availableForSale: boolean;
+      compareAtPrice?: {
+        amount: string;
+        currencyCode: string;
+      } | null;
+      price?: {
+        amount: string;
+        currencyCode: string;
+      };
     }>;
   };
 }
@@ -36,17 +44,15 @@ export function ProductItem({
   const {title, handle, featuredImage} = product;
 
   const price = product.priceRange?.minVariantPrice;
-  const comparePrice =
-    product.priceRange?.maxVariantPrice &&
-    product.priceRange.maxVariantPrice.amount !==
-      product.priceRange.minVariantPrice.amount
-      ? product.priceRange.maxVariantPrice
-      : null;
+  const variantCompareAtPrice = productWithTags.variants?.nodes?.[0]?.compareAtPrice;
+  const comparePrice = variantCompareAtPrice && parseFloat(variantCompareAtPrice.amount) > 0
+    ? variantCompareAtPrice
+    : null;
 
   const isOnSale =
     comparePrice &&
     price &&
-    parseFloat(price.amount) < parseFloat(comparePrice.amount);
+    parseFloat(comparePrice.amount) > parseFloat(price.amount);
 
   const variants = productWithTags.variants?.nodes || [];
   const firstVariant = variants[0];

@@ -19,7 +19,6 @@ export default function NewsletterSignup() {
       return;
     }
 
-    console.log('Email submitted:', email);
     setSubmitted(true);
     setError('');
   };
@@ -75,7 +74,7 @@ export default function NewsletterSignup() {
                 marginBottom: '20px',
               }}
             >
-              Join the community
+              Rejoignez la communauté
             </span>
 
             <h2
@@ -88,7 +87,7 @@ export default function NewsletterSignup() {
                 marginBottom: '12px',
               }}
             >
-              Ne ratez rien de notre actualité
+              -10% sur votre première commande
             </h2>
             <p style={{fontFamily: "'Noto Serif JP', serif", fontSize: '0.75rem', color: 'var(--color-matcha-light)', letterSpacing: '0.3em', marginTop: '6px'}}>
               ニュースレター
@@ -103,8 +102,7 @@ export default function NewsletterSignup() {
                 marginBottom: '36px',
               }}
             >
-              Profitez d'avantages exclusifs, soyez informés des prochaines
-              sorties en avant-première.
+              Inscrivez-vous et recevez votre code de réduction ainsi que nos nouveautés en avant-première.
             </p>
 
             <form
@@ -130,6 +128,7 @@ export default function NewsletterSignup() {
                   setError('');
                 }}
                 placeholder="E-MAIL"
+                aria-label="Adresse e-mail pour la newsletter"
                 style={{
                   flex: 1,
                   background: 'transparent',
@@ -143,6 +142,7 @@ export default function NewsletterSignup() {
               />
               <button
                 type="submit"
+                className="btn-press"
                 style={{
                   background: 'rgba(255,255,255,0.15)',
                   border: '1px solid rgba(255,255,255,0.3)',
@@ -154,14 +154,16 @@ export default function NewsletterSignup() {
                   textTransform: 'uppercase' as const,
                   fontWeight: 500,
                   cursor: 'pointer',
-                  transition: 'all 0.3s ease',
+                  transition: 'all 0.3s var(--ease-premium)',
                   whiteSpace: 'nowrap',
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = 'rgba(255,255,255,0.25)';
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.background = 'rgba(255,255,255,0.15)';
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)';
                 }}
               >
                 S'inscrire

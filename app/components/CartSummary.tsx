@@ -20,7 +20,32 @@ export function CartSummary({cart, layout, checkoutDomain}: CartSummaryProps) {
       aria-labelledby="cart-summary"
       className={`p-6 ${layout === 'page' ? 'max-w-md ml-auto' : ''}`}
     >
-      <h4 className="text-lg font-bold mb-6" style={{color: 'var(--color-charcoal)'}}>Récapitulatif</h4>
+      <h4 className="text-lg font-bold mb-4" style={{color: 'var(--color-charcoal)'}}>Récapitulatif</h4>
+
+      {/* Free shipping progress bar */}
+      {(() => {
+        const subtotal = parseFloat(cart.cost?.subtotalAmount?.amount || '0');
+        const threshold = 50;
+        const remaining = Math.max(0, threshold - subtotal);
+        const progress = Math.min(100, (subtotal / threshold) * 100);
+        return (
+          <div className="mb-5 p-3 rounded-lg" style={{backgroundColor: 'var(--color-cream)', border: '1px solid var(--color-cream-dark)'}}>
+            {remaining > 0 ? (
+              <p style={{fontSize: '12px', color: 'var(--color-charcoal)', marginBottom: '6px', fontWeight: 400}}>
+                Plus que <strong style={{color: 'var(--color-matcha-mid)'}}>{remaining.toFixed(0)}€</strong> pour la livraison offerte à partir de 50€
+              </p>
+            ) : (
+              <p style={{fontSize: '12px', color: 'var(--color-matcha-mid)', marginBottom: '6px', fontWeight: 500}}>
+                ✓ Livraison offerte !
+              </p>
+            )}
+            <div style={{height: '3px', backgroundColor: 'var(--color-cream-dark)', borderRadius: '2px', overflow: 'hidden'}}>
+              <div style={{height: '100%', width: `${progress}%`, backgroundColor: 'var(--color-matcha-mid)', borderRadius: '2px', transition: 'width 0.5s ease'}} />
+            </div>
+          </div>
+        );
+      })()}
+
       <dl className="space-y-4">
         <div className="flex justify-between items-center">
           <dt className="font-medium" style={{color: 'var(--color-stone)'}}>Sous-total</dt>
@@ -35,7 +60,7 @@ export function CartSummary({cart, layout, checkoutDomain}: CartSummaryProps) {
 
         {cart.cost?.totalTaxAmount?.amount ? (
           <div className="flex justify-between items-center">
-            <dt className="font-medium" style={{color: 'var(--color-stone)'}}>TVA (estimée)</dt>
+            <dt className="font-medium" style={{color: 'var(--color-stone)'}}>TVA incluse</dt>
             <dd className="font-bold" style={{color: 'var(--color-charcoal)'}}>
               <Money data={cart.cost.totalTaxAmount} />
             </dd>
@@ -53,9 +78,7 @@ export function CartSummary({cart, layout, checkoutDomain}: CartSummaryProps) {
           </dd>
         </div>
       </dl>
-      {/*       
       <CartDiscounts discountCodes={cart.discountCodes} />
-      <CartGiftCard giftCardCodes={cart.appliedGiftCards} /> */}
       <CartCheckoutActions
         checkoutUrl={cart.checkoutUrl}
         checkoutDomain={checkoutDomain}
@@ -76,25 +99,11 @@ function CartCheckoutActions({
 
   if (!checkoutUrl) return null;
 
-  // Debug the checkout URL for troubleshooting
-  console.log('🔗 CartCheckoutActions - Original checkoutUrl:', checkoutUrl);
-
   // Parse the checkout URL to preserve query parameters
   let parsedUrl: URL;
   try {
     parsedUrl = new URL(checkoutUrl);
-    console.log('🔍 CartCheckoutActions - Parsed URL:', {
-      protocol: parsedUrl.protocol,
-      host: parsedUrl.host,
-      pathname: parsedUrl.pathname,
-      search: parsedUrl.search,
-      params: Array.from(parsedUrl.searchParams.entries()),
-    });
   } catch (error) {
-    console.error(
-      '❌ CartCheckoutActions - Error parsing checkout URL:',
-      error,
-    );
     // Fallback to our custom checkout
     return (
       <div className="mt-8">
@@ -139,14 +148,22 @@ function CartCheckoutActions({
       <a
         href={finalCheckoutUrl}
         onClick={close}
-        className="block w-full text-white text-center py-4 px-6 rounded-lg font-medium transition-all duration-300 hover:-translate-y-0.5"
+        className="block w-full text-white text-center py-4 px-6 rounded-lg font-medium transition-all duration-300 hover:-translate-y-0.5 btn-press"
         style={{backgroundColor: 'var(--color-matcha-mid)', fontSize: '12px', letterSpacing: '0.15em', textTransform: 'uppercase' as const, textDecoration: 'none'}}
       >
         Passer commande &rarr;
       </a>
-      <div className="mt-4 flex items-center justify-center">
+      <div className="mt-4 space-y-2">
+        <div className="flex items-center justify-center gap-4">
+          <span className="text-xs" style={{color: 'var(--color-stone)'}}>
+            🔒 Paiement sécurisé
+          </span>
+          <span className="text-xs" style={{color: 'var(--color-stone)'}}>
+            🚚 Livraison offerte dès 50€
+          </span>
+        </div>
         <p className="text-xs text-center" style={{color: 'var(--color-mist)'}}>
-          Paiement sécurisé
+          Satisfait ou remboursé · Retour sous 14 jours
         </p>
       </div>
     </div>
@@ -165,20 +182,20 @@ function CartDiscounts({
       ?.map(({code}) => code) || [];
 
   return (
-    <div className="mt-8 mb-6">
+    <div className="mt-6 mb-4">
       {/* Have existing discount, display it with a remove option */}
       <dl hidden={!codes.length} className="mb-4">
         <div>
-          <dt className="text-white/70 font-medium mb-2">
-            Applied Discount(s)
+          <dt className="font-medium mb-2" style={{fontSize: '12px', color: 'var(--color-stone)'}}>
+            Code promo appliqué
           </dt>
           <UpdateDiscountForm>
-            <div className="flex items-center justify-between p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
-              <code className="text-sm text-green-400 font-mono">
+            <div className="flex items-center justify-between p-3 rounded-lg" style={{backgroundColor: 'rgba(61, 107, 79, 0.08)', border: '1px solid rgba(61, 107, 79, 0.2)'}}>
+              <code className="text-sm font-mono" style={{color: 'var(--color-matcha-mid)'}}>
                 {codes?.join(', ')}
               </code>
-              <button className="text-sm text-red-400 hover:text-red-300 transition-colors font-medium">
-                Remove
+              <button className="text-sm transition-colors font-medium" style={{color: 'var(--color-stone)'}}>
+                Retirer
               </button>
             </div>
           </UpdateDiscountForm>
@@ -187,28 +204,34 @@ function CartDiscounts({
 
       {/* Show an input to apply a discount */}
       <UpdateDiscountForm discountCodes={codes}>
-        <div className="space-y-2">
-          <label
-            htmlFor="discountCode"
-            className="block text-white/70 font-medium text-sm"
+        <div className="flex gap-2">
+          <input
+            id="discountCode"
+            type="text"
+            name="discountCode"
+            placeholder="Code promo"
+            className="flex-grow rounded-lg px-4 py-2.5 transition-all duration-200"
+            style={{
+              backgroundColor: 'var(--color-cream)',
+              border: '1px solid var(--color-cream-dark)',
+              color: 'var(--color-charcoal)',
+              fontSize: '13px',
+              outline: 'none',
+            }}
+          />
+          <button
+            type="submit"
+            className="px-5 py-2.5 rounded-lg transition-all duration-200 font-medium"
+            style={{
+              backgroundColor: 'var(--color-cream)',
+              border: '1px solid var(--color-cream-dark)',
+              color: 'var(--color-charcoal)',
+              fontSize: '12px',
+              letterSpacing: '0.05em',
+            }}
           >
-            Discount Code
-          </label>
-          <div className="flex gap-2">
-            <input
-              id="discountCode"
-              type="text"
-              name="discountCode"
-              placeholder="Enter code"
-              className="flex-grow bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-primary/50 focus:bg-white/10 transition-all duration-200"
-            />
-            <button
-              type="submit"
-              className="bg-white/10 hover:bg-white/20 border border-white/20 hover:border-primary/40 text-white px-6 py-3 rounded-lg transition-all duration-200 font-medium"
-            >
-              Apply
-            </button>
-          </div>
+            Appliquer
+          </button>
         </div>
       </UpdateDiscountForm>
     </div>

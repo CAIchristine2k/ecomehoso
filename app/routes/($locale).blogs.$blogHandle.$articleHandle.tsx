@@ -7,7 +7,27 @@ import {ArrowLeft, Calendar, User} from 'lucide-react';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   const config = getConfig();
-  return [{title: `${config.brandName} | ${data?.article.title ?? ''}`}];
+  const article = data?.article;
+  const title = article?.title || '';
+  const description = article?.seo?.description || article?.excerpt || `${title} - Article HOSO MATCHA sur le matcha premium, thé vert japonais et culture du matcha.`;
+  const image = article?.image?.url || '';
+
+  return [
+    {title: `${title} | ${config.brandName} - Blog Matcha`},
+    {name: 'description', content: description.substring(0, 160)},
+    {name: 'keywords', content: `${title}, matcha, blog matcha, ${config.brandName}, thé vert japonais`},
+    {property: 'og:title', content: `${title} | ${config.brandName}`},
+    {property: 'og:description', content: description.substring(0, 160)},
+    ...(image ? [{property: 'og:image', content: image}] : []),
+    {property: 'og:type', content: 'article'},
+    {property: 'og:locale', content: 'fr_FR'},
+    {property: 'og:site_name', content: 'HOSO MATCHA'},
+    ...(article?.publishedAt ? [{property: 'article:published_time', content: article.publishedAt}] : []),
+    {name: 'twitter:card', content: 'summary_large_image'},
+    {name: 'twitter:title', content: `${title} | ${config.brandName}`},
+    {name: 'twitter:description', content: description.substring(0, 160)},
+    ...(image ? [{name: 'twitter:image', content: image}] : []),
+  ];
 };
 
 export async function loader(args: LoaderFunctionArgs) {
@@ -188,6 +208,7 @@ const ARTICLE_QUERY = `#graphql
         handle
         title
         contentHtml
+        excerpt
         publishedAt
         author: authorV2 {
           name

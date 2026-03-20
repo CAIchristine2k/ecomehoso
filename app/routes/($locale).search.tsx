@@ -15,7 +15,11 @@ import type {RegularSearchQuery} from 'storefrontapi.generated';
 
 export const meta: MetaFunction = () => {
   const config = getConfig();
-  return [{title: `${config.brandName} | Search`}];
+  return [
+    {title: `Recherche | ${config.brandName} - Matcha Premium`},
+    {name: 'description', content: 'Recherchez parmi nos produits matcha premium : matcha cérémonial, matcha culinaire, accessoires traditionnels japonais et coffrets découverte HOSO MATCHA.'},
+    {name: 'robots', content: 'noindex, follow'},
+  ];
 };
 
 export async function loader({request, context}: LoaderFunctionArgs) {

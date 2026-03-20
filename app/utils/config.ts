@@ -268,7 +268,7 @@ export const defaultConfig: LandingPageConfig = {
   heroTitle: 'HOSO',
   heroSubtitle:
     "L'art du matcha d'exception, directement depuis les jardins d'Uji, Kyoto",
-  ctaText: 'DECOUVRIR',
+  ctaText: 'DÉCOUVRIR NOS MATCHAS',
   ctaLink: '/collections/all',
 
   // Navigation

@@ -40,14 +40,14 @@ export function Footer() {
 
   const shopLinks = [
     {name: 'Tous les produits', href: '/collections/all'},
-    {name: 'Nos Matchas', href: '/collections/all'},
-    {name: 'Accessoires', href: '/collections/all'},
-    {name: 'Coffrets', href: '/collections/all'},
+    {name: 'Nos Matchas', href: '/collections/matcha'},
+    {name: 'Accessoires', href: '/collections/accessoires'},
+    {name: 'Coffrets', href: '/collections/coffrets'},
   ];
 
   const infoLinks = [
     {name: 'Notre Histoire', href: '/notre-histoire'},
-    {name: 'Contact', href: 'mailto:hosomatchagroup@gmail.com'},
+    {name: 'Contact', href: 'mailto:contact@hoso.fr'},
   ];
 
   const policies = [
@@ -98,7 +98,7 @@ export function Footer() {
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="transition-opacity duration-300 hover:opacity-100"
+                      className="transition-all duration-300 hover:opacity-100 hover:scale-110 hover:-translate-y-0.5"
                       style={{opacity: 0.5}}
                       aria-label={social.label}
                     >

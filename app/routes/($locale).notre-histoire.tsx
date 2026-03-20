@@ -5,12 +5,21 @@ import {getConfig} from '~/utils/config';
 export const meta: MetaFunction = () => {
   const config = getConfig();
   return [
-    {title: `${config.brandName} | Notre Histoire`},
+    {title: `Notre Histoire | ${config.brandName} - Du Japon à Paris, la Quête du Matcha Parfait`},
     {
       name: 'description',
-      content:
-        "HOSO MATCHA - La quête du matcha parfait. Découvrez notre philosophie et notre engagement pour un matcha pur, depuis Uji, Kyoto.",
+      content: "HOSO MATCHA - La quête du matcha parfait. Du Japon à Paris, découvrez comment nous sélectionnons le meilleur matcha d'Uji, Kyoto. Philosophie, engagement qualité et tradition séculaire du thé vert japonais.",
     },
+    {name: 'keywords', content: "histoire HOSO MATCHA, matcha Uji Kyoto, philosophie matcha, matcha japonais authentique, tradition thé vert, matcha artisanal, matcha Paris, origine matcha"},
+    {rel: 'canonical', href: '/notre-histoire'},
+    {property: 'og:title', content: `Notre Histoire | ${config.brandName}`},
+    {property: 'og:description', content: "La quête du matcha parfait. Du Japon à Paris, découvrez notre engagement pour un matcha d'exception depuis Uji, Kyoto."},
+    {property: 'og:type', content: 'article'},
+    {property: 'og:locale', content: 'fr_FR'},
+    {property: 'og:site_name', content: 'HOSO MATCHA'},
+    {name: 'twitter:card', content: 'summary_large_image'},
+    {name: 'twitter:title', content: `Notre Histoire | ${config.brandName}`},
+    {name: 'twitter:description', content: "Du Japon à Paris, la quête du matcha parfait. Découvrez notre philosophie et notre engagement qualité."},
   ];
 };
 
@@ -158,7 +167,7 @@ export default function NotreHistoire() {
 
       {/* Section 1 - Introduction & Essence */}
       <section style={{padding: '100px 24px', textAlign: 'center', backgroundColor: '#e8f0e8'}}>
-        <div style={{maxWidth: '700px', margin: '0 auto'}}>
+        <div data-reveal="up" style={{maxWidth: '700px', margin: '0 auto'}}>
           <p
             style={{
               fontFamily: "var(--font-display)",
@@ -172,7 +181,7 @@ export default function NotreHistoire() {
             <span style={{fontWeight: 500}}>HOSO</span>
             <br />
             <span style={{fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', opacity: 0.6, letterSpacing: '0.15em'}}>
-              fin · pur · delicat
+              fin · pur · délicat
             </span>
           </p>
           <div
@@ -194,7 +203,7 @@ export default function NotreHistoire() {
             }}
           >
             Dans un monde qui va toujours plus vite, le sens de l'essentiel se perd souvent.
-            Chez HOSO MATCHA, nous croyons que la vraie force reside dans la simplicite.
+            Chez HOSO MATCHA, nous croyons que la vraie force réside dans la simplicité.
           </p>
         </div>
       </section>
@@ -208,7 +217,7 @@ export default function NotreHistoire() {
           }}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-            <div>
+            <div data-reveal="left">
               <p
                 style={{
                   fontSize: '10px',
@@ -243,7 +252,7 @@ export default function NotreHistoire() {
                   marginBottom: '20px',
                 }}
               >
-                Uji, berceau historique du matcha au Japon. Depuis des siecles, les maitres de the y cultivent les feuilles a l'ombre et les broient lentement a la pierre pour obtenir une poudre d'une finesse exceptionnelle.
+                Uji, berceau historique du matcha au Japon. Depuis des siècles, les maîtres de thé y cultivent les feuilles à l'ombre et les broient lentement à la pierre pour obtenir une poudre d'une finesse exceptionnelle.
               </p>
               <p
                 style={{
@@ -258,12 +267,13 @@ export default function NotreHistoire() {
               </p>
             </div>
             <div
-              className="aspect-[4/5] rounded-lg overflow-hidden"
+              data-reveal="right" data-reveal-delay="2"
+              className="aspect-[4/5] rounded-lg overflow-hidden img-zoom"
               style={{backgroundColor: 'var(--color-matcha-deep)'}}
             >
               <img
                 src="/images/uji-harvest.jpg"
-                alt="Recolte du the a Uji, Japon"
+                alt="Récolte du thé à Uji, Japon"
                 className="w-full h-full object-cover"
                 style={{opacity: 0.85}}
               />
@@ -299,7 +309,7 @@ export default function NotreHistoire() {
           }}
         />
         <div style={{maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1}}>
-          <div style={{textAlign: 'center', marginBottom: '80px'}}>
+          <div data-reveal="up" style={{textAlign: 'center', marginBottom: '80px'}}>
             <p
               style={{
                 fontFamily: "'Noto Serif JP', serif",
@@ -323,7 +333,7 @@ export default function NotreHistoire() {
             >
               Pour respecter l'esprit de HOSO
               <br />
-              nous avons simplifie chaque chose.
+              nous avons simplifié chaque chose.
             </h2>
             <div
               style={{
@@ -348,21 +358,23 @@ export default function NotreHistoire() {
               {
                 kanji: '地',
                 title: "Simplifier l'origine",
-                desc: 'Nous avons concentre notre recherche sur un seul lieu : Uji, le coeur sacre du the japonais.',
+                desc: 'Nous avons concentré notre recherche sur un seul lieu : Uji, le cœur sacré du thé japonais.',
               },
               {
                 kanji: '純',
                 title: 'Simplifier la gamme',
-                desc: "Nous avons volontairement renonce aux melanges, aux aromes et aux recettes artificielles. Chez HOSO MATCHA, vous ne trouverez qu'une seule chose : du matcha pur.",
+                desc: "Nous avons volontairement renoncé aux mélanges, aux arômes et aux recettes artificielles. Chez HOSO MATCHA, vous ne trouverez qu'une seule chose : du matcha pur.",
               },
               {
                 kanji: '道',
                 title: 'Simplifier le chemin',
-                desc: "De la plantation ombragee d'Uji jusqu'a votre bol, chaque etape est rigoureusement controlee afin de preserver toute l'authenticite du matcha.",
+                desc: "De la plantation ombragée d'Uji jusqu'à votre bol, chaque étape est rigoureusement contrôlée afin de préserver toute l'authenticité du matcha.",
               },
             ].map((pilier, i) => (
               <div
                 key={i}
+                data-reveal="up"
+                data-reveal-delay={String(i + 1)}
                 style={{
                   textAlign: 'center',
                 }}

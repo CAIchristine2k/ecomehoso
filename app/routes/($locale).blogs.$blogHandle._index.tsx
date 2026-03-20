@@ -9,7 +9,15 @@ import {ArrowLeft, Calendar, User} from 'lucide-react';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   const config = getConfig();
-  return [{title: `${config.brandName} | ${data?.blog.title ?? ''} Blog`}];
+  const blogTitle = data?.blog?.title || 'Blog';
+  return [
+    {title: `${blogTitle} | ${config.brandName} - Blog Matcha`},
+    {name: 'description', content: `${blogTitle} - Articles, guides et conseils sur le matcha par HOSO MATCHA. Préparation, recettes, bienfaits du thé vert japonais.`},
+    {property: 'og:title', content: `${blogTitle} | ${config.brandName}`},
+    {property: 'og:type', content: 'blog'},
+    {property: 'og:locale', content: 'fr_FR'},
+    {property: 'og:site_name', content: 'HOSO MATCHA'},
+  ];
 };
 
 export async function loader(args: LoaderFunctionArgs) {

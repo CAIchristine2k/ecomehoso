@@ -13,7 +13,10 @@ import {getConfig} from '~/utils/config';
 
 export const meta: MetaFunction = () => {
   const config = getConfig();
-  return [{title: `${config.brandName} | Account`}];
+  return [
+    {title: `Mon Compte | ${config.brandName}`},
+    {name: 'robots', content: 'noindex, nofollow'},
+  ];
 };
 
 export function shouldRevalidate() {

@@ -7,7 +7,16 @@ import {getConfig} from '~/utils/config';
 
 export const meta: MetaFunction = () => {
   const config = getConfig();
-  return [{title: `${config.brandName} | Blog`}];
+  return [
+    {title: `Blog Matcha | ${config.brandName} - Guides, Recettes & Conseils Matcha`},
+    {name: 'description', content: "Blog HOSO MATCHA : guides de préparation du matcha, recettes au matcha, bienfaits du thé vert japonais, conseils d'utilisation et culture du matcha."},
+    {name: 'keywords', content: 'blog matcha, guide matcha, recette matcha, préparation matcha, bienfaits matcha, thé vert japonais, conseils matcha, matcha latte recette'},
+    {property: 'og:title', content: `Blog | ${config.brandName}`},
+    {property: 'og:description', content: "Guides, recettes et conseils autour du matcha. Découvrez l'univers HOSO MATCHA."},
+    {property: 'og:type', content: 'blog'},
+    {property: 'og:locale', content: 'fr_FR'},
+    {property: 'og:site_name', content: 'HOSO MATCHA'},
+  ];
 };
 
 export async function loader(args: LoaderFunctionArgs) {

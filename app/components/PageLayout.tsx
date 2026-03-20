@@ -84,7 +84,7 @@ export function PageLayout({
             padding: '10px 0',
           }}
         >
-          {[...Array(12)].map((_, i) => (
+          {[...Array(20)].map((_, i) => (
             <span
               key={i}
               className="inline-flex items-center gap-2 mx-10"

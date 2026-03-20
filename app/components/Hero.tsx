@@ -14,7 +14,7 @@ export function Hero() {
       <div className="absolute inset-0 z-0">
         <img
           src={config.heroBackgroundImage}
-          alt={config.brandName}
+          alt="HOSO MATCHA - Matcha premium d'exception depuis Uji, Kyoto, Japon"
           className="absolute inset-0 w-full h-full object-cover"
           style={{filter: 'saturate(0.85)', opacity: 0.75}}
         />
@@ -43,7 +43,7 @@ export function Hero() {
         >
           <img
             src="/images/hoso-logo-brush.png"
-            alt={config.heroTitle}
+            alt="Logo HOSO MATCHA - marque de matcha cérémonial et culinaire premium"
             className="w-full h-full"
             style={{
               filter: 'brightness(0) invert(1)',
@@ -80,14 +80,18 @@ export function Hero() {
 
         <Link
           to={config.ctaLink}
-          className="inline-block text-white border border-white/40 hover:border-white/80 transition-all duration-500 hover:-translate-y-0.5"
+          className="inline-block text-white transition-all duration-500 hover:-translate-y-1 btn-press"
           style={{
             fontFamily: "'Brusher', 'Poppins', sans-serif",
-            padding: '16px 48px',
-            fontSize: '11px',
-            letterSpacing: '0.25em',
+            padding: '18px 56px',
+            fontSize: '12px',
+            letterSpacing: '0.2em',
             textTransform: 'uppercase' as const,
             fontWeight: 500,
+            backgroundColor: 'rgba(61, 107, 79, 0.85)',
+            backdropFilter: 'blur(8px)',
+            border: '1px solid rgba(255, 255, 255, 0.25)',
+            borderRadius: '4px',
           }}
         >
           {config.ctaText}

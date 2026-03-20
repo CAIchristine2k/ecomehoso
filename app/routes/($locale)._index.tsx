@@ -4,7 +4,7 @@ import {
   type MetaFunction,
 } from 'react-router';
 import {getPaginationVariables, Analytics, CacheShort} from '@shopify/hydrogen';
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {Link} from 'react-router';
 
 // Import configuration and theme system from utils (consistent directory)
@@ -29,16 +29,22 @@ export const meta: MetaFunction = () => {
     {title: `${config.brandName} | Matcha Premium depuis Uji, Kyoto`},
     {
       name: 'description',
-      content: "Hoso Matcha - Matcha d'exception sélectionné à Uji, Kyoto. Découvrez nos matchas cérémoniaux et culinaires, accessoires traditionnels et coffrets.",
+      content: "HOSO MATCHA - Matcha d'exception sélectionné à Uji, Kyoto. Matcha cérémonial grade A, matcha culinaire, chasen, chawan et coffrets. Mouture sur meule de pierre, culture ombragée traditionnelle. Livraison France. Boutique Paris Le Marais.",
     },
     {
       name: 'keywords',
-      content: 'matcha, matcha cérémonial, matcha culinaire, thé vert japonais, Uji, Kyoto, matcha premium, chasen, chawan',
+      content: 'matcha, matcha premium, matcha cérémonial, matcha culinaire, thé vert japonais, thé matcha, Uji, Kyoto, matcha bio, chasen, chawan, poudre de matcha, matcha latte, matcha Paris, HOSO MATCHA, accessoires matcha, coffret matcha, matcha en poudre, matcha japonais, cérémonie du thé, thé vert en poudre, meilleur matcha, acheter matcha, matcha France, boutique matcha Paris',
     },
-    {property: 'og:title', content: `${config.brandName} | Matcha Premium`},
-    {property: 'og:description', content: config.heroSubtitle},
+    {property: 'og:title', content: `${config.brandName} | Matcha Premium d'Exception depuis Uji, Kyoto`},
+    {property: 'og:description', content: "Matcha d'exception sélectionné à Uji, Kyoto. Découvrez nos matchas cérémoniaux et culinaires, accessoires traditionnels japonais et coffrets découverte."},
     {property: 'og:image', content: config.brandLogo},
     {property: 'og:type', content: 'website'},
+    {property: 'og:locale', content: 'fr_FR'},
+    {property: 'og:site_name', content: 'HOSO MATCHA'},
+    {name: 'twitter:card', content: 'summary_large_image'},
+    {name: 'twitter:title', content: `${config.brandName} | Matcha Premium depuis Uji, Kyoto`},
+    {name: 'twitter:description', content: "Matcha d'exception depuis Uji, Kyoto. Matcha cérémonial, culinaire, accessoires traditionnels et coffrets."},
+    {name: 'twitter:image', content: config.brandLogo},
   ];
 };
 
@@ -72,51 +78,85 @@ export async function loader({request, context}: LoaderFunctionArgs) {
 
 export default function Home() {
   const {products, featuredCollection} = useLoaderData<typeof loader>();
-  const [debugLog, setDebugLog] = useState<string[]>([]);
   const appConfig = useConfig();
 
-  useEffect(() => {
-    // Debug logging for products
-    console.log('Index: Total products loaded:', products?.length || 0);
+  // JSON-LD structured data for homepage
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'HOSO MATCHA',
+    url: 'https://hosomatcha.com',
+    logo: 'https://hosomatcha.com/images/preset/logo-hoso-dark.png',
+    description: "HOSO MATCHA - Matcha d'exception sélectionné à Uji, Kyoto. Matcha cérémonial, matcha culinaire et accessoires traditionnels japonais.",
+    contactPoint: {
+      '@type': 'ContactPoint',
+      email: 'contact@hosomatcha.com',
+      contactType: 'customer service',
+      availableLanguage: ['French', 'English', 'Japanese'],
+    },
+    sameAs: [
+      config.socialLinks?.instagram,
+      config.socialLinks?.tiktok,
+    ].filter(Boolean),
+  };
 
-    // Count customizable and non-customizable products
-    const customizableProducts =
-      products?.filter((product: any) =>
-        product.variants?.nodes?.some(
-          (variant: any) => variant?.title?.toLowerCase() === 'custom',
-        ),
-      ) || [];
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'HOSO MATCHA',
+    url: 'https://hosomatcha.com',
+    description: "Matcha premium d'exception depuis Uji, Kyoto",
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: 'https://hosomatcha.com/search?q={search_term_string}',
+      },
+      'query-input': 'required name=search_term_string',
+    },
+  };
 
-    const nonCustomizableProducts =
-      products?.filter(
-        (product: any) =>
-          !product.variants?.nodes?.some(
-            (variant: any) => variant?.title?.toLowerCase() === 'custom',
-          ),
-      ) || [];
-
-    console.log('Products with custom variants:', customizableProducts.length);
-    console.log(
-      'Products without custom variants:',
-      nonCustomizableProducts.length,
-    );
-
-    // Update debug info
-    setDebugLog([
-      `Total products: ${products?.length || 0}`,
-      `Exclusive products: ${nonCustomizableProducts.length}`,
-      `Customizable products: ${customizableProducts.length}`,
-    ]);
-
-    // Log the titles of customizable products
-    console.log('Customizable product titles:');
-    customizableProducts.forEach((product: any) => {
-      console.log(`- ${product.title}`);
-    });
-  }, [products]);
+  const localBusinessSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Store',
+    name: 'HOSO MATCHA - Boutique Paris',
+    image: 'https://hosomatcha.com/images/magasin/devanture-1.jpg',
+    '@id': 'https://hosomatcha.com/notre-magasin',
+    url: 'https://hosomatcha.com/notre-magasin',
+    description: 'Boutique de matcha premium au cœur du Marais, Paris. Matcha cérémonial, culinaire, dégustation et accessoires traditionnels japonais.',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: '44 Rue Saint-Antoine',
+      addressLocality: 'Paris',
+      postalCode: '75004',
+      addressCountry: 'FR',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 48.8556,
+      longitude: 2.3653,
+    },
+    priceRange: '€€',
+    servesCuisine: 'Matcha, Thé japonais',
+    currenciesAccepted: 'EUR',
+    paymentAccepted: 'Cash, Credit Card',
+  };
 
   return (
     <main>
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{__html: JSON.stringify(organizationSchema)}}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{__html: JSON.stringify(websiteSchema)}}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{__html: JSON.stringify(localBusinessSchema)}}
+      />
       <Hero />
 
       {/* Reassurance Bar - Marquee */}
@@ -215,11 +255,11 @@ export default function Home() {
       </section>
 
       {/* Full width product image */}
-      <div style={{width: '100%', backgroundColor: 'var(--color-matcha-deep)', overflow: 'hidden'}}>
+      <div data-reveal="fade" data-reveal-speed="slow" className="img-zoom" style={{width: '100%', backgroundColor: 'var(--color-matcha-deep)', overflow: 'hidden'}}>
         <img
           src="/images/hoso-matcha-glass-4k.jpg"
-          alt="HOSO Matcha"
-          className="w-full block object-cover"
+          alt="Verre de matcha latte HOSO MATCHA - matcha cérémonial premium depuis Uji, Kyoto"
+          className="w-full block object-cover img-zoom-target"
           style={{
             height: 'clamp(250px, 40vw, 500px)',
           }}
@@ -235,6 +275,19 @@ export default function Home() {
             ),
         )}
       />
+
+      {/* Matcha powder banner */}
+      <div data-reveal="up" style={{width: '100%', textAlign: 'center', paddingTop: '15px', backgroundColor: '#ffffff'}}>
+        <img
+          src="/images/matcha-powder-brush.png"
+          alt="Poudre de matcha premium HOSO MATCHA - mouture fine sur meule de pierre, thé vert japonais d'Uji"
+          style={{
+            width: 'clamp(250px, 50vw, 600px)',
+            display: 'block',
+            margin: '0 auto',
+          }}
+        />
+      </div>
 
       {/* Intro / Story Section */}
       <section
@@ -257,6 +310,7 @@ export default function Home() {
               muted
               loop
               playsInline
+              preload="metadata"
               className="absolute inset-0 w-full h-full object-cover"
             />
             {/* Overlay */}
@@ -298,6 +352,7 @@ export default function Home() {
 
           {/* Text side - desktop only */}
           <div
+            data-reveal="right"
             className="hidden md:flex items-center order-1 md:order-2"
             style={{
               padding: 'clamp(48px, 8vw, 100px) clamp(24px, 5vw, 80px)',
@@ -429,19 +484,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Matcha powder banner */}
-      <div style={{width: '100%', backgroundColor: 'var(--color-cream)', textAlign: 'center', paddingTop: '15px'}}>
-        <img
-          src="/images/matcha-powder-brush.png"
-          alt="Poudre de matcha"
-          style={{
-            width: 'clamp(250px, 50vw, 600px)',
-            display: 'block',
-            margin: '0 auto',
-          }}
-        />
-      </div>
-
       {/* Product showcase section */}
       <ProductShowcase
         products={products.filter(
@@ -453,9 +495,6 @@ export default function Home() {
         title="Nos produits"
       />
 
-      {/* Testimonials section */}
-      <Testimonials />
-
       {/* Histoire de la marque */}
       <section
         style={{
@@ -465,7 +504,7 @@ export default function Home() {
       >
         <div className="max-w-[900px] mx-auto px-6 md:px-10">
           {/* Label */}
-          <div className="text-center mb-10">
+          <div data-reveal="up" className="text-center mb-10">
             <div className="flex items-center justify-center gap-4 mb-6">
               <div style={{width: '40px', height: '1px', backgroundColor: 'var(--color-matcha-mid)', opacity: 0.4}} />
               <span
@@ -500,6 +539,7 @@ export default function Home() {
 
           {/* Story content */}
           <div
+            data-reveal="left"
             style={{
               borderLeft: '2px solid var(--color-matcha-mid)',
               paddingLeft: 'clamp(20px, 4vw, 40px)',
@@ -514,9 +554,9 @@ export default function Home() {
                 lineHeight: 2,
               }}
             >
-              Dans le Paris romantique, il y a beaucoup de matcha.
+              Dans le Paris romantique, le matcha est partout.
               <br />
-              Mais il n'est pas facile de trouver un bon matcha, sain, propre et parfumé.
+              Mais trouver un matcha vraiment pur, sain et parfumé reste rare.
             </p>
 
             <p
@@ -528,8 +568,7 @@ export default function Home() {
                 lineHeight: 2,
               }}
             >
-              Je possède un bar à Paris, spécialisé dans les gâteaux basque au matcha et les boissons au matcha.
-              J'ai cherché pendant longtemps, goûté toutes sortes de matcha, sans jamais trouver celui qui me correspondait.
+              À la tête d'un bar spécialisé dans les créations au matcha, j'ai longtemps cherché la saveur parfaite, sans jamais la trouver.
             </p>
 
             <p
@@ -541,8 +580,7 @@ export default function Home() {
                 lineHeight: 2,
               }}
             >
-              J'ai entendu dire que le matcha d'Uji à Tokyo, au Japon, est très réputé.
-              J'ai donc fait le voyage jusqu'à Uji, à la recherche de cette couleur verte et de ce parfum que j'avais en cœur.
+              Jusqu'au jour où je suis partie à Uji, au Japon, berceau du matcha d'exception, à la recherche de cette couleur et de ce parfum qui me manquaient.
             </p>
 
             <p
@@ -556,12 +594,12 @@ export default function Home() {
             >
               Je l'ai ramené à Paris.
               <br />
-              Dans mon établissement, j'ai créé ma propre marque : <strong style={{fontWeight: 500, color: 'var(--color-charcoal)'}}>Hoso Matcha</strong>.
+              Et j'ai créé <strong style={{fontWeight: 500, color: 'var(--color-charcoal)'}}>Hoso Matcha</strong>.
             </p>
           </div>
 
           {/* Closing quote */}
-          <div className="text-center mt-10">
+          <div data-reveal="fade" className="text-center mt-10">
             <p
               style={{
                 fontStyle: 'italic',
@@ -571,9 +609,7 @@ export default function Home() {
                 lineHeight: 1.6,
               }}
             >
-              "Une touche de thé vert de Tokyo,
-              <br />
-              envoyée jusqu'au Paris romantique."
+              "Une touche d'Uji, déposée au cœur de Paris."
             </p>
             <p style={{fontFamily: "'Noto Serif JP', serif", fontSize: '0.8rem', color: 'var(--color-matcha-mid)', opacity: 0.4, marginTop: '16px', letterSpacing: '0.3em'}}>
               東京の緑茶をパリへ
@@ -581,6 +617,11 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Testimonials */}
+      <div data-reveal="up">
+        <Testimonials />
+      </div>
 
       {/* Newsletter signup section */}
       <NewsletterSignup />
@@ -594,6 +635,7 @@ export default function Home() {
       >
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 text-center">
           <span
+            data-reveal="up-subtle"
             className="inline-block mb-4"
             style={{
               fontSize: '10px',
@@ -606,6 +648,7 @@ export default function Home() {
             Communauté
           </span>
           <h2
+            data-reveal="up" data-reveal-delay="1"
             className="mb-4"
             style={{
               fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
@@ -742,7 +785,7 @@ const PRODUCTS_QUERY = `#graphql
             currencyCode
           }
         }
-        variants(first: 25) {
+        variants(first: 5) {
           nodes {
             id
             title

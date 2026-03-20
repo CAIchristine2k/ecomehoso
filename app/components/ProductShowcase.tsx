@@ -64,7 +64,7 @@ export function ProductShowcase({
     >
       <div className="relative z-10">
         {/* Section Header */}
-        <div className="mb-8 md:mb-16 text-center px-3 md:px-10">
+        <div className="mb-8 md:mb-16 pt-10 md:pt-0 text-center px-3 md:px-10">
           <span
             className="inline-block mb-4"
             style={{

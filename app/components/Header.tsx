@@ -223,20 +223,21 @@ export function Header() {
     </header>
 
     {/* Mobile menu overlay - outside header for proper z-index */}
-    {isOpen && (
-      <div
-        className="md:hidden fixed inset-0 z-[9998]"
-        style={{background: 'rgba(0,0,0,0.4)'}}
-        onClick={() => setIsOpen(false)}
-      />
-    )}
+    <div
+      className={`md:hidden fixed inset-0 z-[9998] transition-opacity duration-500 ${
+        isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+      }`}
+      style={{background: 'rgba(0,0,0,0.4)'}}
+      onClick={() => setIsOpen(false)}
+    />
 
     {/* Mobile Menu - outside header for proper z-index */}
     <div
-      className={`md:hidden fixed top-0 right-0 h-full transition-transform duration-700 z-[9999] ${
+      className={`md:hidden fixed top-0 right-0 h-full transition-transform duration-500 z-[9999] ${
         isOpen ? 'translate-x-0' : 'translate-x-full'
       }`}
       style={{
+        transitionTimingFunction: 'var(--ease-premium)',
         width: '340px',
         maxWidth: '85vw',
         background: 'rgba(250, 248, 243, 0.98)',

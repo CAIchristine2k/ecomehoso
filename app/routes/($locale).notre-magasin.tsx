@@ -4,12 +4,23 @@ import {useState, useEffect} from 'react';
 
 export const meta: MetaFunction = () => {
   return [
-    {title: 'Notre Magasin - HOSO | Paris'},
+    {title: 'Boutique Matcha Paris Le Marais | HOSO MATCHA - Matcha Premium & Dégustation'},
     {
       name: 'description',
-      content:
-        'Visitez notre boutique HOSO au cœur du Marais, Paris 4ème. Matcha premium, dégustation et accessoires.',
+      content: 'Visitez la boutique HOSO MATCHA au cœur du Marais, Paris 4ème. Matcha cérémonial premium, dégustation sur place, gâteaux basque au matcha, accessoires traditionnels japonais. 44 Rue Saint-Antoine, 75004 Paris.',
     },
+    {name: 'keywords', content: 'boutique matcha Paris, magasin matcha Le Marais, HOSO MATCHA Paris, dégustation matcha Paris, matcha Paris 4ème, salon de thé matcha, gâteau basque matcha, matcha latte Paris, boutique thé japonais Paris'},
+    {rel: 'canonical', href: '/notre-magasin'},
+    {property: 'og:title', content: 'Boutique HOSO MATCHA Paris - Le Marais'},
+    {property: 'og:description', content: 'Boutique matcha premium au cœur du Marais, Paris. Dégustation, matcha cérémonial et accessoires traditionnels japonais.'},
+    {property: 'og:type', content: 'place'},
+    {property: 'og:locale', content: 'fr_FR'},
+    {property: 'og:site_name', content: 'HOSO MATCHA'},
+    {property: 'place:location:latitude', content: '48.8533'},
+    {property: 'place:location:longitude', content: '2.3647'},
+    {name: 'twitter:card', content: 'summary_large_image'},
+    {name: 'twitter:title', content: 'Boutique HOSO MATCHA - Paris Le Marais'},
+    {name: 'twitter:description', content: 'Matcha premium, dégustation et accessoires japonais au cœur du Marais, Paris 4ème.'},
   ];
 };
 
@@ -56,8 +67,41 @@ export default function NotreMagasinPage() {
     return () => clearInterval(interval);
   }, []);
 
+  const localBusinessSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CafeOrCoffeeShop',
+    name: 'HOSO MATCHA - Boutique Paris Le Marais',
+    image: '/images/magasin/devanture-1.jpg',
+    '@id': 'https://hosomatcha.com/notre-magasin',
+    url: 'https://hosomatcha.com/notre-magasin',
+    telephone: '',
+    description: 'Boutique de matcha premium au cœur du Marais, Paris. Dégustation de matcha cérémonial, gâteaux basque au matcha, boissons au matcha et accessoires traditionnels japonais.',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: '44 Rue Saint-Antoine',
+      addressLocality: 'Paris',
+      postalCode: '75004',
+      addressRegion: 'Île-de-France',
+      addressCountry: 'FR',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 48.8533,
+      longitude: 2.3647,
+    },
+    priceRange: '€€',
+    servesCuisine: 'Matcha, Thé japonais, Pâtisseries',
+    currenciesAccepted: 'EUR',
+    paymentAccepted: 'Cash, Credit Card, Contactless',
+    hasMap: 'https://maps.google.com/?q=44+Rue+Saint-Antoine+75004+Paris',
+  };
+
   return (
     <div style={{backgroundColor: 'var(--color-cream)'}}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{__html: JSON.stringify(localBusinessSchema)}}
+      />
       {/* Hero Immersif */}
       <section
         style={{
@@ -237,7 +281,7 @@ export default function NotreMagasinPage() {
           overflow: 'hidden',
         }}
       >
-        <div style={{maxWidth: '700px', margin: '0 auto', position: 'relative', zIndex: 2}}>
+        <div data-reveal="up" style={{maxWidth: '700px', margin: '0 auto', position: 'relative', zIndex: 2}}>
           <p style={{
             fontFamily: "'Noto Serif JP', serif",
             fontSize: '0.85rem',
@@ -325,7 +369,7 @@ export default function NotreMagasinPage() {
               }}
             >
               <span style={{color: 'white', fontSize: '14px', fontWeight: 400, letterSpacing: '0.05em'}}>
-                Notre facade
+                Notre façade
               </span>
             </div>
           </div>
@@ -525,6 +569,7 @@ export default function NotreMagasinPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Adresse */}
             <div
+              data-reveal="up" data-reveal-delay="1"
               className="flex gap-5 p-8 rounded-2xl transition-all duration-400 hover:-translate-y-2"
               style={{border: '1px solid transparent'}}
               onMouseEnter={(e) => {
@@ -560,6 +605,7 @@ export default function NotreMagasinPage() {
 
             {/* Horaires */}
             <div
+              data-reveal="up" data-reveal-delay="2"
               className="flex gap-5 p-8 rounded-2xl transition-all duration-400 hover:-translate-y-2"
               style={{border: '1px solid transparent'}}
               onMouseEnter={(e) => {
@@ -592,6 +638,7 @@ export default function NotreMagasinPage() {
 
             {/* Contact */}
             <div
+              data-reveal="up" data-reveal-delay="3"
               className="flex gap-5 p-8 rounded-2xl transition-all duration-400 hover:-translate-y-2"
               style={{border: '1px solid transparent'}}
               onMouseEnter={(e) => {
@@ -620,7 +667,7 @@ export default function NotreMagasinPage() {
                   @hoso.paris
                 </p>
                 <span style={{fontSize: '13px', color: 'var(--color-stone)'}}>
-                  Reponse sous 24h
+                  Réponse sous 24h
                 </span>
               </div>
             </div>
@@ -693,7 +740,7 @@ export default function NotreMagasinPage() {
                 transition: 'all 0.3s ease',
               }}
             >
-              <span>Itineraire</span>
+              <span>Itinéraire</span>
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -738,7 +785,7 @@ export default function NotreMagasinPage() {
               marginBottom: '20px',
             }}
           >
-            A bientot
+            À bientôt
           </p>
           <h2
             style={{
@@ -793,7 +840,7 @@ export default function NotreMagasinPage() {
                 transition: 'all 0.3s ease',
               }}
             >
-              Retour a l'accueil
+              Retour à l'accueil
             </Link>
           </div>
         </div>

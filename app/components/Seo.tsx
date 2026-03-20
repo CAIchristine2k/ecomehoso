@@ -94,7 +94,7 @@ export function Seo({
       <meta name="description" content={seoDescription} />
       <meta
         name="keywords"
-        content={`${config.influencerName}, ${config.brandName}, boxing equipment, merchandise, champion gear`}
+        content={`${config.brandName}, matcha, matcha cérémonial, matcha culinaire, thé vert japonais, Uji, Kyoto, matcha premium, chasen, chawan, poudre de matcha, matcha latte, accessoires matcha`}
       />
 
       {noindex && <meta name="robots" content="noindex, nofollow" />}
@@ -125,7 +125,7 @@ export function Seo({
         name="copyright"
         content={`© ${new Date().getFullYear()} ${config.brandName}`}
       />
-      <meta name="language" content="en" />
+      <meta name="language" content="fr" />
       <meta name="revisit-after" content="7 days" />
 
       {/* Canonical URL */}

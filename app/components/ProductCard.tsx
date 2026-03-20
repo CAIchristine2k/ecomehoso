@@ -91,21 +91,11 @@ export function ProductCard({
 
   return (
     <div
-      className="group relative overflow-hidden transition-all duration-400 flex flex-col h-full"
+      className="group relative overflow-hidden hover-glow flex flex-col h-full"
       style={{
         background: 'white',
         border: '1px solid var(--color-cream-dark)',
         borderRadius: '8px',
-      }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)';
-        (e.currentTarget as HTMLElement).style.boxShadow = 'var(--shadow-lg)';
-        (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-matcha-mid)';
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
-        (e.currentTarget as HTMLElement).style.boxShadow = 'none';
-        (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-cream-dark)';
       }}
     >
       {/* Image Container */}

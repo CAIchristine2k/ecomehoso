@@ -9,7 +9,20 @@ import {getConfig} from '~/utils/config';
 
 export const meta: MetaFunction<typeof loader> = () => {
   const config = getConfig();
-  return [{title: `${config.brandName} | All Products`}];
+  return [
+    {title: `Tous nos Produits Matcha | ${config.brandName} - Matcha Premium Uji, Kyoto`},
+    {name: 'description', content: "Découvrez tous les produits HOSO MATCHA : matcha cérémonial, matcha culinaire, chasen, chawan, coffrets découverte. Matcha d'exception depuis Uji, Kyoto. Livraison France."},
+    {name: 'keywords', content: 'tous produits matcha, acheter matcha, matcha cérémonial, matcha culinaire, chasen, chawan, coffret matcha, accessoires matcha, HOSO MATCHA, matcha Uji, matcha Kyoto'},
+    {rel: 'canonical', href: '/collections/all'},
+    {property: 'og:title', content: `Tous nos Produits | ${config.brandName}`},
+    {property: 'og:description', content: "Tous les produits HOSO MATCHA : matcha cérémonial, culinaire, accessoires traditionnels et coffrets depuis Uji, Kyoto."},
+    {property: 'og:type', content: 'website'},
+    {property: 'og:locale', content: 'fr_FR'},
+    {property: 'og:site_name', content: 'HOSO MATCHA'},
+    {name: 'twitter:card', content: 'summary_large_image'},
+    {name: 'twitter:title', content: `Tous nos Produits Matcha | ${config.brandName}`},
+    {name: 'twitter:description', content: "Matcha cérémonial, culinaire, accessoires et coffrets. Matcha premium depuis Uji, Kyoto."},
+  ];
 };
 
 export async function loader(args: LoaderFunctionArgs) {

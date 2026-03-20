@@ -22,12 +22,39 @@ import {Suspense} from 'react';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   const config = getConfig();
+  const product = data?.product;
+  const title = product?.seo?.title || product?.title || '';
+  const description = product?.seo?.description || product?.description?.substring(0, 160) || `${title} - Matcha premium HOSO MATCHA depuis Uji, Kyoto. Qualité d'exception, mouture sur meule de pierre.`;
+  const image = product?.featuredImage?.url || config.brandLogo;
+
   return [
-    {title: `${config.brandName} | ${data?.product.title ?? ''}`},
+    {title: `${title} | ${config.brandName} - Matcha Premium`},
+    {
+      name: 'description',
+      content: description,
+    },
+    {
+      name: 'keywords',
+      content: `${title}, ${config.brandName}, matcha, matcha premium, thé vert japonais, Uji, Kyoto, ${product?.productType || 'matcha'}, acheter matcha`,
+    },
     {
       rel: 'canonical',
-      href: `/products/${data?.product.handle}`,
+      href: `/products/${product?.handle}`,
     },
+    {property: 'og:title', content: `${title} | ${config.brandName}`},
+    {property: 'og:description', content: description},
+    {property: 'og:image', content: image},
+    {property: 'og:type', content: 'product'},
+    {property: 'og:locale', content: 'fr_FR'},
+    {property: 'og:site_name', content: 'HOSO MATCHA'},
+    {property: 'product:brand', content: 'HOSO MATCHA'},
+    {property: 'product:availability', content: product?.variants?.nodes?.[0]?.availableForSale ? 'in stock' : 'out of stock'},
+    {property: 'product:price:amount', content: product?.variants?.nodes?.[0]?.price?.amount || ''},
+    {property: 'product:price:currency', content: product?.variants?.nodes?.[0]?.price?.currencyCode || 'EUR'},
+    {name: 'twitter:card', content: 'summary_large_image'},
+    {name: 'twitter:title', content: `${title} | ${config.brandName}`},
+    {name: 'twitter:description', content: description},
+    {name: 'twitter:image', content: image},
   ];
 };
 
@@ -321,8 +348,71 @@ export default function Product() {
   // Accordion state
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
 
+  // JSON-LD Product schema
+  const productSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.title,
+    description: product.description?.substring(0, 500),
+    image: product.featuredImage?.url,
+    url: `https://hosomatcha.com/products/${product.handle}`,
+    brand: {
+      '@type': 'Brand',
+      name: product.vendor || 'HOSO MATCHA',
+    },
+    offers: {
+      '@type': 'Offer',
+      url: `https://hosomatcha.com/products/${product.handle}`,
+      priceCurrency: currentVariant?.price?.currencyCode || 'EUR',
+      price: currentVariant?.price?.amount || product.variants.nodes[0]?.price?.amount,
+      availability: (currentVariant?.availableForSale ?? product.variants.nodes[0]?.availableForSale)
+        ? 'https://schema.org/InStock'
+        : 'https://schema.org/OutOfStock',
+      seller: {
+        '@type': 'Organization',
+        name: 'HOSO MATCHA',
+      },
+    },
+    ...(product.variants.nodes[0]?.sku ? {sku: product.variants.nodes[0].sku} : {}),
+  };
+
+  // JSON-LD BreadcrumbList
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Accueil',
+        item: 'https://hosomatcha.com',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Produits',
+        item: 'https://hosomatcha.com/collections/all',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: product.title,
+        item: `https://hosomatcha.com/products/${product.handle}`,
+      },
+    ],
+  };
+
   return (
     <div style={{backgroundColor: 'var(--color-cream)'}}>
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{__html: JSON.stringify(productSchema)}}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{__html: JSON.stringify(breadcrumbSchema)}}
+      />
       <div className="max-w-[1400px] mx-auto" style={{paddingTop: 'calc(var(--header-height-desktop) + 1rem)'}}>
 
         {/* Mobile: Breadcrumb + Title above image */}
@@ -628,7 +718,7 @@ export default function Product() {
 
         {/* Related Products Section */}
         {recommendedProducts.length > 0 && (
-          <div className="px-6 md:px-10 py-16" style={{borderTop: '1px solid var(--color-cream-dark)'}}>
+          <div data-reveal="up" className="px-6 md:px-10 py-16" style={{borderTop: '1px solid var(--color-cream-dark)'}}>
             <h2
               className="mb-8 text-center"
               style={{
