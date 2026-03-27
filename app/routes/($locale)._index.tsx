@@ -90,7 +90,7 @@ export default function Home() {
     description: "HOSO MATCHA - Matcha d'exception sélectionné à Uji, Kyoto. Matcha cérémonial, matcha culinaire et accessoires traditionnels japonais.",
     contactPoint: {
       '@type': 'ContactPoint',
-      email: 'contact@hosomatcha.com',
+      email: 'hosomatchagroup@gmail.com',
       contactType: 'customer service',
       availableLanguage: ['French', 'English', 'Japanese'],
     },
@@ -255,7 +255,7 @@ export default function Home() {
       </section>
 
       {/* Full width product image */}
-      <div data-reveal="fade" data-reveal-speed="slow" className="img-zoom" style={{width: '100%', backgroundColor: 'var(--color-matcha-deep)', overflow: 'hidden'}}>
+      <div id="matcha-showcase" data-reveal="fade" data-reveal-speed="slow" className="img-zoom" style={{width: '100%', backgroundColor: 'var(--color-matcha-deep)', overflow: 'hidden'}}>
         <img
           src="/images/hoso-matcha-glass-4k.jpg"
           alt="Verre de matcha latte HOSO MATCHA - matcha cérémonial premium depuis Uji, Kyoto"

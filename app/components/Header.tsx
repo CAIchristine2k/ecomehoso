@@ -120,33 +120,59 @@ export function Header() {
         <nav className="hidden md:flex items-center">
           <div className="flex items-center gap-10">
             {config.navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                onClick={(e) => {
-                  if (item.href.startsWith('#')) {
-                    e.preventDefault();
-                    handleNavClick(item.href);
-                  }
-                }}
-                className={`relative group transition-all duration-300 ${
-                  (isScrolled || isLightPage) ? 'text-[#1a1a18]' : 'text-white'
-                }`}
-                style={{
-                  fontSize: '11px',
-                  fontWeight: 400,
-                  letterSpacing: '0.2em',
-                  textTransform: 'uppercase' as const,
-                }}
-              >
-                {item.name}
-                <span
-                  className="absolute -bottom-1 left-0 w-0 h-px transition-all duration-300 group-hover:w-full"
+              item.external ? (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`relative group transition-all duration-300 ${
+                    (isScrolled || isLightPage) ? 'text-[#1a1a18]' : 'text-white'
+                  }`}
                   style={{
-                    backgroundColor: (isScrolled || isLightPage) ? '#3d6b4f' : 'white',
+                    fontSize: '11px',
+                    fontWeight: 400,
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase' as const,
                   }}
-                ></span>
-              </Link>
+                >
+                  {item.name}
+                  <span
+                    className="absolute -bottom-1 left-0 w-0 h-px transition-all duration-300 group-hover:w-full"
+                    style={{
+                      backgroundColor: (isScrolled || isLightPage) ? '#3d6b4f' : 'white',
+                    }}
+                  ></span>
+                </a>
+              ) : (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  onClick={(e) => {
+                    if (item.href.startsWith('#')) {
+                      e.preventDefault();
+                      handleNavClick(item.href);
+                    }
+                  }}
+                  className={`relative group transition-all duration-300 ${
+                    (isScrolled || isLightPage) ? 'text-[#1a1a18]' : 'text-white'
+                  }`}
+                  style={{
+                    fontSize: '11px',
+                    fontWeight: 400,
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase' as const,
+                  }}
+                >
+                  {item.name}
+                  <span
+                    className="absolute -bottom-1 left-0 w-0 h-px transition-all duration-300 group-hover:w-full"
+                    style={{
+                      backgroundColor: (isScrolled || isLightPage) ? '#3d6b4f' : 'white',
+                    }}
+                  ></span>
+                </Link>
+              )
             ))}
           </div>
 
@@ -255,27 +281,46 @@ export function Header() {
 
         <nav className="mt-16 flex flex-col">
           {config.navigation.map((item) => (
-            <Link
-              key={item.name}
-              to={item.href}
-              onClick={(e) => {
-                if (item.href.startsWith('#')) {
-                  e.preventDefault();
-                  handleNavClick(item.href);
-                } else {
-                  setIsOpen(false);
-                }
-              }}
-              className="text-[#1a1a18] py-4 border-b border-[#e8e4dc] transition-colors duration-300 hover:text-[#3d6b4f]"
-              style={{
-                fontSize: '13px',
-                letterSpacing: '0.15em',
-                textTransform: 'uppercase' as const,
-                fontWeight: 400,
-              }}
-            >
-              {item.name}
-            </Link>
+            item.external ? (
+              <a
+                key={item.name}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsOpen(false)}
+                className="text-[#1a1a18] py-4 border-b border-[#e8e4dc] transition-colors duration-300 hover:text-[#3d6b4f]"
+                style={{
+                  fontSize: '13px',
+                  letterSpacing: '0.15em',
+                  textTransform: 'uppercase' as const,
+                  fontWeight: 400,
+                }}
+              >
+                {item.name}
+              </a>
+            ) : (
+              <Link
+                key={item.name}
+                to={item.href}
+                onClick={(e) => {
+                  if (item.href.startsWith('#')) {
+                    e.preventDefault();
+                    handleNavClick(item.href);
+                  } else {
+                    setIsOpen(false);
+                  }
+                }}
+                className="text-[#1a1a18] py-4 border-b border-[#e8e4dc] transition-colors duration-300 hover:text-[#3d6b4f]"
+                style={{
+                  fontSize: '13px',
+                  letterSpacing: '0.15em',
+                  textTransform: 'uppercase' as const,
+                  fontWeight: 400,
+                }}
+              >
+                {item.name}
+              </Link>
+            )
           ))}
         </nav>
 

@@ -141,7 +141,9 @@ export default function PrivacyTerms() {
               <h3 className="text-xl font-semibold mt-6 mb-3">9. Contact</h3>
               <p>
                 Questions? Email us at{' '}
-                <a href="mailto:contact@xavvi.com">contact@xavvi.com</a>.
+                <a href="mailto:hosomatchagroup@gmail.com">hosomatchagroup@gmail.com</a> (contact matcha)
+                {' '}or{' '}
+                <a href="mailto:Hosobasqueparis04@gmail.com">Hosobasqueparis04@gmail.com</a> (contact magasin).
               </p>
             </div>
           </section>
@@ -256,7 +258,9 @@ export default function PrivacyTerms() {
               <h3 className="text-xl font-semibold mt-6 mb-3">10. Contact</h3>
               <p>
                 For legal or general inquiries, email us at{' '}
-                <a href="mailto:contact@xavvi.com">contact@xavvi.com</a>.
+                <a href="mailto:hosomatchagroup@gmail.com">hosomatchagroup@gmail.com</a> (contact matcha)
+                {' '}or{' '}
+                <a href="mailto:Hosobasqueparis04@gmail.com">Hosobasqueparis04@gmail.com</a> (contact magasin).
               </p>
             </div>
           </section>

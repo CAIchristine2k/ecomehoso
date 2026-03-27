@@ -78,11 +78,15 @@ export function Hero() {
           {config.heroSubtitle}
         </p>
 
-        <Link
-          to={config.ctaLink}
-          className="inline-block text-white transition-all duration-500 hover:-translate-y-1 btn-press"
+        <a
+          href="#matcha-showcase"
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById('matcha-showcase')?.scrollIntoView({behavior: 'smooth'});
+          }}
+          className="inline-block transition-all duration-500 hover:-translate-y-1 btn-press cursor-pointer"
           style={{
-            fontFamily: "'Brusher', 'Poppins', sans-serif",
+            fontFamily: "'Times New Roman', Times, serif",
             padding: '18px 56px',
             fontSize: '12px',
             letterSpacing: '0.2em',
@@ -92,10 +96,35 @@ export function Hero() {
             backdropFilter: 'blur(8px)',
             border: '1px solid rgba(255, 255, 255, 0.25)',
             borderRadius: '4px',
+            color: 'transparent',
+            WebkitTextStroke: '1px white',
           }}
         >
           {config.ctaText}
-        </Link>
+        </a>
+
+        <div className="mt-4">
+          <Link
+            to="/notre-magasin"
+            className="inline-block transition-all duration-500 hover:-translate-y-1 btn-press"
+            style={{
+              fontFamily: "'Times New Roman', Times, serif",
+              padding: '18px 56px',
+              fontSize: '12px',
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase' as const,
+              fontWeight: 500,
+              backgroundColor: 'transparent',
+              backdropFilter: 'blur(8px)',
+              border: '1px solid rgba(255, 255, 255, 0.4)',
+              borderRadius: '4px',
+              color: 'transparent',
+              WebkitTextStroke: '1px white',
+            }}
+          >
+            Découvrir nos basques
+          </Link>
+        </div>
       </div>
 
       {/* Scroll Indicator */}

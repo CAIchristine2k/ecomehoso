@@ -280,6 +280,7 @@ export const defaultConfig: LandingPageConfig = {
     {name: 'Nos Accessoires', href: '/collections/accesoires'},
     {name: 'Notre Histoire', href: '/notre-histoire'},
     {name: 'Notre Magasin', href: '/notre-magasin'},
+    {name: 'Commander', href: 'https://order.odyssey.ad/7e7e4908-c3a7-41b4-b29b-35803a7a10ce', external: true},
   ],
 
   // Product Information

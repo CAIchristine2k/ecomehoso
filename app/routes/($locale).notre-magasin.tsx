@@ -26,19 +26,19 @@ export const meta: MetaFunction = () => {
 
 const storeImages = [
   {
-    src: '/images/magasin/devanture-1.jpg',
-    alt: 'Devanture HOSO',
-    caption: 'Notre façade',
+    src: '/images/picc.JPG',
+    alt: 'Boutique HOSO Basque Cheesecake Paris',
+    caption: 'Notre boutique',
   },
   {
-    src: '/images/magasin/interieur-gobelets.jpg',
-    alt: 'Intérieur boutique',
-    caption: "L'espace dégustation",
+    src: '/images/IMG_2671.JPG',
+    alt: 'Équipe HOSO Basque - préparation cheesecake',
+    caption: 'Notre équipe',
   },
   {
-    src: '/images/magasin/service-sesame.jpg',
-    alt: 'Service',
-    caption: 'Préparation artisanale',
+    src: '/images/IMG_2689.JPG',
+    alt: 'Basque cheesecake HOSO',
+    caption: 'Notre basque cheesecake',
   },
   {
     src: '/images/magasin/ambiance.jpg',
@@ -357,8 +357,8 @@ export default function NotreMagasinPage() {
             style={{height: '560px'}}
           >
             <img
-              src="/images/magasin/devanture-1.jpg"
-              alt="Devanture HOSO"
+              src="/images/IMG_2671.JPG"
+              alt="Équipe HOSO Basque - préparation cheesecake"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.08]"
             />
             <div
@@ -369,7 +369,7 @@ export default function NotreMagasinPage() {
               }}
             >
               <span style={{color: 'white', fontSize: '14px', fontWeight: 400, letterSpacing: '0.05em'}}>
-                Notre façade
+                Notre équipe
               </span>
             </div>
           </div>
@@ -377,9 +377,9 @@ export default function NotreMagasinPage() {
           {/* Regular items */}
           {[
             {src: '/images/magasin/interieur-gobelets.jpg', caption: "L'espace dégustation"},
-            {src: '/images/magasin/service-sesame.jpg', caption: 'Préparation artisanale'},
+            {src: '/images/IMG_2689.JPG', caption: 'Notre basque cheesecake'},
             {src: '/images/magasin/plaque-hoso.jpg', caption: 'Notre enseigne'},
-            {src: '/images/magasin/ambiance.jpg', caption: 'Ambiance zen'},
+            {src: '/images/IMG_3315.JPG', caption: 'Notre équipe'},
           ].map((item, i) => (
             <div
               key={i}
@@ -523,6 +523,29 @@ export default function NotreMagasinPage() {
             </div>
 
           </div>
+
+          <div style={{textAlign: 'center', marginTop: '48px'}}>
+            <a
+              href="https://order.odyssey.ad/7e7e4908-c3a7-41b4-b29b-35803a7a10ce"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block transition-all duration-500 hover:-translate-y-1"
+              style={{
+                fontFamily: "'Times New Roman', Times, serif",
+                padding: '16px 48px',
+                fontSize: '12px',
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase' as const,
+                fontWeight: 500,
+                backgroundColor: 'var(--color-matcha-mid)',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+              }}
+            >
+              Commander
+            </a>
+          </div>
         </div>
       </section>
 
@@ -657,18 +680,27 @@ export default function NotreMagasinPage() {
                 </svg>
               </div>
               <div>
-                <h3 style={{fontSize: '11px', fontWeight: 500, letterSpacing: '0.2em', textTransform: 'uppercase' as const, color: 'var(--color-matcha-mid)', marginBottom: '8px'}}>
+                <h3 style={{fontSize: '11px', fontWeight: 500, letterSpacing: '0.2em', textTransform: 'uppercase' as const, color: 'var(--color-matcha-mid)', marginBottom: '16px'}}>
                   Contact
                 </h3>
-                <p style={{fontFamily: "var(--font-display)", fontSize: '22px', fontWeight: 400, color: 'var(--color-charcoal)', marginBottom: '2px'}}>
-                  contact@hoso.fr
-                </p>
-                <p style={{fontSize: '16px', color: 'var(--color-stone)', marginBottom: '12px'}}>
-                  @hoso.paris
-                </p>
-                <span style={{fontSize: '13px', color: 'var(--color-stone)'}}>
-                  Réponse sous 24h
-                </span>
+
+                <div style={{marginBottom: '16px'}}>
+                  <p style={{fontFamily: "var(--font-display)", fontSize: '16px', fontWeight: 400, color: 'var(--color-charcoal)', marginBottom: '4px'}}>
+                    Hosomatchagroup@gmail.com
+                  </p>
+                  <span style={{fontSize: '12px', color: 'var(--color-stone)'}}>
+                    Collaborations matcha & service client
+                  </span>
+                </div>
+
+                <div>
+                  <p style={{fontFamily: "var(--font-display)", fontSize: '16px', fontWeight: 400, color: 'var(--color-charcoal)', marginBottom: '4px'}}>
+                    Hosobasqueparis04@gmail.com
+                  </p>
+                  <span style={{fontSize: '12px', color: 'var(--color-stone)'}}>
+                    Collaborations, commandes & événements magasin
+                  </span>
+                </div>
               </div>
             </div>
           </div>

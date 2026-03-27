@@ -198,7 +198,8 @@ export function Footer() {
                 lineHeight: 1.9,
               }}
             >
-              {config.contactInfo?.email && <p>{config.contactInfo.email}</p>}
+              <p>Hosomatchagroup@gmail.com — contact matcha</p>
+              <p>Hosobasqueparis04@gmail.com — contact magasin</p>
               {config.contactInfo?.address && <p>{config.contactInfo.address}</p>}
             </div>
           </div>
