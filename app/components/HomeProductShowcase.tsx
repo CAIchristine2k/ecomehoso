@@ -1,5 +1,6 @@
 import {Link} from 'react-router';
-import {Image, Money} from '@shopify/hydrogen';
+import {Image} from '@shopify/hydrogen';
+import {FormattedMoney} from '~/components/FormattedMoney';
 import {getProductRating} from '~/utils/productRatings';
 
 interface ShelfProduct {
@@ -206,7 +207,7 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
                           color: 'var(--color-matcha-mid)',
                           fontWeight: 500,
                         }}>
-                          <Money data={product.priceRange.minVariantPrice} />
+                          <FormattedMoney data={product.priceRange.minVariantPrice} />
                         </p>
                       )}
                     </div>
@@ -250,7 +251,7 @@ export function HomeProductShowcase({products}: HomeProductShowcaseProps) {
                             color: 'var(--color-matcha-mid)',
                             fontWeight: 500,
                           }}>
-                            <Money data={product.priceRange.minVariantPrice} />
+                            <FormattedMoney data={product.priceRange.minVariantPrice} />
                           </p>
                         )}
                       </div>

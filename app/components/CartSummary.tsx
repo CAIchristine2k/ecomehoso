@@ -1,6 +1,7 @@
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import type {CartLayout} from '~/components/CartMain';
-import {CartForm, Money, type OptimisticCart} from '@shopify/hydrogen';
+import {CartForm, type OptimisticCart} from '@shopify/hydrogen';
+import {FormattedMoney} from '~/components/FormattedMoney';
 import {useRef} from 'react';
 import {FetcherWithComponents, Link} from 'react-router';
 import {useConfig} from '~/utils/themeContext';
@@ -51,7 +52,7 @@ export function CartSummary({cart, layout, checkoutDomain}: CartSummaryProps) {
           <dt className="font-medium" style={{color: 'var(--color-stone)'}}>Sous-total</dt>
           <dd className="font-bold" style={{color: 'var(--color-charcoal)'}}>
             {cart.cost?.subtotalAmount?.amount ? (
-              <Money data={cart.cost?.subtotalAmount} />
+              <FormattedMoney data={cart.cost?.subtotalAmount} />
             ) : (
               '-'
             )}
@@ -62,7 +63,7 @@ export function CartSummary({cart, layout, checkoutDomain}: CartSummaryProps) {
           <div className="flex justify-between items-center">
             <dt className="font-medium" style={{color: 'var(--color-stone)'}}>TVA incluse</dt>
             <dd className="font-bold" style={{color: 'var(--color-charcoal)'}}>
-              <Money data={cart.cost.totalTaxAmount} />
+              <FormattedMoney data={cart.cost.totalTaxAmount} />
             </dd>
           </div>
         ) : null}
@@ -71,7 +72,7 @@ export function CartSummary({cart, layout, checkoutDomain}: CartSummaryProps) {
           <dt className="font-bold text-lg" style={{color: 'var(--color-charcoal)'}}>Total</dt>
           <dd className="font-bold text-xl" style={{color: 'var(--color-matcha-mid)'}}>
             {cart.cost?.totalAmount?.amount ? (
-              <Money data={cart.cost?.totalAmount} />
+              <FormattedMoney data={cart.cost?.totalAmount} />
             ) : (
               '-'
             )}

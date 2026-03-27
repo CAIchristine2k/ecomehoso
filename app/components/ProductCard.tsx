@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {ShoppingCart, Eye} from 'lucide-react';
 import {Link} from 'react-router';
-import {Image, Money} from '@shopify/hydrogen';
+import {Image} from '@shopify/hydrogen';
+import {FormattedMoney} from '~/components/FormattedMoney';
 import {AddToCartButton} from '~/components/AddToCartButton';
 import {WishlistButton} from '~/components/WishlistButton';
 import {LoadingSpinner} from '~/components/LoadingSpinner';
@@ -275,7 +276,7 @@ export function ProductCard({
                 color: 'var(--color-matcha-light)',
               }}
             >
-              <Money data={price} />
+              <FormattedMoney data={price} />
             </span>
           )}
 
@@ -287,7 +288,7 @@ export function ProductCard({
                 color: 'var(--color-mist)',
               }}
             >
-              <Money data={compareAtPrice} />
+              <FormattedMoney data={compareAtPrice} />
             </span>
           )}
         </div>

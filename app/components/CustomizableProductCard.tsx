@@ -1,7 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router';
 import {Image as ImageIcon, Pencil, Sparkles} from 'lucide-react';
-import {Image as ShopifyImage, Money} from '@shopify/hydrogen';
+import {Image as ShopifyImage} from '@shopify/hydrogen';
+import {FormattedMoney} from '~/components/FormattedMoney';
 import {useConfig} from '~/utils/themeContext';
 
 // Internal components
@@ -56,15 +57,15 @@ function PriceRange({priceRange}: {priceRange: any}) {
   if (maxPrice && parseFloat(minPrice) < parseFloat(maxPrice)) {
     return (
       <div className="flex items-center gap-1">
-        <Money data={minVariantPrice} className="text-primary font-bold" />
+        <FormattedMoney data={minVariantPrice} className="text-primary font-bold" />
         <span className="text-gray-400">-</span>
-        <Money data={maxVariantPrice} className="text-primary font-bold" />
+        <FormattedMoney data={maxVariantPrice} className="text-primary font-bold" />
       </div>
     );
   }
 
   // Same price or no max price
-  return <Money data={minVariantPrice} className="text-primary font-bold" />;
+  return <FormattedMoney data={minVariantPrice} className="text-primary font-bold" />;
 }
 
 interface CustomizableProductCardProps {

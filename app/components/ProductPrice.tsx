@@ -1,4 +1,4 @@
-import {Money} from '@shopify/hydrogen';
+import {FormattedMoney} from '~/components/FormattedMoney';
 import type {MoneyV2} from '@shopify/hydrogen/storefront-api-types';
 import {useConfig} from '~/utils/themeContext';
 
@@ -19,16 +19,16 @@ export function ProductPrice({
         <div className="flex items-center gap-2">
           {price ? (
             <span className="font-medium text-primary">
-              <Money data={price} />
+              <FormattedMoney data={price} />
             </span>
           ) : null}
           <s className="text-sm text-primary-600">
-            <Money data={compareAtPrice} />
+            <FormattedMoney data={compareAtPrice} />
           </s>
         </div>
       ) : price ? (
         <span className="font-medium text-primary">
-          <Money data={price} />
+          <FormattedMoney data={price} />
         </span>
       ) : (
         <span>&nbsp;</span>

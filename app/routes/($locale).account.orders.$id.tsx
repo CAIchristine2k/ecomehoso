@@ -1,6 +1,7 @@
 import {redirect, type LoaderFunctionArgs} from 'react-router';
 import {useLoaderData, type MetaFunction} from 'react-router';
-import {Money, Image, flattenConnection} from '@shopify/hydrogen';
+import {Image, flattenConnection} from '@shopify/hydrogen';
+import {FormattedMoney} from '~/components/FormattedMoney';
 import type {OrderLineItemFullFragment} from 'customer-accountapi.generated';
 // import {CUSTOMER_ORDER_QUERY} from '~/graphql/customer-account/CustomerOrderQuery';
 const CUSTOMER_ORDER_QUERY = `#graphql
@@ -220,7 +221,7 @@ export default function OrderRoute() {
             <div className="flex items-center gap-4">
               <div className="text-right">
                 <div className="text-sm text-gray-400 mb-1">Total</div>
-                <Money
+                <FormattedMoney
                   data={order.totalPrice!}
                   className="text-2xl font-bold text-gold-500"
                 />
@@ -273,7 +274,7 @@ export default function OrderRoute() {
               <div className="space-y-3">
                 <div className="flex justify-between text-gray-300">
                   <span>Subtotal</span>
-                  <Money data={order.subtotal!} />
+                  <FormattedMoney data={order.subtotal!} />
                 </div>
 
                 {((discountValue && discountValue.amount) ||
@@ -283,20 +284,20 @@ export default function OrderRoute() {
                     <span>
                       {discountPercentage
                         ? `-${discountPercentage}% OFF`
-                        : discountValue && <Money data={discountValue!} />}
+                        : discountValue && <FormattedMoney data={discountValue!} />}
                     </span>
                   </div>
                 )}
 
                 <div className="flex justify-between text-gray-300">
                   <span>Tax</span>
-                  <Money data={order.totalTax!} />
+                  <FormattedMoney data={order.totalTax!} />
                 </div>
 
                 <div className="border-t border-gray-700 pt-3">
                   <div className="flex justify-between font-bold text-gold-500 text-lg">
                     <span>Total</span>
-                    <Money data={order.totalPrice!} />
+                    <FormattedMoney data={order.totalPrice!} />
                   </div>
                 </div>
               </div>
@@ -355,7 +356,7 @@ function OrderLineRow({lineItem}: {lineItem: OrderLineItemFullFragment}) {
       </div>
       <div className="text-right">
         <p className="text-gray-400 text-sm">Price</p>
-        <Money data={lineItem.price!} className="text-white font-medium" />
+        <FormattedMoney data={lineItem.price!} className="text-white font-medium" />
       </div>
       <div className="text-right">
         <p className="text-gray-400 text-sm">Quantity</p>
@@ -363,7 +364,7 @@ function OrderLineRow({lineItem}: {lineItem: OrderLineItemFullFragment}) {
       </div>
       <div className="text-right">
         <p className="text-gray-400 text-sm">Total</p>
-        <Money
+        <FormattedMoney
           data={lineItem.totalDiscount!}
           className="text-white font-medium"
         />

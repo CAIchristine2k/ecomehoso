@@ -1,7 +1,8 @@
 import React from 'react';
 import {ShoppingCart} from 'lucide-react';
 import {Link} from 'react-router';
-import {Image, Money} from '@shopify/hydrogen';
+import {Image} from '@shopify/hydrogen';
+import {FormattedMoney} from '~/components/FormattedMoney';
 import type {
   ProductItemFragment,
   CollectionItemFragment,
@@ -169,7 +170,7 @@ export function ProductItem({
                   color: 'var(--color-matcha-light)',
                 }}
               >
-                <Money data={price} />
+                <FormattedMoney data={price} />
               </span>
             )}
 
@@ -178,7 +179,7 @@ export function ProductItem({
                 className="line-through price-no-hover"
                 style={{fontSize: '0.85rem', color: 'var(--color-mist)'}}
               >
-                <Money data={comparePrice} />
+                <FormattedMoney data={comparePrice} />
               </span>
             )}
           </div>

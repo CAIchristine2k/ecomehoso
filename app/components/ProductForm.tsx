@@ -2,7 +2,8 @@ import {useState, useEffect} from 'react';
 import {useConfig} from '~/utils/themeContext';
 import {AddToCartButton} from './AddToCartButton';
 import {useAside} from './Aside';
-import {Money, ShopPayButton} from '@shopify/hydrogen';
+import {ShopPayButton} from '@shopify/hydrogen';
+import {FormattedMoney} from '~/components/FormattedMoney';
 import type {ProductDetailsQuery} from 'storefrontapi.generated';
 import {useCart} from '~/providers/CartProvider';
 import {useLoaderData} from 'react-router';
@@ -249,7 +250,7 @@ export function ProductForm({
             color: 'var(--color-charcoal)',
           }}
         >
-          <Money data={selectedVariant.price} />
+          <FormattedMoney data={selectedVariant.price} />
         </span>
         {selectedVariant.compareAtPrice &&
           parseFloat(selectedVariant.compareAtPrice.amount) > parseFloat(selectedVariant.price.amount) && (
@@ -261,7 +262,7 @@ export function ProductForm({
               fontWeight: 400,
             }}
           >
-            <Money data={selectedVariant.compareAtPrice} />
+            <FormattedMoney data={selectedVariant.compareAtPrice} />
           </span>
         )}
         {selectedVariant.compareAtPrice &&
@@ -322,11 +323,11 @@ export function ProductForm({
           ) : isAvailable ? (
             <span className="flex items-center gap-2">
               Ajouter au panier —{' '}
-              <Money data={selectedVariant.price} />
+              <FormattedMoney data={selectedVariant.price} />
               {selectedVariant.compareAtPrice &&
                 parseFloat(selectedVariant.compareAtPrice.amount) > parseFloat(selectedVariant.price.amount) && (
                 <span className="line-through opacity-60" style={{fontSize: '0.85em'}}>
-                  <Money data={selectedVariant.compareAtPrice} />
+                  <FormattedMoney data={selectedVariant.compareAtPrice} />
                 </span>
               )}
             </span>

@@ -1,9 +1,9 @@
 import {Link, useLoaderData, type MetaFunction} from 'react-router';
 import {
-  Money,
   getPaginationVariables,
   flattenConnection,
 } from '@shopify/hydrogen';
+import {FormattedMoney} from '~/components/FormattedMoney';
 import {redirect, type LoaderFunctionArgs} from 'react-router';
 import type {
   CustomerOrdersFragment,
@@ -215,7 +215,7 @@ function OrderItem({order}: {order: OrderItemFragment}) {
         <div className="flex items-center justify-between lg:justify-end gap-4">
           <div className="text-right">
             <div className="text-sm mb-1" style={{color: 'var(--color-stone)'}}>Total</div>
-            <Money
+            <FormattedMoney
               data={order.totalPrice}
               className="text-xl font-bold"
               style={{color: 'var(--color-matcha-mid)'}}

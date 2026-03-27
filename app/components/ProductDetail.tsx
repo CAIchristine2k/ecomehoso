@@ -1,6 +1,7 @@
 import React from 'react';
 import {Star, Truck, Shield, ArrowLeft} from 'lucide-react';
-import {Image, Money, type MappedProductOptions} from '@shopify/hydrogen';
+import {Image, type MappedProductOptions} from '@shopify/hydrogen';
+import {FormattedMoney} from '~/components/FormattedMoney';
 import {ProductForm} from './ProductForm';
 import {Link, useLocation} from 'react-router';
 import type {ProductDetailsQuery} from 'storefrontapi.generated';
@@ -112,12 +113,12 @@ export function ProductDetail({
                   className={`text-3xl font-bold ${isOnSale ? 'text-red-500' : 'text-gold-500'}`}
                 >
                   {selectedVariant?.price && (
-                    <Money data={selectedVariant.price} />
+                    <FormattedMoney data={selectedVariant.price} />
                   )}
                 </span>
                 {selectedVariant?.compareAtPrice && (
                   <span className="text-xl text-gray-500 line-through">
-                    <Money data={selectedVariant.compareAtPrice} />
+                    <FormattedMoney data={selectedVariant.compareAtPrice} />
                   </span>
                 )}
               </div>
@@ -282,7 +283,7 @@ export function ProductDetail({
                   </h3>
                   {relatedProduct.variants?.nodes?.[0] && (
                     <div className="mt-1 text-gray-300">
-                      <Money data={relatedProduct.variants.nodes[0].price} />
+                      <FormattedMoney data={relatedProduct.variants.nodes[0].price} />
                     </div>
                   )}
                 </Link>

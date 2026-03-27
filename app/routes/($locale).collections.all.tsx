@@ -5,6 +5,7 @@ import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {ProductItem} from '~/components/ProductItem';
 import {Link} from 'react-router';
 import {ArrowLeft} from 'lucide-react';
+import {useEffect, useRef} from 'react';
 import {getConfig} from '~/utils/config';
 
 export const meta: MetaFunction<typeof loader> = () => {
@@ -130,6 +131,9 @@ export default function Collection() {
           </p>
         </div>
 
+        {/* Video Banner */}
+        <VideoLoop src="/videos/17687.MOV" />
+
         {/* Products Grid */}
         <div className="mb-16">
           <PaginatedResourceSection
@@ -195,6 +199,48 @@ export default function Collection() {
           </Link>
         </div>
       </div>
+    </div>
+  );
+}
+
+function VideoLoop({src}: {src: string}) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    const container = containerRef.current;
+    if (!video || !container) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      },
+      {threshold: 0.25},
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      className="w-full mb-16 rounded-lg overflow-hidden"
+      style={{height: '50vh'}}
+    >
+      <video
+        ref={videoRef}
+        src={src}
+        muted
+        loop
+        playsInline
+        className="w-full h-full object-cover"
+      />
     </div>
   );
 }

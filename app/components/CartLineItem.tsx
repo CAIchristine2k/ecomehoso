@@ -1,4 +1,5 @@
-import {CartForm, Image, Money} from '@shopify/hydrogen';
+import {CartForm, Image} from '@shopify/hydrogen';
+import {FormattedMoney} from '~/components/FormattedMoney';
 import {Link} from 'react-router';
 import {useConfig} from '~/utils/themeContext';
 import type {CartLineFragment} from 'storefrontapi.generated';
@@ -579,7 +580,7 @@ export function CartLineItem({
             {/* Price */}
             <div className="flex items-baseline gap-2">
               {merchandise.price ? (
-                <Money
+                <FormattedMoney
                   data={merchandise.price}
                   className="font-semibold text-sm"
                 />
@@ -589,7 +590,7 @@ export function CartLineItem({
                 </span>
               )}
               {merchandise.compareAtPrice && (
-                <Money
+                <FormattedMoney
                   data={merchandise.compareAtPrice}
                   className="line-through text-xs"
                 />

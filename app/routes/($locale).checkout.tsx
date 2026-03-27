@@ -5,7 +5,8 @@ import type {
   ActionFunctionArgs,
   MetaFunction,
 } from 'react-router';
-import { CartForm, Image, Money } from '@shopify/hydrogen';
+import { CartForm, Image } from '@shopify/hydrogen';
+import { FormattedMoney } from '~/components/FormattedMoney';
 import { useConfig } from '~/utils/themeContext';
 import type { CartApiQueryFragment, CartLineFragment } from 'storefrontapi.generated';
 import { Truck, Shield, CreditCard, ArrowLeft, ExternalLink } from 'lucide-react';
@@ -365,7 +366,7 @@ function CheckoutLineItem({ line }: { line: CartLineFragment }) {
         <div className="flex items-center justify-between mt-3">
           <div className="text-sm" style={{color: 'var(--color-stone)'}}>Quantity: {quantity}</div>
           <div className="font-bold" style={{color: 'var(--color-charcoal)'}}>
-            <Money data={merchandise.price} />
+            <FormattedMoney data={merchandise.price} />
           </div>
         </div>
       </div>
@@ -675,7 +676,7 @@ export default function Checkout() {
                   </span>
                   <span className="font-medium" style={{color: 'var(--color-charcoal)'}}>
                     {cart.cost?.subtotalAmount ? (
-                      <Money data={cart.cost.subtotalAmount} />
+                      <FormattedMoney data={cart.cost.subtotalAmount} />
                     ) : (
                       '-'
                     )}
@@ -686,7 +687,7 @@ export default function Checkout() {
                   <div className="flex justify-between items-center">
                     <span style={{color: 'var(--color-stone)'}}>Tax (estimated)</span>
                     <span className="font-medium" style={{color: 'var(--color-charcoal)'}}>
-                      <Money data={cart.cost.totalTaxAmount} />
+                      <FormattedMoney data={cart.cost.totalTaxAmount} />
                     </span>
                   </div>
                 )}
@@ -703,7 +704,7 @@ export default function Checkout() {
                     <span className="font-bold" style={{color: 'var(--color-charcoal)'}}>Total</span>
                     <span className="font-bold text-xl" style={{color: 'var(--color-matcha-mid)'}}>
                       {cart.cost?.totalAmount ? (
-                        <Money data={cart.cost.totalAmount} />
+                        <FormattedMoney data={cart.cost.totalAmount} />
                       ) : (
                         '-'
                       )}

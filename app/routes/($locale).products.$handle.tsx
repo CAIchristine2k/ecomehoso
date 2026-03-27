@@ -9,7 +9,6 @@ import {
   getAdjacentAndFirstAvailableVariants,
   useSelectedOptionInUrlParam,
   Image,
-  Money,
   parseGid,
   CacheShort,
 } from '@shopify/hydrogen';
@@ -18,6 +17,7 @@ import {getConfig} from '~/utils/config';
 import {useConfig} from '~/utils/themeContext';
 import {getProductRating} from '~/utils/productRatings';
 import {ProductForm} from '~/components/ProductForm';
+import {FormattedMoney} from '~/components/FormattedMoney';
 import {Suspense} from 'react';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
@@ -783,7 +783,7 @@ export default function Product() {
                         fontWeight: 600,
                       }}
                     >
-                      <Money data={relatedProduct.variants.nodes[0].price} />
+                      <FormattedMoney data={relatedProduct.variants.nodes[0].price} />
                     </div>
                   )}
                 </Link>
