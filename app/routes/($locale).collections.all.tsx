@@ -94,7 +94,7 @@ export default function Collection() {
         </div>
 
         {/* Page Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-6">
           <span
             className="inline-block mb-4"
             style={{
@@ -132,7 +132,7 @@ export default function Collection() {
         </div>
 
         {/* Video Banner */}
-        <VideoLoop src="/videos/17687.MOV" />
+        <VideoLoop src="/videos/17687.mp4" />
 
         {/* Products Grid */}
         <div className="mb-16">
@@ -231,7 +231,7 @@ function VideoLoop({src}: {src: string}) {
     <div
       ref={containerRef}
       className="w-full mb-16 rounded-lg overflow-hidden"
-      style={{height: '50vh'}}
+      style={{height: '75vh'}}
     >
       <video
         ref={videoRef}

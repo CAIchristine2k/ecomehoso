@@ -98,11 +98,13 @@ export function ProductForm({
   const colorMap: Record<string, string> = {
     'vert forêt': '#1a4a2e',
     'vert foret': '#1a4a2e',
-    'blanc nuage': '#f5f0e6',
+    'blanc nuage': '#e8e0d0',
+    'vert prélude': '#7ab88a',
+    'vert prelude': '#7ab88a',
     'vert clair prélude': '#7ab88a',
     'vert clair prelude': '#7ab88a',
     'vert': '#2d6b3f',
-    'blanc': '#f5f0e6',
+    'blanc': '#e8e0d0',
     'noir': '#1a1a18',
     'beige': '#d4c5a9',
     'crème': '#faf8f3',
@@ -202,6 +204,9 @@ export function ProductForm({
                   );
                   const isAvailableOption = optionVariant?.availableForSale || false;
 
+                  const variantColor = getVariantColor(value);
+                  const isLightColor = variantColor === '#e8e0d0' || variantColor === '#faf8f3' || variantColor === '#d4c5a9' || variantColor === '#f5f0e6';
+
                   return (
                     <button
                       key={value}
@@ -209,26 +214,42 @@ export function ProductForm({
                       disabled={!isAvailableOption}
                       className="transition-all duration-200 flex-shrink-0 flex items-center gap-2"
                       style={{
-                        fontSize: '12px',
+                        fontSize: '11px',
                         fontWeight: isSelected ? 600 : 400,
                         letterSpacing: '0.03em',
                         color: isAvailableOption
-                          ? (getVariantColor(value) && getVariantColor(value) !== '#f5f0e6' && getVariantColor(value) !== '#faf8f3' && getVariantColor(value) !== '#d4c5a9')
-                            ? 'white'
+                          ? isSelected
+                            ? (isLightColor ? 'var(--color-charcoal)' : 'white')
                             : 'var(--color-charcoal)'
                           : 'var(--color-stone)',
                         backgroundColor: isSelected
-                          ? (getVariantColor(value) || 'var(--color-matcha-mid)')
-                          : (getVariantColor(value) || 'var(--color-cream-warm)'),
+                          ? (variantColor || 'var(--color-charcoal)')
+                          : 'var(--color-cream-warm)',
                         border: isSelected
-                          ? '2px solid var(--color-charcoal)'
+                          ? `2px solid ${variantColor || 'var(--color-charcoal)'}`
                           : '1.5px solid var(--color-cream-dark)',
-                        borderRadius: '8px',
-                        padding: '10px 20px',
+                        borderRadius: '6px',
+                        padding: '7px 14px',
                         opacity: isAvailableOption ? 1 : 0.4,
                         cursor: isAvailableOption ? 'pointer' : 'not-allowed',
                       }}
                     >
+                      {variantColor && (
+                        <span
+                          style={{
+                            display: 'inline-block',
+                            width: '10px',
+                            height: '10px',
+                            borderRadius: '50%',
+                            backgroundColor: variantColor,
+                            border: isSelected
+                              ? '1.5px solid rgba(255,255,255,0.6)'
+                              : '1.5px solid rgba(0,0,0,0.12)',
+                            flexShrink: 0,
+                            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                          }}
+                        />
+                      )}
                       {value}
                     </button>
                   );
