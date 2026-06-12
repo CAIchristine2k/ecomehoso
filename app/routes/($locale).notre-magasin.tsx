@@ -313,7 +313,7 @@ export default function NotreMagasinPage() {
             Plongez dans notre sélection de matchas d'exception et d'accessoires artisanaux, directement importés d'Uji, Kyoto.
           </p>
           <a
-            href="https://order.odyssey.ad/7e7e4908-c3a7-41b4-b29b-35803a7a10ce"
+            href="https://order.ody.app/b49decec-fa15-4998-a828-83e29bcada61"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 group transition-all duration-300 hover:scale-[1.02]"
@@ -526,7 +526,7 @@ export default function NotreMagasinPage() {
 
           <div style={{textAlign: 'center', marginTop: '48px'}}>
             <a
-              href="https://order.odyssey.ad/7e7e4908-c3a7-41b4-b29b-35803a7a10ce"
+              href="https://order.ody.app/b49decec-fa15-4998-a828-83e29bcada61"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block transition-all duration-500 hover:-translate-y-1"
