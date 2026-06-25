@@ -135,6 +135,8 @@ export function WelcomePopup() {
             marginBottom: '6px',
           }}>
             sur votre première commande
+            <br />
+            de matchas et accessoires
           </p>
 
           <p style={{

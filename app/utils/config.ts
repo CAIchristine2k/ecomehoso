@@ -280,7 +280,7 @@ export const defaultConfig: LandingPageConfig = {
     {name: 'Nos Accessoires', href: '/collections/accesoires'},
     {name: 'Notre Histoire', href: '/notre-histoire'},
     {name: 'Notre Magasin', href: '/notre-magasin'},
-    {name: 'Commander', href: 'https://order.ody.app/b49decec-fa15-4998-a828-83e29bcada61', external: true},
+    {name: 'Commander', href: '/commander'},
   ],
 
   // Product Information
