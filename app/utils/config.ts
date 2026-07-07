@@ -279,7 +279,7 @@ export const defaultConfig: LandingPageConfig = {
     {name: 'Nos Kits', href: '/collections/kit'},
     {name: 'Nos Accessoires', href: '/collections/accesoires'},
     {name: 'Notre Histoire', href: '/notre-histoire'},
-    {name: 'Notre Magasin', href: '/notre-magasin'},
+    {name: 'Nos Magasins', href: '/notre-magasin'},
     {name: 'Commander', href: '/commander'},
   ],
 

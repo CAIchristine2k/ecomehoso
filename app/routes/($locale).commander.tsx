@@ -382,7 +382,7 @@ export default function CommanderPage() {
                 transition: 'all 0.3s ease',
               }}
             >
-              Notre magasin
+              Nos magasins
             </Link>
             <Link
               to="/collections/all"
