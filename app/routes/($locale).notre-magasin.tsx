@@ -96,7 +96,7 @@ export default function NotreMagasinPage() {
       image: '/images/magasin/boutique-saint-honore.jpg',
       '@id': 'https://hosomatcha.com/notre-magasin#saint-honore',
       url: 'https://hosomatcha.com/notre-magasin',
-      telephone: '',
+      telephone: '+33987003614',
       description: 'Boutique de matcha premium à Saint-Honoré, Paris 1er. Dégustation de matcha cérémonial, gâteaux basque au matcha, boissons au matcha et accessoires traditionnels japonais.',
       address: {
         '@type': 'PostalAddress',
@@ -124,7 +124,7 @@ export default function NotreMagasinPage() {
       image: '/images/magasin/devanture-1.jpg',
       '@id': 'https://hosomatcha.com/notre-magasin#saint-antoine',
       url: 'https://hosomatcha.com/notre-magasin',
-      telephone: '',
+      telephone: '+33987003614',
       description: 'Boutique de matcha premium au cœur du Marais, Paris 4ème. Dégustation de matcha cérémonial, gâteaux basque au matcha, boissons au matcha et accessoires traditionnels japonais.',
       address: {
         '@type': 'PostalAddress',
@@ -907,12 +907,24 @@ export default function NotreMagasinPage() {
                   </span>
                 </div>
 
-                <div>
+                <div style={{marginBottom: '16px'}}>
                   <p style={{fontFamily: "var(--font-display)", fontSize: '16px', fontWeight: 400, color: 'var(--color-charcoal)', marginBottom: '4px'}}>
                     Hosobasqueparis04@gmail.com
                   </p>
                   <span style={{fontSize: '12px', color: 'var(--color-stone)'}}>
                     Collaborations, commandes & événements magasin
+                  </span>
+                </div>
+
+                <div>
+                  <a
+                    href="tel:+33987003614"
+                    style={{fontFamily: "var(--font-display)", fontSize: '16px', fontWeight: 400, color: 'var(--color-charcoal)', marginBottom: '4px', textDecoration: 'none', display: 'block'}}
+                  >
+                    09 87 00 36 14
+                  </a>
+                  <span style={{fontSize: '12px', color: 'var(--color-stone)'}}>
+                    Nous joindre par téléphone
                   </span>
                 </div>
               </div>
