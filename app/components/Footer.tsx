@@ -201,8 +201,8 @@ export function Footer() {
               <p>Hosomatchagroup@gmail.com — contact matcha</p>
               <p>Hosobasqueparis04@gmail.com — contact magasin</p>
               <p>
-                <a href="tel:+33987003614" style={{color: 'inherit', textDecoration: 'none'}}>
-                  09 87 00 36 14
+                <a href="tel:+33988382143" style={{color: 'inherit', textDecoration: 'none'}}>
+                  09 88 38 21 43
                 </a>
               </p>
               {config.contactInfo?.address && <p>{config.contactInfo.address}</p>}
